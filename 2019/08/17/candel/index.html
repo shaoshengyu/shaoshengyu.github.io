@@ -1,0 +1,474 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  
+    <title>邵圣煜的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="邵圣煜">
+    
+
+    
+    <meta name="description" content="自编的一些帮助理解c标签以及el表达式的代码 对c标签与el表达式重新学习了一下，有所收获写下一些代码。 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778">
+<meta property="og:type" content="article">
+<meta property="og:title" content="邵圣煜的博客">
+<meta property="og:url" content="http://shaoshengyu.github.io/2019/08/17/candel/index.html">
+<meta property="og:site_name" content="邵圣煜的博客">
+<meta property="og:description" content="自编的一些帮助理解c标签以及el表达式的代码 对c标签与el表达式重新学习了一下，有所收获写下一些代码。 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-08-17T15:37:16.667Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="邵圣煜的博客">
+<meta name="twitter:description" content="自编的一些帮助理解c标签以及el表达式的代码 对c标签与el表达式重新学习了一下，有所收获写下一些代码。 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778">
+
+    
+    <link rel="alternative" href="/atom.xml" title="邵圣煜的博客" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="邵圣煜的博客" title="邵圣煜的博客"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="邵圣煜的博客">邵圣煜的博客</a></h1>
+				<h2 class="blog-motto">爱生活爱编码</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/tags">标签</a></li>
+					
+						<li><a href="/categories">分类</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:shaoshengyu.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2019/08/17/candel/" title="" itemprop="url"></a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="邵圣煜" target="_blank" itemprop="author">邵圣煜</a>
+		
+  <p class="article-time">
+    <time datetime="2019-08-17T14:35:05.772Z" itemprop="datePublished"> 发表于 2019-08-17</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-number">1.</span> <span class="toc-text">自编的一些帮助理解c标签以及el表达式的代码</span></a></li></ol>
+		
+		</div>
+		
+		<h1>自编的一些帮助理解c标签以及el表达式的代码</h1>
+对c标签与el表达式重新学习了一下，有所收获写下一些代码。
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@page import=&quot;java.util.HashMap&quot;%&gt;</span><br><span class="line">&lt;%@page import=&quot;java.util.Map&quot;%&gt;</span><br><span class="line">&lt;%@page import=&quot;java.util.ArrayList&quot;%&gt;</span><br><span class="line">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;</span><br><span class="line">    pageEncoding=&quot;UTF-8&quot; import=&quot;com.cha4.Book&quot;%&gt;</span><br><span class="line">&lt;%@taglib prefix=&quot;c&quot; uri=&quot;http://java.sun.com/jsp/jstl/core&quot;%&gt;</span><br><span class="line">&lt;%@taglib prefix=&quot;fn&quot; uri=&quot;http://java.sun.com/jsp/jstl/functions&quot;%&gt;</span><br><span class="line">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line"></span><br><span class="line">&lt;c:set var=&quot;hello&quot; value=&quot;Hello JSTL!&lt;br/&gt;&quot; scope=&quot;session&quot;/&gt;</span><br><span class="line">&lt;c:out value=&quot;$&#123;hello &#125;&quot; escapeXml=&quot;false&quot; default=&quot;Goodby!&lt;br/&gt;&quot;&gt;&lt;/c:out&gt;</span><br><span class="line">&lt;c:out value=&quot;$&#123;hello &#125;&quot; escapeXml=&quot;true&quot;&gt;&lt;/c:out&gt;</span><br><span class="line">&lt;c:out value=&quot;$&#123;hello2 &#125;&quot; escapeXml=&quot;false&quot; default=&quot;Goodby!&lt;br/&gt;&quot;&gt;&lt;/c:out&gt;</span><br><span class="line">$&#123;fn:substring(hello,0,5)&#125;&lt;br&gt;</span><br><span class="line"></span><br><span class="line">&lt;c:if test=&quot;$&#123;not empty sessionScope.hello&#125;&quot;&gt;</span><br><span class="line">     欢迎您：$&#123;sessionScope.hello&#125;</span><br><span class="line">&lt;/c:if&gt;</span><br><span class="line"></span><br><span class="line">&lt;c:set var=&quot;score&quot; value=&quot;85&quot;&gt;&lt;/c:set&gt;</span><br><span class="line">&lt;c:choose&gt;</span><br><span class="line">&lt;c:when test=&quot;$&#123;score&gt;=90&#125;&quot;&gt;</span><br><span class="line">优秀&lt;br/&gt;</span><br><span class="line">&lt;/c:when&gt;</span><br><span class="line">&lt;c:when test=&quot;$&#123;score&lt;90&amp;&amp;score&gt;=60&#125;&quot;&gt;</span><br><span class="line">良好&lt;br/&gt;</span><br><span class="line">&lt;/c:when&gt;</span><br><span class="line">&lt;c:otherwise&gt;</span><br><span class="line">不及格&lt;br/&gt;</span><br><span class="line">&lt;/c:otherwise&gt;</span><br><span class="line">&lt;/c:choose&gt;</span><br><span class="line"></span><br><span class="line">&lt;%</span><br><span class="line">ArrayList list=new ArrayList();</span><br><span class="line">list.add(&quot;一&quot;);</span><br><span class="line">list.add(2);</span><br><span class="line">list.add(3.6);</span><br><span class="line">list.add(&quot;si&quot;);</span><br><span class="line">session.setAttribute(&quot;list&quot;, list);</span><br><span class="line">%&gt;</span><br><span class="line">&lt;c:forEach items=&quot;$&#123;sessionScope.list&#125;&quot; var=&quot;item&quot; varStatus=&quot;vst&quot;&gt;</span><br><span class="line">序号$&#123;vst.index+1&#125;:$&#123;item&#125;&lt;br&gt;</span><br><span class="line">&lt;%//判断一个数是否在集合内 %&gt;</span><br><span class="line">&lt;c:if test=&quot;$&#123;item eq &apos;2&apos;&#125;&quot;&gt;</span><br><span class="line">存在&lt;br/&gt;</span><br><span class="line">&lt;/c:if&gt;</span><br><span class="line">&lt;/c:forEach&gt;</span><br><span class="line">&lt;%=list.get(2)%&gt;&lt;br&gt;</span><br><span class="line"></span><br><span class="line">&lt;c:forEach begin=&quot;3&quot; end=&quot;10&quot; step=&quot;2&quot; var=&quot;num&quot;&gt;</span><br><span class="line">$&#123;num&#125;&lt;br&gt;</span><br><span class="line">&lt;/c:forEach&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;%</span><br><span class="line">//无序</span><br><span class="line">Map&lt;String,Book&gt; map=new HashMap&lt;String,Book&gt;();</span><br><span class="line">map.put(&quot;Java基础&quot;,new Book(&quot;Java基础开发&quot;,50));</span><br><span class="line">map.put(&quot;Java高级&quot;,new Book(&quot;Java高级开发&quot;,60));</span><br><span class="line">map.put(&quot;JavaWeb&quot;,new Book(&quot;JavaWeb开发&quot;,70));</span><br><span class="line">map.put(&quot;Java框架&quot;,new Book(&quot;Java框架开发&quot;,80));</span><br><span class="line">request.setAttribute(&quot;bookMap&quot;,map);</span><br><span class="line">%&gt;</span><br><span class="line">&lt;c:forEach items=&quot;$&#123;requestScope.bookMap&#125;&quot; var=&quot;book&quot;&gt;</span><br><span class="line">$&#123;book.key&#125;:$&#123;book.value.name&#125;--$&#123;book.value&#125;&lt;br&gt;&lt;br&gt;</span><br><span class="line">&lt;/c:forEach&gt;</span><br><span class="line">&lt;%=map.get(&quot;Java基础&quot;).getName() %&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;c:set var=&quot;number&quot; value=&quot;a,b,c,d,e&quot;&gt;&lt;/c:set&gt;</span><br><span class="line">&lt;c:forTokens items=&quot;$&#123;number&#125;&quot; var=&quot;num&quot; delims=&quot;,&quot; varStatus=&quot;no&quot;&gt;</span><br><span class="line">&lt;c:out value=&quot;$&#123;no.count&#125;&quot;/&gt;.&lt;c:out value=&quot;$&#123;num&#125;&quot;/&gt;</span><br><span class="line">&lt;/c:forTokens&gt;</span><br><span class="line">&lt;br&gt;</span><br><span class="line"></span><br><span class="line">&lt;c:catch var=&quot;myException&quot;&gt;</span><br><span class="line">&lt;%=5/0 %&gt;</span><br><span class="line">&lt;/c:catch&gt;</span><br><span class="line">&lt;c:out value=&quot;$&#123;myException&#125;&lt;br/&gt;&quot; escapeXml=&quot;false&quot;&gt;&lt;/c:out&gt;</span><br><span class="line">&lt;c:out value=&quot;$&#123;myException.message&#125;&lt;br/&gt;&quot;&gt;&lt;/c:out&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://shaoshengyu.github.io/2019/08/17/candel/" data-title="邵圣煜的博客" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2019/08/17/ccs1/" title="">
+  <strong>上一篇：</strong><br/>
+  <span>
+  (no title)</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2019/08/17/html/"  title="">
+ <strong>下一篇：</strong><br/> 
+ <span>(no title)
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2019/08/17/candel/" data-title="" data-url="http://shaoshengyu.github.io/2019/08/17/candel/"></div>
+</section>
+
+
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-number">1.</span> <span class="toc-text">自编的一些帮助理解c标签以及el表达式的代码</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github 名片</p>
+<div class="github-card" data-github="shaoshengyu" data-theme="medium"></div>
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+
+
+
+  
+
+  
+
+  
+  <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">归档</a></p>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">11</span></li></ul>
+  </div>
+
+
+  
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://how2j.cn" target="_blank" title="一个学习java宝地与前端css库">How2j</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.liaoxuefeng.com" target="_blank" title="Liaoxuefeng&#39;s Website">Liaoxuefeng&#39;s Website</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> 爱码代码的邵圣煜 <br/>
+			程序员上辈子都是折翼的天使</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/6609337505" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/shaoshengyu" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2019 
+		
+		<a href="/about" target="_blank" title="邵圣煜">邵圣煜</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"邵帅"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
