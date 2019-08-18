@@ -84,7 +84,208 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2019/08/17/css2/" title="" itemprop="url"></a>
+      <a href="/2019/08/18/gitinstruction/" title="" itemprop="url"></a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="邵圣煜" target="_blank" itemprop="author">邵圣煜</a>
+		
+  <p class="article-time">
+    <time datetime="2019-08-18T14:25:44.058Z" itemprop="datePublished"> 发表于 2019-08-18</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h1>常用的一些git指令</h1>
+mkdir <filename>    ——创建一个文件夹(空目录)   假设filename为learngit<br>
+cd                  ——进入某文件夹目录<br>
+ls                    ——查看所在目录的所有文件<br>
+cat readme.txt        ——查看文件内容<br>
+vi readme.txt      ——进入文件编辑界面<br>
+            1、按i进入编辑模式，此时界面右下角显示insert<br>
+            2、编辑完按esc推出insert模式<br>
+            3、按shift + ：（shift + 冒号键）输入wq。  ps：wq表示保存并退出，只有q表示只退出<br>
+            4、最后按enter键退出界面<br>
+rm readme.txt       ——删除文件<br>
+pwd                 ——用于显示当前目录<br>
+
+<p>初始化仓库<br>git  init                      ——初始化一个Git仓库</p>
+<p>添加文件到Git仓库：<br>    1、git add <file>    ——添加文件，可以反复使用多次<br>            先将文件提交到暂存区<br>    2、git commit -m <message>    ——提交文件到Git仓库，-m后面输入的是本次提交的说明<br>            将暂存区文件一次性commit到master上<br>git status        ——查看仓库当前的状态，随时掌握工作区的状态</message></file></p>
+<p>git diff          ——查看difference，若git status提示文件被修改过，使用该命令查看修改内容</p>
+<p>版本回退<br>    git log           ——查看从最近到最远的提交日志，若嫌输出的信息太多可以加上 –pretty=oneline参数</p>
+<pre><code>git reset --hard HEAD^    ——退回到上一个版本，HEAD表示当前版本
+       git reset命令既可以回退版本，也可以把暂存区的修改回退到工作区。当我们用HEAD时，表示最新的版本。
+
+git reset --hard 7be436d    ——回到退回前的版本(前提是命令行窗口未被关闭，找到上面的对应版本的
+                                版本号)版本号没必要写全，前几位就可以了
+     git reflog                                —— 查看命令历史
+                                                    （可用于版本退回后想要回到退回前，但已关闭命令行窗口）</code></pre><p>管理修改<br>          第一次修改 -&gt; git add -&gt; 第二次修改 -&gt; git add -&gt; git commit        【正确，推荐】</p>
+<pre><code>第一次修改 -&gt; git add -&gt;  第二次修改 -&gt; git commit     【错误】  
+                                            第二次修改没有被提交，只有再进行一次add、commit</code></pre><p>撤销修改 git checkout<br>  —git checkout其实是用版本库里的版本替换工作区的版本，无论工作区是修改还是删除，都可“一键还原”。<br>            使用git status查看仓库当前状态，若有修改 :</p>
+<pre><code>一、git checkout -- &lt;file&gt; 放弃工作区的修改（两种情况）:
+                ----此命令让文件回到最近一次git commit或者git add时的状态
+        1、file自修改后还没有被放到暂存区，此时撤销修改回到和版本库一摸一样的状态。
+                   直接使用此命令
+        2、file已经添加至暂存区，又做了修改，此时撤销就回到添加至暂存区后的状态。
+                    使用git add后，查询仓库状态:
+
+                  首先使用 git reset HEAD readme.txt，将暂存区的修改退回工作区。
+                  再使用 git checkout -- readme.txt  丢弃工作区的修改
+
+二、已经提交了不合适的修改到版本库时，想要撤销本次提交。
+         参考版本回退进行操作，不过前提是没有推送到远程库</code></pre><p>删除文件 rm file<br>            一般情况，直接在文件管理器中删除，或者用 rm test.txt 删除文件 ，此时git知道你删除文件，和版本库不一致   ，git status会提示你那些文件删除了。</p>
+<pre><code>此时有两个选择:
+     1、确实要从版本库删除该文件，则用git rm删掉，并且git commit
+     2、删错了，将误删的文件恢复到最新版本：   git checkout -- test.txt</code></pre><p>创建分支并切换 git checkout -b dev<br>        相当于 git branch dev   之后再 git checkout dev</p>
+<pre><code>查看当前分支  git branch
+日常工作git add file和git commit -m &quot;&quot;
+dev工作完成则切换回master分支 git checkout master
+dev合并到当前分支 git merge dev
+合并完成后删除 git branch -d dev</code></pre><p>分支合并冲突，把合并失败的文件手动修改再提交。</p>
+<p>分支管理策略，平时不在master分支干活，master只用于发布</p>
+<pre><code>2人以下在dev分支工作，2人以上在dev分支的基础上再建立feature分支上工作
+普通模式合并有历史分支  在分支上git add file和git commit -m &quot;&quot;，转回上一分支 git merge --no--ff -m &quot;&quot; dev(或者feature)</code></pre><p>bug分支<br>          突然遇到要修改的bug，将当前dev分支的工作储藏  git stash<br>          然后转到要修复的分支  git checkout bug分支<br>          在bug分支创建临时修改分支  git checkout -b issue-101<br>          完成修复并git add file， git commit -m “fix bug 101”(假设这步版本号为为4c80512)<br>          再切换到bug分支合并 git checkout bug分支    git merge –no–ff -m “” issue-101<br>          bug修复返回dev分支工作  git checkout dev<br>          查看储藏的工作现场   git stash list<br>          恢复现场有2种<br>               1 恢复的同时删除stash  git stash pop<br>               2 恢复时不删除stash  git stash apply  之后想删除可以  git stash drop<br>          可以多次stash，恢复时根据工作现场的版本号(假设为stash@{0})恢复   git stash apply stash@{0}<br>          bug修复的分支的相关分支通常也有相同bug，切换到那些分支执行之前的修复操作 git cherry-pick 4c805e2</p>
+<p>Feature分支 feature-v分支修改完毕但未合并，突然需求变化不再需要，  git branch -D feature-v    </p>
+<p>查看远程仓库信息  git remote<br>查看具体信息      git remote -v<br>推送分支          git push master/dev/feature</p>
+<p>将本地未push的分叉整理成直线  git rebase </p>
+</filename>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2019/08/18/cssthree/" title="" itemprop="url"></a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="邵圣煜" target="_blank" itemprop="author">邵圣煜</a>
+		
+  <p class="article-time">
+    <time datetime="2019-08-18T08:57:37.013Z" itemprop="datePublished"> 发表于 2019-08-18</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h1>盒子模型</h1>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">content内容 padding(内边距) border(边界) margin(外边距) </span><br><span class="line">padding,border,margin都有(top,right,bottom,left)(顶部，右部，底部，左部)</span><br><span class="line">width=左右各部+content-width</span><br><span class="line">height=顶底各部+content-height</span><br><span class="line">当内容溢出盒子，overflow属性：hidden(超出部分不可见),scroll(显示滚动条),auto(如果有超出部分显示滚动条)</span><br><span class="line">border属性:</span><br><span class="line">border-width:px</span><br><span class="line">border-style:dashed(虚线)、dotted(点)、solid(实现)、double(双实线)</span><br><span class="line">border-color:颜色</span><br><span class="line">border:width style color</span><br><span class="line">水平分割线(例子):</span><br><span class="line">.line&#123;</span><br><span class="line">   height:1px;</span><br><span class="line">   width:500px;</span><br><span class="line">   border-top:1px solid #e5e5e5;(上边线)</span><br><span class="line">&#125;</span><br><span class="line">对浏览器默认的设置清零</span><br><span class="line">*&#123;</span><br><span class="line">  margin:0;</span><br><span class="line">  padding:0</span><br><span class="line">&#125;</span><br><span class="line">margin:1px 2px 1px 3px;(按顺时针)(顶,右,底,左)</span><br><span class="line">margin:1px(代表4边间距都为1px)</span><br><span class="line">margin不设置全四边,则未设置bottom与top相同,未设置left与right相同。</span><br><span class="line">margin的合并:垂直方向合并(哪个margin-width大,取哪个)，水平方向不合并</span><br><span class="line">图片、文字水平居中:text-align:center;</span><br><span class="line">水平居中:margin:auto;</span><br></pre></td></tr></table></figure>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2019/08/18/cssfour/" title="" itemprop="url"></a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="邵圣煜" target="_blank" itemprop="author">邵圣煜</a>
+		
+  <p class="article-time">
+    <time datetime="2019-08-18T08:57:08.017Z" itemprop="datePublished"> 发表于 2019-08-18</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h1>CSS定位机制</h1>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">文档流定位</span><br><span class="line">元素分类：</span><br><span class="line">block(独占一行,可设置height、width、margin、padding):</span><br><span class="line">常见的有:&lt;div&gt;,&lt;p&gt;,&lt;h1&gt;...&lt;h6&gt;,&lt;ol&gt;,&lt;ul&gt;,&lt;table&gt;,&lt;form&gt;</span><br><span class="line">inline(不独占一行,width就是包含图片和文字宽度不可改变):</span><br><span class="line">常见的有&lt;span&gt;、&lt;a&gt;(元素间会有间距问题)</span><br><span class="line">inline-block(不独占一行,但可设置height、width、margin、padding):</span><br><span class="line">元素类型转换:display属性</span><br><span class="line">display:block/inline/inline/block</span><br><span class="line"></span><br><span class="line">浮动定位</span><br><span class="line">float浮动             clear清除浮动</span><br><span class="line">float:left            clear:left(左侧不会有浮动对象)</span><br><span class="line">flooat:right          clear:right(右侧不会有浮动对象)</span><br><span class="line">float:none(不浮动)    clear:both(两侧不出现浮动，独占一行)</span><br><span class="line">使用float若宽度不够会丢失原有的位置。</span><br><span class="line"></span><br><span class="line">层定位</span><br><span class="line">position属性:</span><br><span class="line">static没有定位</span><br><span class="line">fixed固定定位(相对于浏览器窗口)</span><br><span class="line">relative相对定位(相对于父元素,原位置依然保留，不会被占据)</span><br><span class="line">absolute绝对定位(相对于static定位以外的第一个父元素，原位置不再存在，会被其他盒子占据)</span><br><span class="line">top,right,bottom,left属性:以当前盒子为参照物</span><br><span class="line">z-index:值大的在上面覆盖小的(设置极大或极小值（负数）来设置底层)</span><br></pre></td></tr></table></figure>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2019/08/17/csstwo/" title="" itemprop="url"></a>
   </h1>
   <p class="article-author">By
        
@@ -254,7 +455,7 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2019/08/17/ccs1/" title="" itemprop="url"></a>
+      <a href="/2019/08/17/ccsone/" title="" itemprop="url"></a>
   </h1>
   <p class="article-author">By
        
@@ -606,214 +807,6 @@ SSM框架我做了一个房源系统，具体实现代码可以访问我的githu
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2019/08/17/actionscope/" title="" itemprop="url"></a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="邵圣煜" target="_blank" itemprop="author">邵圣煜</a>
-		
-  <p class="article-time">
-    <time datetime="2019-08-17T14:21:07.770Z" itemprop="datePublished"> 发表于 2019-08-17</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h1>对JavaWeb四大作用域的理解</h1>
-
-<p>application作用域：application应用域，是程序全局变量，对每个用户每个页面都有效。存放在ServletContext对象中。它的存活时间是最长的，只要服务器开启，如果不进行手工删除，它们就一直可以使用。</p>
-<p>session作用域：session会话域，Session是用户全局变量，在整个会话期间都有效。只要页面不关闭就一直有效（或者直到用户一直未活动导致会话过期，默认session过期时间为30分钟，或调用HttpSession的invalidate()方法）。</p>
-<p>servletRequest作用域：request请求域生存时间为一次完整请求全过程，即从http请求到服务器处理结束，返回响应的整个过程，存放在HttpServletRequest对象中。在这个过程中可以使用forward方式跳转多个jsp。在这些页面里你都可以使用这个变量。</p>
-<p>PageContext作用域：PageContext页面域是范围最小的一个域，仅当前页面有效或在一个jsp页面里有效。</p>
-<p>帮助理解的小程序，可以在不同浏览器刷新查看结果的不同。<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"> &lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;</span><br><span class="line">    pageEncoding=&quot;UTF-8&quot;%&gt;</span><br><span class="line">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;%</span><br><span class="line">		int pageCount = 1;</span><br><span class="line">		int sessionCount = 1;</span><br><span class="line">		int applicationCount = 1;</span><br><span class="line">		</span><br><span class="line">		//页面域计数</span><br><span class="line">		if (pageContext.getAttribute(&quot;pageCount&quot;) != null) &#123;</span><br><span class="line">			pageCount = Integer.parseInt(pageContext.getAttribute(&quot;pageCount&quot;).toString());</span><br><span class="line">			pageCount++;</span><br><span class="line">		&#125;</span><br><span class="line">		pageContext.setAttribute(&quot;pageCount&quot;, pageCount);</span><br><span class="line">		</span><br><span class="line">		//会话域计数(一个浏览器打开到关闭)</span><br><span class="line">		if (session.getAttribute(&quot;sessionCount&quot;) != null) &#123;</span><br><span class="line">			sessionCount = Integer.parseInt(session.getAttribute(&quot;sessionCount&quot;).toString());</span><br><span class="line">			sessionCount++;</span><br><span class="line">		&#125;</span><br><span class="line">		session.setAttribute(&quot;sessionCount&quot;, sessionCount);</span><br><span class="line">		</span><br><span class="line">		//应用域计数(Web项目服务运行全程)</span><br><span class="line">		if (application.getAttribute(&quot;applicationCount&quot;) != null) &#123;</span><br><span class="line">			applicationCount = Integer.parseInt(application.getAttribute(&quot;applicationCount&quot;).toString());</span><br><span class="line">			applicationCount++;</span><br><span class="line">		&#125;</span><br><span class="line">		application.setAttribute(&quot;applicationCount&quot;, applicationCount);</span><br><span class="line">	%&gt;</span><br><span class="line">	</span><br><span class="line">	&lt;p&gt;</span><br><span class="line">		页面域计数：&lt;%=pageCount%&gt;&lt;/p&gt;</span><br><span class="line">	&lt;p&gt;</span><br><span class="line">		会话域计数：&lt;%=sessionCount%&gt;&lt;/p&gt;</span><br><span class="line">	&lt;p&gt;</span><br><span class="line">		应用域计数：&lt;%=applicationCount%&gt;&lt;/p&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2019/08/17/MVC/" title="" itemprop="url"></a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="邵圣煜" target="_blank" itemprop="author">邵圣煜</a>
-		
-  <p class="article-time">
-    <time datetime="2019-08-17T14:10:32.422Z" itemprop="datePublished"> 发表于 2019-08-17</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h1>对MVC的一些了解</h1>
-<h2>MVC框架</h2>
-MVC全名是Model View Controller，是模型(model)－视图(view)－控制器(controller)的缩写。<br>
-MVC的最主要精神之一就是Model与View的分离。<br><br>
-
-MVC 是一种使用 MVC（Model View Controller 模型-视图-控制器）设计创建 Web 应用程序的模式：<br>
-（1）Model（模型）表示应用程序核心（比如数据库记录列表）。<br>
-（2）View（视图）显示数据（数据库记录）。<br>
-（3）Controller（控制器）处理输入（写入数据库记录）。<br><br>
-
-MVC指MVC模式的某种框架，它强制性的使应用程序的输入、处理和输出分开。<br>
-使用MVC应用程序被分成三个核心部件：模型、视图、控制器。它们各自处理自己的任务。最典型的MVC就是JSP + servlet + javabean的模式。<br><br>
-
-Java Web开发模式在发展中经历了Model 1模式和Model 2模式。<br>
-Model 1模式是以JSP为主的开发模式，分为完全用JSP开发和使用JSP+JavaBean来设计。<br>
-完全使用JSP开发，开发时间较短，但程序可读性较低，程序重复利用率较低，维护成本大。<br>
-使用JSP+JavaBean开发，程序可读性与重复利用率提高，但流程控制不清晰，仍然不易维护。<br>
-Model 2模式即Java Web应用的MVC模式，通过JavaBean、EJB等组件来实现MVC的模型层，通过JSP实现MVC的视图层，通过Servlet实现MVC的控制层。<br>
-Model 2模式的组件可以交互与重用弥补了Model 1的不足，开发流程明确，核心程序管控，更易维护。但Model2 的开发时间较长，在系统设计上花费更多时间。<br>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2019/08/17/ajax/" title="" itemprop="url"></a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="邵圣煜" target="_blank" itemprop="author">邵圣煜</a>
-		
-  <p class="article-time">
-    <time datetime="2019-08-17T12:04:35.358Z" itemprop="datePublished"> 发表于 2019-08-17</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <body>
-<h1>Ajax基础</h1>
-<br><br>
-Ajax是一种对传统Web应用模式加以扩展的技术，可以在不重新加载网页的情况下通过异步请求方式对网页进行局部刷新，是非阻塞的。<br>
-<h2>基于Ajax的关键技术有：</h2><br>
-（1）使用XHTML（HTML）和CSS构建标准化的展示层。<br>
-（2）使用DOM进行动态交互和显示。<br>
-（3）使用XML或JSON等进行数据交换和操纵。<br>
-（4）使用XMLHttpRequest来和服务器进行异步通信。<br>
-（5）使用JavaScript将所有元素绑定在一起。<br>
-XMLHttpRequest是Ajax技术得以实现的一个重要JavaScript对象。<br>
-<br><br>
-<h2>Ajax实例实现一般需要几个步骤：</h2><br>
-（1）在页面中定义Ajax请求的触发事件。<br>
-（2）创建XMLHttpRequest对象。<br>
-（3）确定请求地址和请求参数。<br>
-（4）通过XMLHttpRequest对象的open()方法建立对服务器的调用。<br>
-（5）通过XMLHttpRequest对象的onreadystatechange属性指定响应事件处理函数。<br>
-（6）在函数中根据响应状态进行数据获取和数处理工作。<br>
-（7）调用XMLHttpRequest对象的send()方法向服务器发出请求。<br>
-<br>
-<p>其中open()方法必须包含mthod(特定请求方法)，url(所调用资源的url)这两个参数，其他参数可选(asynch一般不写默认为true，表示异步,可设为false表示同步)。
-onreadystatechange属性中主要有readyState和status两个属性。readyState可设为0,1,2,3,4这五个值。0表示XMLHttpRequest对象已创建但未初始化，
-1表示请求准备发送到服务器，2表示请求已发送到服务器但未响应，3表示正在接收但只接收到HTTP响应头部信息，4表示响应已完全被接收。所以readyState常设为4表示已
-接收完成信息。status描述了HTTP状态码，包括200（请求成功），202请求未接收但处理未完成，400（错误请求），404（请求资源未找到），500（内部服务器错误）。
-通常status设为200。</p>
-<br>
-JSON是基于JavaScript的一种轻量级数据格式，易于阅读和编写，也易于机器解析和生成，是理想的数据交换语言。<br>
-JSON有两种结构：（1）"名/值"对的集合 （2）值得有序列表<br>
-JSON格式相比XML格式在可读性，可扩展性，编码难度，解码难度，流行度等方面都更具有优势。<br>
-我个人的体会来说，JSON格式在编码时代码量大大减少，不需要XML格式使用时的关于XMLHttpRequest对象的操作。<br>
-使用插件后前后端发送接收信息都使用JSON格式，无需复杂的编码解码过程。
-<br>
-JQuery是一种免费开源兼多浏览器的JavaScript库其核心理念是：write less,do more。<br>
-JQuery的语法设计可以使开发者更加便捷操作，例如操作文档对象，选择DOM元素，事件处理以及Ajax以及其他功能。<br>
-我认为jQuery就是一种简洁的语言，在Ajax中使用JQuery，可以使代码变得简介而且可以更容易实现一些操作。
-</body>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
@@ -842,7 +835,7 @@ JQuery的语法设计可以使开发者更加便捷操作，例如操作文档�
   
   <div class="archiveslist">
     <p class="asidetitle"><a href="/archives">归档</a></p>
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">14</span></li></ul>
   </div>
 
 

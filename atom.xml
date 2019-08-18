@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://shaoshengyu.github.io/"/>
-  <updated>2019-08-17T15:40:58.592Z</updated>
+  <updated>2019-08-18T14:37:36.117Z</updated>
   <id>http://shaoshengyu.github.io/</id>
   
   <author>
@@ -18,8 +18,76 @@
   
   <entry>
     <title></title>
-    <link href="http://shaoshengyu.github.io/2019/08/17/css2/"/>
-    <id>http://shaoshengyu.github.io/2019/08/17/css2/</id>
+    <link href="http://shaoshengyu.github.io/2019/08/18/gitinstruction/"/>
+    <id>http://shaoshengyu.github.io/2019/08/18/gitinstruction/</id>
+    <published>2019-08-18T14:25:44.058Z</published>
+    <updated>2019-08-18T14:37:36.117Z</updated>
+    
+    <content type="html"><![CDATA[<h1>常用的一些git指令</h1>mkdir <filename>    ——创建一个文件夹(空目录)   假设filename为learngit<br>cd                  ——进入某文件夹目录<br>ls                    ——查看所在目录的所有文件<br>cat readme.txt        ——查看文件内容<br>vi readme.txt      ——进入文件编辑界面<br>            1、按i进入编辑模式，此时界面右下角显示insert<br>            2、编辑完按esc推出insert模式<br>            3、按shift + ：（shift + 冒号键）输入wq。  ps：wq表示保存并退出，只有q表示只退出<br>            4、最后按enter键退出界面<br>rm readme.txt       ——删除文件<br>pwd                 ——用于显示当前目录<br><p>初始化仓库<br>git  init                      ——初始化一个Git仓库</p><p>添加文件到Git仓库：<br>    1、git add <file>    ——添加文件，可以反复使用多次<br>            先将文件提交到暂存区<br>    2、git commit -m <message>    ——提交文件到Git仓库，-m后面输入的是本次提交的说明<br>            将暂存区文件一次性commit到master上<br>git status        ——查看仓库当前的状态，随时掌握工作区的状态</message></file></p><p>git diff          ——查看difference，若git status提示文件被修改过，使用该命令查看修改内容</p><p>版本回退<br>    git log           ——查看从最近到最远的提交日志，若嫌输出的信息太多可以加上 –pretty=oneline参数</p><pre><code>git reset --hard HEAD^    ——退回到上一个版本，HEAD表示当前版本       git reset命令既可以回退版本，也可以把暂存区的修改回退到工作区。当我们用HEAD时，表示最新的版本。git reset --hard 7be436d    ——回到退回前的版本(前提是命令行窗口未被关闭，找到上面的对应版本的                                版本号)版本号没必要写全，前几位就可以了     git reflog                                —— 查看命令历史                                                    （可用于版本退回后想要回到退回前，但已关闭命令行窗口）</code></pre><p>管理修改<br>          第一次修改 -&gt; git add -&gt; 第二次修改 -&gt; git add -&gt; git commit        【正确，推荐】</p><pre><code>第一次修改 -&gt; git add -&gt;  第二次修改 -&gt; git commit     【错误】                                              第二次修改没有被提交，只有再进行一次add、commit</code></pre><p>撤销修改 git checkout<br>  —git checkout其实是用版本库里的版本替换工作区的版本，无论工作区是修改还是删除，都可“一键还原”。<br>            使用git status查看仓库当前状态，若有修改 :</p><pre><code>一、git checkout -- &lt;file&gt; 放弃工作区的修改（两种情况）:                ----此命令让文件回到最近一次git commit或者git add时的状态        1、file自修改后还没有被放到暂存区，此时撤销修改回到和版本库一摸一样的状态。                   直接使用此命令        2、file已经添加至暂存区，又做了修改，此时撤销就回到添加至暂存区后的状态。                    使用git add后，查询仓库状态:                  首先使用 git reset HEAD readme.txt，将暂存区的修改退回工作区。                  再使用 git checkout -- readme.txt  丢弃工作区的修改二、已经提交了不合适的修改到版本库时，想要撤销本次提交。         参考版本回退进行操作，不过前提是没有推送到远程库</code></pre><p>删除文件 rm file<br>            一般情况，直接在文件管理器中删除，或者用 rm test.txt 删除文件 ，此时git知道你删除文件，和版本库不一致   ，git status会提示你那些文件删除了。</p><pre><code>此时有两个选择:     1、确实要从版本库删除该文件，则用git rm删掉，并且git commit     2、删错了，将误删的文件恢复到最新版本：   git checkout -- test.txt</code></pre><p>创建分支并切换 git checkout -b dev<br>        相当于 git branch dev   之后再 git checkout dev</p><pre><code>查看当前分支  git branch日常工作git add file和git commit -m &quot;&quot;dev工作完成则切换回master分支 git checkout masterdev合并到当前分支 git merge dev合并完成后删除 git branch -d dev</code></pre><p>分支合并冲突，把合并失败的文件手动修改再提交。</p><p>分支管理策略，平时不在master分支干活，master只用于发布</p><pre><code>2人以下在dev分支工作，2人以上在dev分支的基础上再建立feature分支上工作普通模式合并有历史分支  在分支上git add file和git commit -m &quot;&quot;，转回上一分支 git merge --no--ff -m &quot;&quot; dev(或者feature)</code></pre><p>bug分支<br>          突然遇到要修改的bug，将当前dev分支的工作储藏  git stash<br>          然后转到要修复的分支  git checkout bug分支<br>          在bug分支创建临时修改分支  git checkout -b issue-101<br>          完成修复并git add file， git commit -m “fix bug 101”(假设这步版本号为为4c80512)<br>          再切换到bug分支合并 git checkout bug分支    git merge –no–ff -m “” issue-101<br>          bug修复返回dev分支工作  git checkout dev<br>          查看储藏的工作现场   git stash list<br>          恢复现场有2种<br>               1 恢复的同时删除stash  git stash pop<br>               2 恢复时不删除stash  git stash apply  之后想删除可以  git stash drop<br>          可以多次stash，恢复时根据工作现场的版本号(假设为stash@{0})恢复   git stash apply stash@{0}<br>          bug修复的分支的相关分支通常也有相同bug，切换到那些分支执行之前的修复操作 git cherry-pick 4c805e2</p><p>Feature分支 feature-v分支修改完毕但未合并，突然需求变化不再需要，  git branch -D feature-v    </p><p>查看远程仓库信息  git remote<br>查看具体信息      git remote -v<br>推送分支          git push master/dev/feature</p><p>将本地未push的分叉整理成直线  git rebase </p></filename>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1&gt;常用的一些git指令&lt;/h1&gt;
+mkdir &lt;filename&gt;    ——创建一个文件夹(空目录)   假设filename为learngit&lt;br&gt;
+cd                  ——进入某文件夹目录&lt;br&gt;
+ls                    ——
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://shaoshengyu.github.io/2019/08/18/cssthree/"/>
+    <id>http://shaoshengyu.github.io/2019/08/18/cssthree/</id>
+    <published>2019-08-18T08:57:37.013Z</published>
+    <updated>2019-08-18T14:28:37.398Z</updated>
+    
+    <content type="html"><![CDATA[<h1>盒子模型</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">content内容 padding(内边距) border(边界) margin(外边距) </span><br><span class="line">padding,border,margin都有(top,right,bottom,left)(顶部，右部，底部，左部)</span><br><span class="line">width=左右各部+content-width</span><br><span class="line">height=顶底各部+content-height</span><br><span class="line">当内容溢出盒子，overflow属性：hidden(超出部分不可见),scroll(显示滚动条),auto(如果有超出部分显示滚动条)</span><br><span class="line">border属性:</span><br><span class="line">border-width:px</span><br><span class="line">border-style:dashed(虚线)、dotted(点)、solid(实现)、double(双实线)</span><br><span class="line">border-color:颜色</span><br><span class="line">border:width style color</span><br><span class="line">水平分割线(例子):</span><br><span class="line">.line&#123;</span><br><span class="line">   height:1px;</span><br><span class="line">   width:500px;</span><br><span class="line">   border-top:1px solid #e5e5e5;(上边线)</span><br><span class="line">&#125;</span><br><span class="line">对浏览器默认的设置清零</span><br><span class="line">*&#123;</span><br><span class="line">  margin:0;</span><br><span class="line">  padding:0</span><br><span class="line">&#125;</span><br><span class="line">margin:1px 2px 1px 3px;(按顺时针)(顶,右,底,左)</span><br><span class="line">margin:1px(代表4边间距都为1px)</span><br><span class="line">margin不设置全四边,则未设置bottom与top相同,未设置left与right相同。</span><br><span class="line">margin的合并:垂直方向合并(哪个margin-width大,取哪个)，水平方向不合并</span><br><span class="line">图片、文字水平居中:text-align:center;</span><br><span class="line">水平居中:margin:auto;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1&gt;盒子模型&lt;/h1&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://shaoshengyu.github.io/2019/08/18/cssfour/"/>
+    <id>http://shaoshengyu.github.io/2019/08/18/cssfour/</id>
+    <published>2019-08-18T08:57:08.017Z</published>
+    <updated>2019-08-18T14:29:18.375Z</updated>
+    
+    <content type="html"><![CDATA[<h1>CSS定位机制</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">文档流定位</span><br><span class="line">元素分类：</span><br><span class="line">block(独占一行,可设置height、width、margin、padding):</span><br><span class="line">常见的有:&lt;div&gt;,&lt;p&gt;,&lt;h1&gt;...&lt;h6&gt;,&lt;ol&gt;,&lt;ul&gt;,&lt;table&gt;,&lt;form&gt;</span><br><span class="line">inline(不独占一行,width就是包含图片和文字宽度不可改变):</span><br><span class="line">常见的有&lt;span&gt;、&lt;a&gt;(元素间会有间距问题)</span><br><span class="line">inline-block(不独占一行,但可设置height、width、margin、padding):</span><br><span class="line">元素类型转换:display属性</span><br><span class="line">display:block/inline/inline/block</span><br><span class="line"></span><br><span class="line">浮动定位</span><br><span class="line">float浮动             clear清除浮动</span><br><span class="line">float:left            clear:left(左侧不会有浮动对象)</span><br><span class="line">flooat:right          clear:right(右侧不会有浮动对象)</span><br><span class="line">float:none(不浮动)    clear:both(两侧不出现浮动，独占一行)</span><br><span class="line">使用float若宽度不够会丢失原有的位置。</span><br><span class="line"></span><br><span class="line">层定位</span><br><span class="line">position属性:</span><br><span class="line">static没有定位</span><br><span class="line">fixed固定定位(相对于浏览器窗口)</span><br><span class="line">relative相对定位(相对于父元素,原位置依然保留，不会被占据)</span><br><span class="line">absolute绝对定位(相对于static定位以外的第一个父元素，原位置不再存在，会被其他盒子占据)</span><br><span class="line">top,right,bottom,left属性:以当前盒子为参照物</span><br><span class="line">z-index:值大的在上面覆盖小的(设置极大或极小值（负数）来设置底层)</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1&gt;CSS定位机制&lt;/h1&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/spa
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://shaoshengyu.github.io/2019/08/17/csstwo/"/>
+    <id>http://shaoshengyu.github.io/2019/08/17/csstwo/</id>
     <published>2019-08-17T15:12:05.350Z</published>
     <updated>2019-08-17T15:40:58.592Z</updated>
     
@@ -86,8 +154,8 @@
   
   <entry>
     <title></title>
-    <link href="http://shaoshengyu.github.io/2019/08/17/ccs1/"/>
-    <id>http://shaoshengyu.github.io/2019/08/17/ccs1/</id>
+    <link href="http://shaoshengyu.github.io/2019/08/17/ccsone/"/>
+    <id>http://shaoshengyu.github.io/2019/08/17/ccsone/</id>
     <published>2019-08-17T14:39:59.251Z</published>
     <updated>2019-08-17T15:37:35.148Z</updated>
     

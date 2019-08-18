@@ -11,17 +11,17 @@
     
 
     
-    <meta name="description" content="对JavaWeb四大作用域的理解  application作用域：application应用域，是程序全局变量，对每个用户每个页面都有效。存放在ServletContext对象中。它的存活时间是最长的，只要服务器开启，如果不进行手工删除，它们就一直可以使用。 session作用域：session会话域，Session是用户全局变量，在整个会话期间都有效。只要页面不关闭就一直有效（或者直到用户一直未">
+    <meta name="description" content="CSS定位机制 12345678910111213141516171819202122232425文档流定位元素分类：block(独占一行,可设置height、width、margin、padding):常见的有:&amp;lt;div&amp;gt;,&amp;lt;p&amp;gt;,&amp;lt;h1&amp;gt;...&amp;lt;h6&amp;gt;,&amp;lt;ol&amp;gt;,&amp;lt;ul&amp;gt;,&amp;lt;table&amp;gt;,&amp;lt;form&amp;gt">
 <meta property="og:type" content="article">
 <meta property="og:title" content="邵圣煜的博客">
-<meta property="og:url" content="http://shaoshengyu.github.io/2019/08/17/actionscope/index.html">
+<meta property="og:url" content="http://shaoshengyu.github.io/2019/08/18/cssfour/index.html">
 <meta property="og:site_name" content="邵圣煜的博客">
-<meta property="og:description" content="对JavaWeb四大作用域的理解  application作用域：application应用域，是程序全局变量，对每个用户每个页面都有效。存放在ServletContext对象中。它的存活时间是最长的，只要服务器开启，如果不进行手工删除，它们就一直可以使用。 session作用域：session会话域，Session是用户全局变量，在整个会话期间都有效。只要页面不关闭就一直有效（或者直到用户一直未">
+<meta property="og:description" content="CSS定位机制 12345678910111213141516171819202122232425文档流定位元素分类：block(独占一行,可设置height、width、margin、padding):常见的有:&amp;lt;div&amp;gt;,&amp;lt;p&amp;gt;,&amp;lt;h1&amp;gt;...&amp;lt;h6&amp;gt;,&amp;lt;ol&amp;gt;,&amp;lt;ul&amp;gt;,&amp;lt;table&amp;gt;,&amp;lt;form&amp;gt">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-08-17T15:40:15.310Z">
+<meta property="og:updated_time" content="2019-08-18T14:29:18.375Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="邵圣煜的博客">
-<meta name="twitter:description" content="对JavaWeb四大作用域的理解  application作用域：application应用域，是程序全局变量，对每个用户每个页面都有效。存放在ServletContext对象中。它的存活时间是最长的，只要服务器开启，如果不进行手工删除，它们就一直可以使用。 session作用域：session会话域，Session是用户全局变量，在整个会话期间都有效。只要页面不关闭就一直有效（或者直到用户一直未">
+<meta name="twitter:description" content="CSS定位机制 12345678910111213141516171819202122232425文档流定位元素分类：block(独占一行,可设置height、width、margin、padding):常见的有:&amp;lt;div&amp;gt;,&amp;lt;p&amp;gt;,&amp;lt;h1&amp;gt;...&amp;lt;h6&amp;gt;,&amp;lt;ol&amp;gt;,&amp;lt;ul&amp;gt;,&amp;lt;table&amp;gt;,&amp;lt;form&amp;gt">
 
     
     <link rel="alternative" href="/atom.xml" title="邵圣煜的博客" type="application/atom+xml">
@@ -83,14 +83,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2019/08/17/actionscope/" title="" itemprop="url"></a>
+      <a href="/2019/08/18/cssfour/" title="" itemprop="url"></a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="邵圣煜" target="_blank" itemprop="author">邵圣煜</a>
 		
   <p class="article-time">
-    <time datetime="2019-08-17T14:21:07.770Z" itemprop="datePublished"> 发表于 2019-08-17</time>
+    <time datetime="2019-08-18T08:57:08.017Z" itemprop="datePublished"> 发表于 2019-08-18</time>
     
   </p>
 </header>
@@ -99,18 +99,12 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-number">1.</span> <span class="toc-text">对JavaWeb四大作用域的理解</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-number">1.</span> <span class="toc-text">CSS定位机制</span></a></li></ol>
 		
 		</div>
 		
-		<h1>对JavaWeb四大作用域的理解</h1>
-
-<p>application作用域：application应用域，是程序全局变量，对每个用户每个页面都有效。存放在ServletContext对象中。它的存活时间是最长的，只要服务器开启，如果不进行手工删除，它们就一直可以使用。</p>
-<p>session作用域：session会话域，Session是用户全局变量，在整个会话期间都有效。只要页面不关闭就一直有效（或者直到用户一直未活动导致会话过期，默认session过期时间为30分钟，或调用HttpSession的invalidate()方法）。</p>
-<p>servletRequest作用域：request请求域生存时间为一次完整请求全过程，即从http请求到服务器处理结束，返回响应的整个过程，存放在HttpServletRequest对象中。在这个过程中可以使用forward方式跳转多个jsp。在这些页面里你都可以使用这个变量。</p>
-<p>PageContext作用域：PageContext页面域是范围最小的一个域，仅当前页面有效或在一个jsp页面里有效。</p>
-<p>帮助理解的小程序，可以在不同浏览器刷新查看结果的不同。<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"> &lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;</span><br><span class="line">    pageEncoding=&quot;UTF-8&quot;%&gt;</span><br><span class="line">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;%</span><br><span class="line">		int pageCount = 1;</span><br><span class="line">		int sessionCount = 1;</span><br><span class="line">		int applicationCount = 1;</span><br><span class="line">		</span><br><span class="line">		//页面域计数</span><br><span class="line">		if (pageContext.getAttribute(&quot;pageCount&quot;) != null) &#123;</span><br><span class="line">			pageCount = Integer.parseInt(pageContext.getAttribute(&quot;pageCount&quot;).toString());</span><br><span class="line">			pageCount++;</span><br><span class="line">		&#125;</span><br><span class="line">		pageContext.setAttribute(&quot;pageCount&quot;, pageCount);</span><br><span class="line">		</span><br><span class="line">		//会话域计数(一个浏览器打开到关闭)</span><br><span class="line">		if (session.getAttribute(&quot;sessionCount&quot;) != null) &#123;</span><br><span class="line">			sessionCount = Integer.parseInt(session.getAttribute(&quot;sessionCount&quot;).toString());</span><br><span class="line">			sessionCount++;</span><br><span class="line">		&#125;</span><br><span class="line">		session.setAttribute(&quot;sessionCount&quot;, sessionCount);</span><br><span class="line">		</span><br><span class="line">		//应用域计数(Web项目服务运行全程)</span><br><span class="line">		if (application.getAttribute(&quot;applicationCount&quot;) != null) &#123;</span><br><span class="line">			applicationCount = Integer.parseInt(application.getAttribute(&quot;applicationCount&quot;).toString());</span><br><span class="line">			applicationCount++;</span><br><span class="line">		&#125;</span><br><span class="line">		application.setAttribute(&quot;applicationCount&quot;, applicationCount);</span><br><span class="line">	%&gt;</span><br><span class="line">	</span><br><span class="line">	&lt;p&gt;</span><br><span class="line">		页面域计数：&lt;%=pageCount%&gt;&lt;/p&gt;</span><br><span class="line">	&lt;p&gt;</span><br><span class="line">		会话域计数：&lt;%=sessionCount%&gt;&lt;/p&gt;</span><br><span class="line">	&lt;p&gt;</span><br><span class="line">		应用域计数：&lt;%=applicationCount%&gt;&lt;/p&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
-  
+		<h1>CSS定位机制</h1>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">文档流定位</span><br><span class="line">元素分类：</span><br><span class="line">block(独占一行,可设置height、width、margin、padding):</span><br><span class="line">常见的有:&lt;div&gt;,&lt;p&gt;,&lt;h1&gt;...&lt;h6&gt;,&lt;ol&gt;,&lt;ul&gt;,&lt;table&gt;,&lt;form&gt;</span><br><span class="line">inline(不独占一行,width就是包含图片和文字宽度不可改变):</span><br><span class="line">常见的有&lt;span&gt;、&lt;a&gt;(元素间会有间距问题)</span><br><span class="line">inline-block(不独占一行,但可设置height、width、margin、padding):</span><br><span class="line">元素类型转换:display属性</span><br><span class="line">display:block/inline/inline/block</span><br><span class="line"></span><br><span class="line">浮动定位</span><br><span class="line">float浮动             clear清除浮动</span><br><span class="line">float:left            clear:left(左侧不会有浮动对象)</span><br><span class="line">flooat:right          clear:right(右侧不会有浮动对象)</span><br><span class="line">float:none(不浮动)    clear:both(两侧不出现浮动，独占一行)</span><br><span class="line">使用float若宽度不够会丢失原有的位置。</span><br><span class="line"></span><br><span class="line">层定位</span><br><span class="line">position属性:</span><br><span class="line">static没有定位</span><br><span class="line">fixed固定定位(相对于浏览器窗口)</span><br><span class="line">relative相对定位(相对于父元素,原位置依然保留，不会被占据)</span><br><span class="line">absolute绝对定位(相对于static定位以外的第一个父元素，原位置不再存在，会被其他盒子占据)</span><br><span class="line">top,right,bottom,left属性:以当前盒子为参照物</span><br><span class="line">z-index:值大的在上面覆盖小的(设置极大或极小值（负数）来设置底层)</span><br></pre></td></tr></table></figure>  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -122,7 +116,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://shaoshengyu.github.io/2019/08/17/actionscope/" data-title="邵圣煜的博客" data-tsina="" class="share clearfix">
+	  <div data-url="http://shaoshengyu.github.io/2019/08/18/cssfour/" data-title="邵圣煜的博客" data-tsina="" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -136,7 +130,7 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2019/08/17/SSM/" title="">
+ <a href="/2019/08/18/cssthree/" title="">
   <strong>上一篇：</strong><br/>
   <span>
   (no title)</span>
@@ -145,7 +139,7 @@
 
 
 <div class="next">
-<a href="/2019/08/17/MVC/"  title="">
+<a href="/2019/08/17/csstwo/"  title="">
  <strong>下一篇：</strong><br/> 
  <span>(no title)
 </span>
@@ -164,7 +158,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-number">1.</span> <span class="toc-text">对JavaWeb四大作用域的理解</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-number">1.</span> <span class="toc-text">CSS定位机制</span></a></li></ol>
  
   </div>
 
