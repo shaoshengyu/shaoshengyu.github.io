@@ -84,223 +84,25 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2019/08/18/gitinstruction/" title="" itemprop="url"></a>
+      <a href="/2019/08/19/js2/" title="js之DOM" itemprop="url">js之DOM</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="邵圣煜" target="_blank" itemprop="author">邵圣煜</a>
 		
   <p class="article-time">
-    <time datetime="2019-08-18T14:25:44.058Z" itemprop="datePublished"> 发表于 2019-08-18</time>
+    <time datetime="2019-08-19T14:51:35.358Z" itemprop="datePublished"> 发表于 2019-08-19</time>
     
   </p>
 </header>
     <div class="article-content">
         
-        <h1>常用的一些git指令</h1>
-mkdir <filename>    ——创建一个文件夹(空目录)   假设filename为learngit<br>
-cd                  ——进入某文件夹目录<br>
-ls                    ——查看所在目录的所有文件<br>
-cat readme.txt        ——查看文件内容<br>
-vi readme.txt      ——进入文件编辑界面<br>
-            1、按i进入编辑模式，此时界面右下角显示insert<br>
-            2、编辑完按esc推出insert模式<br>
-            3、按shift + ：（shift + 冒号键）输入wq。  ps：wq表示保存并退出，只有q表示只退出<br>
-            4、最后按enter键退出界面<br>
-rm readme.txt       ——删除文件<br>
-pwd                 ——用于显示当前目录<br>
-
-<p>初始化仓库<br>git  init                      ——初始化一个Git仓库</p>
-<p>添加文件到Git仓库：<br>    1、git add <file>    ——添加文件，可以反复使用多次<br>            先将文件提交到暂存区<br>    2、git commit -m <message>    ——提交文件到Git仓库，-m后面输入的是本次提交的说明<br>            将暂存区文件一次性commit到master上<br>git status        ——查看仓库当前的状态，随时掌握工作区的状态</message></file></p>
-<p>git diff          ——查看difference，若git status提示文件被修改过，使用该命令查看修改内容</p>
-<p>版本回退<br>    git log           ——查看从最近到最远的提交日志，若嫌输出的信息太多可以加上 –pretty=oneline参数</p>
-<pre><code>git reset --hard HEAD^    ——退回到上一个版本，HEAD表示当前版本
-       git reset命令既可以回退版本，也可以把暂存区的修改回退到工作区。当我们用HEAD时，表示最新的版本。
-
-git reset --hard 7be436d    ——回到退回前的版本(前提是命令行窗口未被关闭，找到上面的对应版本的
-                                版本号)版本号没必要写全，前几位就可以了
-     git reflog                                —— 查看命令历史
-                                                    （可用于版本退回后想要回到退回前，但已关闭命令行窗口）</code></pre><p>管理修改<br>          第一次修改 -&gt; git add -&gt; 第二次修改 -&gt; git add -&gt; git commit        【正确，推荐】</p>
-<pre><code>第一次修改 -&gt; git add -&gt;  第二次修改 -&gt; git commit     【错误】  
-                                            第二次修改没有被提交，只有再进行一次add、commit</code></pre><p>撤销修改 git checkout<br>  —git checkout其实是用版本库里的版本替换工作区的版本，无论工作区是修改还是删除，都可“一键还原”。<br>            使用git status查看仓库当前状态，若有修改 :</p>
-<pre><code>一、git checkout -- &lt;file&gt; 放弃工作区的修改（两种情况）:
-                ----此命令让文件回到最近一次git commit或者git add时的状态
-        1、file自修改后还没有被放到暂存区，此时撤销修改回到和版本库一摸一样的状态。
-                   直接使用此命令
-        2、file已经添加至暂存区，又做了修改，此时撤销就回到添加至暂存区后的状态。
-                    使用git add后，查询仓库状态:
-
-                  首先使用 git reset HEAD readme.txt，将暂存区的修改退回工作区。
-                  再使用 git checkout -- readme.txt  丢弃工作区的修改
-
-二、已经提交了不合适的修改到版本库时，想要撤销本次提交。
-         参考版本回退进行操作，不过前提是没有推送到远程库</code></pre><p>删除文件 rm file<br>            一般情况，直接在文件管理器中删除，或者用 rm test.txt 删除文件 ，此时git知道你删除文件，和版本库不一致   ，git status会提示你那些文件删除了。</p>
-<pre><code>此时有两个选择:
-     1、确实要从版本库删除该文件，则用git rm删掉，并且git commit
-     2、删错了，将误删的文件恢复到最新版本：   git checkout -- test.txt</code></pre><p>创建分支并切换 git checkout -b dev<br>        相当于 git branch dev   之后再 git checkout dev</p>
-<pre><code>查看当前分支  git branch
-日常工作git add file和git commit -m &quot;&quot;
-dev工作完成则切换回master分支 git checkout master
-dev合并到当前分支 git merge dev
-合并完成后删除 git branch -d dev</code></pre><p>分支合并冲突，把合并失败的文件手动修改再提交。</p>
-<p>分支管理策略，平时不在master分支干活，master只用于发布</p>
-<pre><code>2人以下在dev分支工作，2人以上在dev分支的基础上再建立feature分支上工作
-普通模式合并有历史分支  在分支上git add file和git commit -m &quot;&quot;，转回上一分支 git merge --no--ff -m &quot;&quot; dev(或者feature)</code></pre><p>bug分支<br>          突然遇到要修改的bug，将当前dev分支的工作储藏  git stash<br>          然后转到要修复的分支  git checkout bug分支<br>          在bug分支创建临时修改分支  git checkout -b issue-101<br>          完成修复并git add file， git commit -m “fix bug 101”(假设这步版本号为为4c80512)<br>          再切换到bug分支合并 git checkout bug分支    git merge –no–ff -m “” issue-101<br>          bug修复返回dev分支工作  git checkout dev<br>          查看储藏的工作现场   git stash list<br>          恢复现场有2种<br>               1 恢复的同时删除stash  git stash pop<br>               2 恢复时不删除stash  git stash apply  之后想删除可以  git stash drop<br>          可以多次stash，恢复时根据工作现场的版本号(假设为stash@{0})恢复   git stash apply stash@{0}<br>          bug修复的分支的相关分支通常也有相同bug，切换到那些分支执行之前的修复操作 git cherry-pick 4c805e2</p>
-<p>Feature分支 feature-v分支修改完毕但未合并，突然需求变化不再需要，  git branch -D feature-v    </p>
-<p>查看远程仓库信息  git remote<br>查看具体信息      git remote -v<br>推送分支          git push master/dev/feature</p>
-<p>将本地未push的分叉整理成直线  git rebase </p>
-</filename>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2019/08/18/cssthree/" title="" itemprop="url"></a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="邵圣煜" target="_blank" itemprop="author">邵圣煜</a>
-		
-  <p class="article-time">
-    <time datetime="2019-08-18T08:57:37.013Z" itemprop="datePublished"> 发表于 2019-08-18</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h1>盒子模型</h1>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">content内容 padding(内边距) border(边界) margin(外边距) </span><br><span class="line">padding,border,margin都有(top,right,bottom,left)(顶部，右部，底部，左部)</span><br><span class="line">width=左右各部+content-width</span><br><span class="line">height=顶底各部+content-height</span><br><span class="line">当内容溢出盒子，overflow属性：hidden(超出部分不可见),scroll(显示滚动条),auto(如果有超出部分显示滚动条)</span><br><span class="line">border属性:</span><br><span class="line">border-width:px</span><br><span class="line">border-style:dashed(虚线)、dotted(点)、solid(实现)、double(双实线)</span><br><span class="line">border-color:颜色</span><br><span class="line">border:width style color</span><br><span class="line">水平分割线(例子):</span><br><span class="line">.line&#123;</span><br><span class="line">   height:1px;</span><br><span class="line">   width:500px;</span><br><span class="line">   border-top:1px solid #e5e5e5;(上边线)</span><br><span class="line">&#125;</span><br><span class="line">对浏览器默认的设置清零</span><br><span class="line">*&#123;</span><br><span class="line">  margin:0;</span><br><span class="line">  padding:0</span><br><span class="line">&#125;</span><br><span class="line">margin:1px 2px 1px 3px;(按顺时针)(顶,右,底,左)</span><br><span class="line">margin:1px(代表4边间距都为1px)</span><br><span class="line">margin不设置全四边,则未设置bottom与top相同,未设置left与right相同。</span><br><span class="line">margin的合并:垂直方向合并(哪个margin-width大,取哪个)，水平方向不合并</span><br><span class="line">图片、文字水平居中:text-align:center;</span><br><span class="line">水平居中:margin:auto;</span><br></pre></td></tr></table></figure>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2019/08/18/cssfour/" title="" itemprop="url"></a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="邵圣煜" target="_blank" itemprop="author">邵圣煜</a>
-		
-  <p class="article-time">
-    <time datetime="2019-08-18T08:57:08.017Z" itemprop="datePublished"> 发表于 2019-08-18</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h1>CSS定位机制</h1>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">文档流定位</span><br><span class="line">元素分类：</span><br><span class="line">block(独占一行,可设置height、width、margin、padding):</span><br><span class="line">常见的有:&lt;div&gt;,&lt;p&gt;,&lt;h1&gt;...&lt;h6&gt;,&lt;ol&gt;,&lt;ul&gt;,&lt;table&gt;,&lt;form&gt;</span><br><span class="line">inline(不独占一行,width就是包含图片和文字宽度不可改变):</span><br><span class="line">常见的有&lt;span&gt;、&lt;a&gt;(元素间会有间距问题)</span><br><span class="line">inline-block(不独占一行,但可设置height、width、margin、padding):</span><br><span class="line">元素类型转换:display属性</span><br><span class="line">display:block/inline/inline/block</span><br><span class="line"></span><br><span class="line">浮动定位</span><br><span class="line">float浮动             clear清除浮动</span><br><span class="line">float:left            clear:left(左侧不会有浮动对象)</span><br><span class="line">flooat:right          clear:right(右侧不会有浮动对象)</span><br><span class="line">float:none(不浮动)    clear:both(两侧不出现浮动，独占一行)</span><br><span class="line">使用float若宽度不够会丢失原有的位置。</span><br><span class="line"></span><br><span class="line">层定位</span><br><span class="line">position属性:</span><br><span class="line">static没有定位</span><br><span class="line">fixed固定定位(相对于浏览器窗口)</span><br><span class="line">relative相对定位(相对于父元素,原位置依然保留，不会被占据)</span><br><span class="line">absolute绝对定位(相对于static定位以外的第一个父元素，原位置不再存在，会被其他盒子占据)</span><br><span class="line">top,right,bottom,left属性:以当前盒子为参照物</span><br><span class="line">z-index:值大的在上面覆盖小的(设置极大或极小值（负数）来设置底层)</span><br></pre></td></tr></table></figure>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2019/08/17/csstwo/" title="" itemprop="url"></a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="邵圣煜" target="_blank" itemprop="author">邵圣煜</a>
-		
-  <p class="article-time">
-    <time datetime="2019-08-17T15:12:05.350Z" itemprop="datePublished"> 发表于 2019-08-17</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h1>对于html各标签内内容具体css设计笔记</h1>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line">CSS文字样式</span><br><span class="line">单位</span><br><span class="line">px 像素</span><br><span class="line">em 字符</span><br><span class="line">%  百分比</span><br><span class="line">&lt;p&gt;标签不设置样式则默认120%*12px</span><br><span class="line">若设置div字体大小12px</span><br><span class="line">&lt;div&gt;</span><br><span class="line">&lt;h1&gt;&lt;/h1&gt;</span><br><span class="line">&lt;p&gt;&lt;/p&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">受HTML DOM树继承关系，&lt;h1&gt;和&lt;p&gt;标签内容大小为12px</span><br><span class="line"></span><br><span class="line">颜色</span><br><span class="line">red,blue,green</span><br><span class="line">RGB为红色,蓝色,绿色在黑色下调色</span><br><span class="line">reg(x,x,x):RGB值,每个颜色分量取0-255:</span><br><span class="line">红色:rgb(255,0,0),灰色:rgb(66,66,66)(三种颜色分量一样),黑色(0,0,0)</span><br><span class="line">rgb(x%,x%,x%):RGB百分比值0-100%,如红色rgb(100%,0%,0%)</span><br><span class="line">rgba(x,x,x,x):RGB值,透明度(最后一位)</span><br><span class="line">a值(透明度):0.0(完全透明)-1.0(完全不透明) </span><br><span class="line">#rrggbb:十六进制数,如红色:#ff00(#ff0000去掉了重复位)</span><br><span class="line"></span><br><span class="line">文本</span><br><span class="line">属性              描述         取值</span><br><span class="line">color             文本颜色     red #ff00 rgb,rgba</span><br><span class="line">letter-spacing    字符间距     2px  -3px(负数时会产生重叠效果)</span><br><span class="line">line-height       行高         14px 1.5em 120%(将line-height与height设置的一样就能垂直居中)</span><br><span class="line">text-align        对齐         center(居中)  left  right  justify(两端对齐)</span><br><span class="line">text-decoration   装饰线       none(无装饰线）  overline  underline(下划线)  line-through(删除线)</span><br><span class="line">可设置a&#123;text-decoration:none;&#125;，将超链接下划线删除。</span><br><span class="line">text-indent       首行缩进     2em</span><br><span class="line"></span><br><span class="line">字体</span><br><span class="line">font(属性)在一个声明中设置所有字体的属性</span><br><span class="line">font:bold 18px &apos;幼圆&apos;</span><br><span class="line">font-family(字体系列): &quot;HiraginoSans GB&quot;(有空格要加引号),sans-serif；</span><br><span class="line">font-size(字号)  font-style:italic(斜体)  font-weight(粗体):bold </span><br><span class="line">简化font(必须拥有所有属性)</span><br><span class="line">font:斜体   粗体  字号/行高   字体;</span><br><span class="line">font:italic bold  16px/1.5em  &apos;宋体&apos;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">css背景样式</span><br><span class="line">background空元素要先定义元素的高度和宽度</span><br><span class="line">height:30px;</span><br><span class="line">width:600px;</span><br><span class="line">background-color:rgb(未显示图片则显示颜色)</span><br><span class="line">background-image:url(&quot;logo.jpg&quot;)</span><br><span class="line">background-repeat:repeat(全部填充),repeat-x(横向),repeat-y(纵向),no-repeat(填充一次)</span><br><span class="line">background:颜色 图片 repeat;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">css超链接样式(都设置则按以下顺序编写)</span><br><span class="line">a&#123;</span><br><span class="line">    font-size:22px;</span><br><span class="line">&#125;</span><br><span class="line">a:link&#123;</span><br><span class="line">    text-decoration:none;</span><br><span class="line">	color:#09f; /*未访问*/</span><br><span class="line">&#125;</span><br><span class="line">a:visited&#123;</span><br><span class="line">    text-decoration:none;</span><br><span class="line">	color:#930; /*已访问*/</span><br><span class="line">&#125;</span><br><span class="line">a:hover&#123;</span><br><span class="line">    text-decoration:underline;</span><br><span class="line">	font-size:120%;(字体放大,简单同态效果)</span><br><span class="line">	color:#03c; /*鼠标悬停*/</span><br><span class="line">&#125;</span><br><span class="line">a:active&#123;</span><br><span class="line">    text-decoration:none;</span><br><span class="line">    color:#03c; /*按下鼠标*/</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">列表表格样式</span><br><span class="line">css列表样式ul与ol公用</span><br><span class="line">list-style:所有用于列表的属性设置于一个声明中</span><br><span class="line">list-style-image:设置列表项标志的图像</span><br><span class="line">list-style-position:标志的位置(inside向右缩进/outside向左缩进)</span><br><span class="line">list-style-type:标志的类型</span><br><span class="line"></span><br><span class="line">css表格样式table</span><br><span class="line">border-collapse:collapse;合并表格边框</span><br><span class="line">:ntn-child(odd|even)奇偶选择器</span><br><span class="line">tr:nth-child(odd)每行交替显示颜色</span><br></pre></td></tr></table></figure>
-
+        <p>DOM是W3C的标准，对网页进行增删改查</p>
+<p>DOM查找<br>1.按id属性精确查找一个元素<br>var elem=document.getElementById(“myList”);<br>2.按表签名查找<br>var elems=parent(父节点).getElementsByTagName(“tag”);<br>查找直接子节点以及其子代节点并返回一个动态集合<br>3.通过name属性查找<br>var elemes=document.getElementsByName(“boy”);<br>可以返回DOM树中具有制定name属性值的所有子元素集合<br>4.通过class查找<br>var elems=parent.getElementsByClassName(“class”);<br>有兼容性问题:IE9+<br>5.通过css选择器查找<br>(1)只找一个元素 var elem=parent.querySelector(“selector”)<br>若选择器匹配多个,只返回第一个元素<br>(2)找多个 var elems=parent.querySelectorAll(“selector”)<br>返回非动态集合</p>
+<p>Math.random()随机数(取不到最大值)，Math.floor取整<br>产生1-10随机数: Math.floor(Math.random()*10)+1</p>
+<p>DOM修改<br>1.读取属性值<br>先获得属性节点对象，再获得节点对象的属性值<br>var attr=elem.attributes[下标/属性名];<br>var attr=elem.getAttributeNode(属性名)<br>attr.value 属性值<br>直接获得属性值<br>var value=elem.getAttribute(“属性名”);</p>
+<p>2.修改属性<br>elem.setAttribute(“属性名”,value);<br>判断元素中是否包含指定属性:<br>var bool=elem.hasAttribute(“属性名”);<br>移除属性<br><a id="alink" class="slink" href></a><br>var a=document.getElementById(“alink”);<br>a.removeAttribute(“class”);</p>
+<p>3.修改样式<br>内联样式elem.style.属性名(去横线，变驼峰)<br>如list-style-type=&gt;listStyleType</p>
 
         
         
@@ -337,28 +139,20 @@ dev合并到当前分支 git merge dev
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2019/08/17/gitrejected/" title="" itemprop="url"></a>
+      <a href="/2019/08/19/js1/" title="JavaScript基础" itemprop="url">JavaScript基础</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="邵圣煜" target="_blank" itemprop="author">邵圣煜</a>
 		
   <p class="article-time">
-    <time datetime="2019-08-17T15:07:54.752Z" itemprop="datePublished"> 发表于 2019-08-17</time>
+    <time datetime="2019-08-19T14:51:27.791Z" itemprop="datePublished"> 发表于 2019-08-19</time>
     
   </p>
 </header>
     <div class="article-content">
         
-        <h1>对使用git时！【rejected】-master问题的解决<h1>
-使用git时有时会出现！【rejected】-master ->master的错误<br>
-如图:<br>
-<image src="https://github.com/shaoshengyu/gituser/blob/master/gitrejected/problem.png?raw=true">
-<br><br>
-我的解决方案如下:<br>
-<image src="https://github.com/shaoshengyu/gituser/blob/master/gitrejected/resolve.png?raw=true">
-
-</image></image></h1></h1>
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br></pre></td><td class="code"><pre><span class="line">js(JavaScript)是一种运行于JavaScript解释器/引擎中的解释型语言(运行前不编译)</span><br><span class="line">js组成:</span><br><span class="line">1.核心(ECMAScript)</span><br><span class="line">2.文档对象模型(DOM),让JS有能力与网页进行对话</span><br><span class="line">3.浏览器对象模型(BOM),让JS有能力与浏览器进行对话</span><br><span class="line">控制台输出console.log();</span><br><span class="line">页面输出document.write();</span><br><span class="line"></span><br><span class="line">将JS脚本嵌入在HTML页面中执行的步骤:</span><br><span class="line">1.将js代码嵌入元素&quot;事件&quot;  &lt;div id=&quot;&quot; onclick=&quot;JS代码&quot;&gt;XXX&lt;/div&gt;</span><br><span class="line">2.将js代码放入&lt;script&gt;&lt;/script&gt;之间，允许出现在网页的任意位置</span><br><span class="line">3.将js代码编写在外部XXX.js文件中,并在页面中引入&lt;script src=&quot;js文件路径&quot;&gt;&lt;/script&gt;</span><br><span class="line">(引用外部文件后，在引用的&lt;script&gt;标签内不能使用js)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">变量：</span><br><span class="line">内存是程序运行过程中需要用到的数据</span><br><span class="line">1KB=1024byte=8*1024bit</span><br><span class="line">变量是内存中的一段存储空间名,可以自定义值,保存内存空间中的数据</span><br><span class="line">声明：var 变量名</span><br><span class="line">赋值：变量名=值</span><br><span class="line">不加var全局变量(一般不用)</span><br><span class="line">声明多个变量var namee1,name2,age1,age2=20;</span><br><span class="line">输出未赋值的变量，即未初始化，输出undefined</span><br><span class="line">对变量进行Get操作(对userPwd) var newPwd =userPwd</span><br><span class="line">对变量进行Set操作(对newPwd)  newPwd =userPwd</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">数据类型</span><br><span class="line">1.原始类型（基本类型）</span><br><span class="line">2.引用类型</span><br><span class="line"></span><br><span class="line">原始类型</span><br><span class="line">1.数字类型(number类型)</span><br><span class="line">可以表示32位整数(4字节)和64位浮点型(8字节)</span><br><span class="line">2.字符串类型</span><br><span class="line">标识一系列的文本字符数据</span><br><span class="line">由Unicode字符，数字，标点组成（都占两字节）</span><br><span class="line">查看字符16进制表现方式:&quot;张&quot;.charCodeAt.toString(16) </span><br><span class="line">\n 换行  \r 回车 \t 一个制表符</span><br><span class="line">3.boolean类型</span><br><span class="line">true:真  false:假  除条件判断外做运算时true当做1.false当做0</span><br><span class="line">4.空</span><br><span class="line">null</span><br><span class="line">声明对象未赋值</span><br><span class="line">5.未定义</span><br><span class="line">undefined</span><br><span class="line">声明变量为未负值 </span><br><span class="line">访问对象不存在的属性</span><br><span class="line"></span><br><span class="line">引用类型</span><br><span class="line">1.数据类型转换</span><br><span class="line">var stu;//undefined</span><br><span class="line">stu =25;//number</span><br><span class="line">stu =&quot;25&quot;;//string</span><br><span class="line">2.隐式转换</span><br><span class="line">函数 typeof()或typeof判断数据类型</span><br><span class="line">NaN（Not a Number） 结果为true:不是一个数字  结果为false:是一个数字</span><br><span class="line">3.强制转换</span><br><span class="line">.toString将任意类型转换为string类型</span><br><span class="line">parseInt()获取制定数据的整数部分，从左向右转换，遇到第一个非整数字停止</span><br><span class="line">4.parseFloat() 与parseFloat()相似</span><br><span class="line">5.Number() 将一个字符串解析为number,但不管哪里出现非number类型返回NaN</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">函数</span><br><span class="line">函数声明function()&#123;可执行语句&#125;;</span><br><span class="line"></span><br><span class="line">1.定义带参数的函数</span><br><span class="line">function 函数名(形参，userName，userPwd)&#123;</span><br><span class="line">     函数体，功能体，方法体   </span><br><span class="line">&#125;</span><br><span class="line">函数名(实参，&apos;Tom&apos;，&apos;123&apos;)；(调用)</span><br><span class="line">2.带返回值的函数</span><br><span class="line">function 函数名(n1,n2)&#123;</span><br><span class="line">    return n1+n2;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">作用域</span><br><span class="line">局部作用域:函数作用域中的变量为局部变量，只在该函数存在</span><br><span class="line">全局作用域：定义在函数外部 var sum=0;</span><br><span class="line">全局作用域中的变量：</span><br><span class="line">var sum=0;</span><br><span class="line">function A()&#123;</span><br><span class="line">    sum=1+2;</span><br><span class="line">&#125;</span><br><span class="line">A();调用函数</span><br><span class="line">console.log(sum);</span><br><span class="line"></span><br><span class="line">按值传递:</span><br><span class="line">var n=100;</span><br><span class="line">function fun(n)&#123;</span><br><span class="line">    n-=3;</span><br><span class="line">console.log(n);//修改的是局部变量n</span><br><span class="line">console.log(n);//输出的是局部变量n，此时为97</span><br><span class="line">&#125;</span><br><span class="line">fen(n);</span><br><span class="line">console.log(n);//输出全局变量100</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">数组</span><br><span class="line">1.索引数组</span><br><span class="line">数组直接创建 var arr=[];  var arr=[元素1,元素2,...]; arr[0]=元素1;</span><br><span class="line">用new创建  var arr =new Array();  var srr=new Arrey(元素一,元素2,...)；</span><br><span class="line">数组长度可变化，不限制数据类型</span><br><span class="line">var arr=new Array(10);长度为10</span><br><span class="line">使用下标 arr[0],arr[1]...</span><br><span class="line">获取倒数第n个元素: arr[arr.length-n]</span><br><span class="line">遍历数组使用length</span><br><span class="line">for(var i=1;i&lt;arr.length,i++)&#123;</span><br><span class="line">      arr[i];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">2.关联数组</span><br><span class="line">var arr=[];</span><br><span class="line">arr[&apos;bookName&apos;]=&apos;西游记&apos;;</span><br><span class="line">arr[&apos;price&apos;]=35.5;</span><br><span class="line">遍历数组没有length</span><br><span class="line">for(var key in hash)&#123;</span><br><span class="line">     key;//元素下标名</span><br><span class="line">	 hash[key];//当前元素值</span><br><span class="line">&#125;</span><br><span class="line">快速查找元素使用hash(关联)数组</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">数组API函数</span><br><span class="line">1.数组转字符串</span><br><span class="line">String(arr):将arr中每个元素转为字符串,逗号分隔</span><br><span class="line">arr.join(&quot;&quot;连接符):将arr中每个元素转为字符串，用自定义连接符分隔</span><br><span class="line">arr.join(&quot;&quot;)无缝拼接</span><br><span class="line"></span><br><span class="line">2.拼接和选取</span><br><span class="line">不直接修改数组而返回新数字</span><br><span class="line">拼接</span><br><span class="line">var arr1=[1,2];</span><br><span class="line">var arr2=[3,4];</span><br><span class="line">var arr3=arr1.concat(5,arr2); /值为[1,2,5,3,4]</span><br><span class="line">var newArr=arr.concat()</span><br><span class="line"></span><br><span class="line">选取</span><br><span class="line">slice()返回现有数组的一个子数组</span><br><span class="line">var subArr=arr.slice(starti,endi+1) </span><br><span class="line">用法与SubString相同(含头不含尾)</span><br><span class="line">一直取到结尾可省略第二个参数</span><br><span class="line">返取用倒数下标arr.slice(arr,length-n,arr.length-m+1);</span><br><span class="line">可简写为arr.slice(-n,-m+1);</span><br><span class="line">复制数组 arr.slice();</span><br><span class="line"></span><br><span class="line">3.替换</span><br><span class="line">1.删除</span><br><span class="line">arr.splice(starti,n); 删除starti位置开始n个元素(不考虑含头不含尾)</span><br><span class="line">2.插入</span><br><span class="line">arr.splice(starti,0,yuansu1,...)</span><br><span class="line">3.替换</span><br><span class="line">arr.splice(starti,n,1,l,...); 删除后插入n,1,...</span><br><span class="line">arr.splice(starti,n,1,arr2,...);</span><br><span class="line"></span><br><span class="line">4.颠倒</span><br><span class="line">仅负责原样颠倒数组,不负责排序</span><br><span class="line">arr.reverse();</span><br><span class="line"></span><br><span class="line">5.排序</span><br><span class="line">arr.sort():默认将所有元素转为字符串再从小到大排序</span><br></pre></td></tr></table></figure>
         
         
         <p class="article-more-link">
@@ -394,22 +188,70 @@ dev合并到当前分支 git merge dev
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2019/08/17/shopping/" title="" itemprop="url"></a>
+      <a href="/2019/08/19/SSM/" title="对SSM框架的理解" itemprop="url">对SSM框架的理解</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="邵圣煜" target="_blank" itemprop="author">邵圣煜</a>
 		
   <p class="article-time">
-    <time datetime="2019-08-17T14:57:25.512Z" itemprop="datePublished"> 发表于 2019-08-17</time>
+    <time datetime="2019-08-19T11:48:32.699Z" itemprop="datePublished"> 发表于 2019-08-19</time>
     
   </p>
 </header>
     <div class="article-content">
         
-        <h1>自编的一个简单购物车</h1>
-使用MVC框架，一个jsp页面+两个Servlet，使用Session存储用户信息。Jsp通过form表单传值。第一个Servlet文件判断是否有商品加入,并根据该商品是否已在购物车做出判断，然后将商品及其对应数量放入一个Map集合并用session保存。第二个Servlet文件遍历显示购物车中商品信息，并设置返回jsp的超链接。
+        <p>SSM框架（Spring+SpringMVC+MyBatis）框架集由Spring、MyBatis两个开源框架整合而成（SpringMVC是Spring中的部分内容）。<br><br>SSM框架通常使用 springMVC为控制器(controller) ，spring 为事务层(service)， MyBatis 负责持久层（dao）。<br><br>SSM框架中pojo类可以与数据库表进行映射，是实体层。<br><br>Spring是一个轻量级的控制反转(IoC)和面向切面(AOP)的容器框架。通过使用注解依赖注入来管理各层的组件，使用AOP切面编程来管理事务，日志，权限等。<br><br>springMVC为控制器，使用Servlet嵌入，分离了控制器、模型对象、分派器以及处理程序对象的角色，让它们更容易进行定制。<br><br>MyBatis持久化dao层，对jdbc的封装。它消除了几乎所有的JDBC代码和参数的手工设置以及结果集的检索，使用简单的 XML或注解用于配置和原始映射将接口和 Java 的POJO层对象映射成数据库中的记录。<br><br>SSM框架我做了一个房源系统，具体实现代码可以访问我的github。<a href="https://github.com/shaoshengyu/gituser/tree/master/HouseRentSystem" target="_blank" rel="noopener">https://github.com/shaoshengyu/gituser/tree/master/HouseRentSystem</a></p>
 
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2019/08/19/shopping/" title="自编的一个简单购物车" itemprop="url">自编的一个简单购物车</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="邵圣煜" target="_blank" itemprop="author">邵圣煜</a>
+		
+  <p class="article-time">
+    <time datetime="2019-08-19T11:48:32.696Z" itemprop="datePublished"> 发表于 2019-08-19</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>使用MVC框架，一个jsp页面+两个Servlet，使用Session存储用户信息。Jsp通过form表单传值。第一个Servlet文件判断是否有商品加入,并根据该商品是否已在购物车做出判断，然后将商品及其对应数量放入一个Map集合并用session保存。第二个Servlet文件遍历显示购物车中商品信息，并设置返回jsp的超链接。</p>
 <p>purchase.jsp</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;</span><br><span class="line">    pageEncoding=&quot;UTF-8&quot;%&gt;</span><br><span class="line">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;form action=&quot;PurchaseServlet&quot; method=&quot;Get&quot;&gt;</span><br><span class="line">&lt;p&gt;商品:&lt;/p&gt;</span><br><span class="line">&lt;input name=&quot;equipment&quot; type=&quot;checkbox&quot; value=&quot;空调&quot;&gt;空调&lt;/p&gt;</span><br><span class="line">&lt;p&gt;&lt;input name=&quot;equipment&quot; type=&quot;checkbox&quot; value=&quot;冰箱&quot;&gt;冰箱&lt;/p&gt;</span><br><span class="line">&lt;p&gt;&lt;input name=&quot;equipment&quot; type=&quot;checkbox&quot; value=&quot;洗衣机&quot;&gt;洗衣机&lt;/p&gt;</span><br><span class="line">&lt;p&gt;&lt;input type=&quot;submit&quot; value=&quot;提交&quot;/&gt;&lt;input type=&quot;reset&quot; value=&quot;重置&quot;/&gt;&lt;/p&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
 
@@ -455,171 +297,27 @@ dev合并到当前分支 git merge dev
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2019/08/17/ccsone/" title="" itemprop="url"></a>
+      <a href="/2019/08/19/MVC/" title="对MVC的一些了解" itemprop="url">对MVC的一些了解</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="邵圣煜" target="_blank" itemprop="author">邵圣煜</a>
 		
   <p class="article-time">
-    <time datetime="2019-08-17T14:39:59.251Z" itemprop="datePublished"> 发表于 2019-08-17</time>
+    <time datetime="2019-08-19T11:48:32.694Z" itemprop="datePublished"> 发表于 2019-08-19</time>
     
   </p>
 </header>
     <div class="article-content">
         
-        <h1>对css添加方法和选择器的一些理解与记录</h1>
+        <h2>MVC框架</h2>
+MVC全名是Model View Controller，是模型(model)－视图(view)－控制器(controller)的缩写。<br>
+MVC的最主要精神之一就是Model与View的分离。<br><br>
 
-<p>平常接触后端较多，最近发现了前端的一些乐趣，做了一些css样式的笔记。</p>
-<pre><code>CSS层叠样式表
-内容和样式相分离，便于修改样式。
+<p>MVC 是一种使用 MVC（Model View Controller 模型-视图-控制器）设计创建 Web 应用程序的模式：<br><br>（1）Model（模型）表示应用程序核心（比如数据库记录列表）。<br><br>（2）View（视图）显示数据（数据库记录）。<br><br>（3）Controller（控制器）处理输入（写入数据库记录）。<br><br></p>
+<p>MVC指MVC模式的某种框架，它强制性的使应用程序的输入、处理和输出分开。<br><br>使用MVC应用程序被分成三个核心部件：模型、视图、控制器。它们各自处理自己的任务。最典型的MVC就是JSP + servlet + javabean的模式。<br><br></p>
+<p>Java Web开发模式在发展中经历了Model 1模式和Model 2模式。<br><br>Model 1模式是以JSP为主的开发模式，分为完全用JSP开发和使用JSP+JavaBean来设计。<br><br>完全使用JSP开发，开发时间较短，但程序可读性较低，程序重复利用率较低，维护成本大。<br><br>使用JSP+JavaBean开发，程序可读性与重复利用率提高，但流程控制不清晰，仍然不易维护。<br><br>Model 2模式即Java Web应用的MVC模式，通过JavaBean、EJB等组件来实现MVC的模型层，通过JSP实现MVC的视图层，通过Servlet实现MVC的控制层。<br><br>Model 2模式的组件可以交互与重用弥补了Model 1的不足，开发流程明确，核心程序管控，更易维护。但Model2 的开发时间较长，在系统设计上花费更多时间。<br></p>
 
-CSS语法
-&lt;p&gt;XXXXX&lt;/p&gt;(html中)
-CSS中
-p(选择器，此处选择html中&lt;p&gt;标签){
-    font-size:12px;     /*字号*/
-    color:blue;         /*文字颜色*/
-    font-weight:bold;   /*加粗*/
-    属性名:属性值;      /*注释，可跨行*/
-}    
-
-css添加方法
-
-(1)行内: 
-&lt;body&gt;
-&lt;p style=&quot;color:red;&quot;&gt;XXX&lt;/p&gt;
-&lt;/body&gt;
-
-(2)内嵌样式: (适合文件少，css代码也不多的情况)
-&lt;head&gt;
-  &lt;style type=&quot;text/css&quot;&gt;
-   p{
-       color:red;
-    }
-  &lt;/style&gt;
-&lt;/head&gt;
-&lt;body&gt;
-  &lt;p&gt;XXX&lt;/p&gt;
-&lt;/body&gt;
-
-(3)单独文件(外联样式表文件)
-现有css文件夹与1.html和2.html处于同一文件夹，css文件夹中有style.css
-style.css外联样式表文件
-p{
-color:
-}
-1.html网页文件
-&lt;head&gt;
-  &lt;link rel=&quot;stylesheet&quot;(连接文件的类型) href=&quot;css/style.css&quot;(文件相对路径) /&gt;
-&lt;/head&gt;
-&lt;body&gt;
-  &lt;p&gt;XXX&lt;/p&gt;
-&lt;/body&gt;
-&lt;/head&gt;
-
-优先级：
-多重样式可以层叠，可以覆盖
-样式的优先按照就近原则
-行内样式&gt;内嵌样式&gt;连接样式&gt;浏览器默认样式
-例子:
-外联样式表文件
-h3{
-color:red
-text-align:left;
-font-size:8pt;
-}
-内嵌样式
-h3{
-text-align:right;
-font-size:20pt
-}
-
-html中h3得到的样式
-clor&quot;red;
-text-aligen:right;
-font-size:20pt;
-
-
-CSS选择器
-
-标签选择器
-&lt;style type=&quot;text/css&quot;&gt;
-  body{background-color:#ccc;(背景灰色)
-  text-align:center(居中)
-  font-size:12px}
-  h1{font:&quot;黑体&quot;,font-size:20px;}
-  p{color:red;}
-  hr{width:200px;}
-&lt;style&gt;
-
-类别选择器
-css文件
-p  { font-size:12px;}
- .one{font-size:18px;}(注意one前面要加点)
- .two{font-size:24px;}
-html文件
-&lt;body&gt;
-  &lt;p class=&quot;one&quot;&gt;18px&lt;/p&gt;(注意one前面不要加点)
-  &lt;p class=&quot;one&quot;&gt;18px&lt;/p&gt;
-  &lt;p class=&quot;two&quot;&gt;24px&lt;/p&gt;
-  &lt;p class=&quot;two&quot;&gt;24px&lt;/p&gt;
-  &lt;p&gt;12px&lt;/p&gt;
-&lt;/body&gt;
-
-ID选择器(与class的区别在于唯一性)
-css文件
- #one{font-size:12px;}
- #two{font-size:24px;}
-html文件
-&lt;body&gt;
-  &lt;p id=&quot;one&quot;&gt;12px&lt;/p&gt;
-  &lt;p id=&quot;two&quot;&gt;24px&lt;/p&gt;
-&lt;/body&gt;
-
-嵌套声明
-css文件
-p span{color:red;}(用空格隔断标签)
-html文件
-&lt;body&gt;
-&lt;p&gt;&lt;span&gt;红色的字&lt;/span&gt;XXXX&lt;/p&gt;
-&lt;/body&gt;
-
-集体声明
-css文件
-h1,p{text-align:center;}(用,隔断标签)
-html文件
-&lt;body&gt;
- &lt;h1&gt;居中的字&lt;/h1&gt;
- &lt;p&gt;居中的字&lt;/p&gt;
-&lt;body&gt;
-
-全局声明
-css文件
-*{
-   text-align:center
-}
-html文件
-&lt;body&gt;
-所有未就近设置其他样式的标签内容居中
-&lt;body&gt;
-
-混合
-id选择器不可多个同时使用。
-可同时使用一个id选择器和多个class选择器。
-css文件
-#my{}
-.one{}
-.yellow{}
-.left{}
-html文件
-&lt;div id=&quot;my&quot; class=&quot;one yellow left&quot;&gt;......&lt;div&gt;
-
-
-
-
-
-</code></pre>
         
         
         <p class="article-more-link">
@@ -655,22 +353,20 @@ html文件
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2019/08/17/candel/" title="" itemprop="url"></a>
+      <a href="/2019/08/19/html/" title="关于html页面标签的一些理解" itemprop="url">关于html页面标签的一些理解</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="邵圣煜" target="_blank" itemprop="author">邵圣煜</a>
 		
   <p class="article-time">
-    <time datetime="2019-08-17T14:35:05.772Z" itemprop="datePublished"> 发表于 2019-08-17</time>
+    <time datetime="2019-08-19T11:48:32.693Z" itemprop="datePublished"> 发表于 2019-08-19</time>
     
   </p>
 </header>
     <div class="article-content">
         
-        <h1>自编的一些帮助理解c标签以及el表达式的代码</h1>
-对c标签与el表达式重新学习了一下，有所收获写下一些代码。
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@page import=&quot;java.util.HashMap&quot;%&gt;</span><br><span class="line">&lt;%@page import=&quot;java.util.Map&quot;%&gt;</span><br><span class="line">&lt;%@page import=&quot;java.util.ArrayList&quot;%&gt;</span><br><span class="line">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;</span><br><span class="line">    pageEncoding=&quot;UTF-8&quot; import=&quot;com.cha4.Book&quot;%&gt;</span><br><span class="line">&lt;%@taglib prefix=&quot;c&quot; uri=&quot;http://java.sun.com/jsp/jstl/core&quot;%&gt;</span><br><span class="line">&lt;%@taglib prefix=&quot;fn&quot; uri=&quot;http://java.sun.com/jsp/jstl/functions&quot;%&gt;</span><br><span class="line">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line"></span><br><span class="line">&lt;c:set var=&quot;hello&quot; value=&quot;Hello JSTL!&lt;br/&gt;&quot; scope=&quot;session&quot;/&gt;</span><br><span class="line">&lt;c:out value=&quot;$&#123;hello &#125;&quot; escapeXml=&quot;false&quot; default=&quot;Goodby!&lt;br/&gt;&quot;&gt;&lt;/c:out&gt;</span><br><span class="line">&lt;c:out value=&quot;$&#123;hello &#125;&quot; escapeXml=&quot;true&quot;&gt;&lt;/c:out&gt;</span><br><span class="line">&lt;c:out value=&quot;$&#123;hello2 &#125;&quot; escapeXml=&quot;false&quot; default=&quot;Goodby!&lt;br/&gt;&quot;&gt;&lt;/c:out&gt;</span><br><span class="line">$&#123;fn:substring(hello,0,5)&#125;&lt;br&gt;</span><br><span class="line"></span><br><span class="line">&lt;c:if test=&quot;$&#123;not empty sessionScope.hello&#125;&quot;&gt;</span><br><span class="line">     欢迎您：$&#123;sessionScope.hello&#125;</span><br><span class="line">&lt;/c:if&gt;</span><br><span class="line"></span><br><span class="line">&lt;c:set var=&quot;score&quot; value=&quot;85&quot;&gt;&lt;/c:set&gt;</span><br><span class="line">&lt;c:choose&gt;</span><br><span class="line">&lt;c:when test=&quot;$&#123;score&gt;=90&#125;&quot;&gt;</span><br><span class="line">优秀&lt;br/&gt;</span><br><span class="line">&lt;/c:when&gt;</span><br><span class="line">&lt;c:when test=&quot;$&#123;score&lt;90&amp;&amp;score&gt;=60&#125;&quot;&gt;</span><br><span class="line">良好&lt;br/&gt;</span><br><span class="line">&lt;/c:when&gt;</span><br><span class="line">&lt;c:otherwise&gt;</span><br><span class="line">不及格&lt;br/&gt;</span><br><span class="line">&lt;/c:otherwise&gt;</span><br><span class="line">&lt;/c:choose&gt;</span><br><span class="line"></span><br><span class="line">&lt;%</span><br><span class="line">ArrayList list=new ArrayList();</span><br><span class="line">list.add(&quot;一&quot;);</span><br><span class="line">list.add(2);</span><br><span class="line">list.add(3.6);</span><br><span class="line">list.add(&quot;si&quot;);</span><br><span class="line">session.setAttribute(&quot;list&quot;, list);</span><br><span class="line">%&gt;</span><br><span class="line">&lt;c:forEach items=&quot;$&#123;sessionScope.list&#125;&quot; var=&quot;item&quot; varStatus=&quot;vst&quot;&gt;</span><br><span class="line">序号$&#123;vst.index+1&#125;:$&#123;item&#125;&lt;br&gt;</span><br><span class="line">&lt;%//判断一个数是否在集合内 %&gt;</span><br><span class="line">&lt;c:if test=&quot;$&#123;item eq &apos;2&apos;&#125;&quot;&gt;</span><br><span class="line">存在&lt;br/&gt;</span><br><span class="line">&lt;/c:if&gt;</span><br><span class="line">&lt;/c:forEach&gt;</span><br><span class="line">&lt;%=list.get(2)%&gt;&lt;br&gt;</span><br><span class="line"></span><br><span class="line">&lt;c:forEach begin=&quot;3&quot; end=&quot;10&quot; step=&quot;2&quot; var=&quot;num&quot;&gt;</span><br><span class="line">$&#123;num&#125;&lt;br&gt;</span><br><span class="line">&lt;/c:forEach&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;%</span><br><span class="line">//无序</span><br><span class="line">Map&lt;String,Book&gt; map=new HashMap&lt;String,Book&gt;();</span><br><span class="line">map.put(&quot;Java基础&quot;,new Book(&quot;Java基础开发&quot;,50));</span><br><span class="line">map.put(&quot;Java高级&quot;,new Book(&quot;Java高级开发&quot;,60));</span><br><span class="line">map.put(&quot;JavaWeb&quot;,new Book(&quot;JavaWeb开发&quot;,70));</span><br><span class="line">map.put(&quot;Java框架&quot;,new Book(&quot;Java框架开发&quot;,80));</span><br><span class="line">request.setAttribute(&quot;bookMap&quot;,map);</span><br><span class="line">%&gt;</span><br><span class="line">&lt;c:forEach items=&quot;$&#123;requestScope.bookMap&#125;&quot; var=&quot;book&quot;&gt;</span><br><span class="line">$&#123;book.key&#125;:$&#123;book.value.name&#125;--$&#123;book.value&#125;&lt;br&gt;&lt;br&gt;</span><br><span class="line">&lt;/c:forEach&gt;</span><br><span class="line">&lt;%=map.get(&quot;Java基础&quot;).getName() %&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;c:set var=&quot;number&quot; value=&quot;a,b,c,d,e&quot;&gt;&lt;/c:set&gt;</span><br><span class="line">&lt;c:forTokens items=&quot;$&#123;number&#125;&quot; var=&quot;num&quot; delims=&quot;,&quot; varStatus=&quot;no&quot;&gt;</span><br><span class="line">&lt;c:out value=&quot;$&#123;no.count&#125;&quot;/&gt;.&lt;c:out value=&quot;$&#123;num&#125;&quot;/&gt;</span><br><span class="line">&lt;/c:forTokens&gt;</span><br><span class="line">&lt;br&gt;</span><br><span class="line"></span><br><span class="line">&lt;c:catch var=&quot;myException&quot;&gt;</span><br><span class="line">&lt;%=5/0 %&gt;</span><br><span class="line">&lt;/c:catch&gt;</span><br><span class="line">&lt;c:out value=&quot;$&#123;myException&#125;&lt;br/&gt;&quot; escapeXml=&quot;false&quot;&gt;&lt;/c:out&gt;</span><br><span class="line">&lt;c:out value=&quot;$&#123;myException.message&#125;&lt;br/&gt;&quot;&gt;&lt;/c:out&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br></pre></td><td class="code"><pre><span class="line">java前端</span><br><span class="line">web网站即文件夹，page网页即文件。</span><br><span class="line">前端网页由三部分决定。html决定页面结构，css决定页面样式，javascript决定页面上的行为。</span><br><span class="line">HTML：超文本标记语言，构建网页结构，定义网页内容。</span><br><span class="line">CSS：层叠样式表，构建网页布局、外观，美化页面。</span><br><span class="line">JS：JavaScript，脚本语言，构建网页行为，与用户进行交互，是用户更好体验。</span><br><span class="line"></span><br><span class="line">HTML</span><br><span class="line">文件结构:</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;title&gt;XXX&lt;/title&gt; 浏览器搜索引擎所需信息,出现在网页标题栏。</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">body标签中间显示网站具体内容</span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">字符集与编码:</span><br><span class="line">ASCII:对数字、英文字母、符号进行编码</span><br><span class="line">GB2312:简体中文</span><br><span class="line">UNicode；所有语言</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">标签：</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">元数据标签&lt;meta&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">标题标签</span><br><span class="line">&lt;h1&gt;&lt;/h1&gt;从 一个页面只会有一个&lt;h1&gt;</span><br><span class="line">&lt;h2&gt;&lt;/h2&gt;上</span><br><span class="line">&lt;h3&gt;&lt;/h3&gt;往</span><br><span class="line">&lt;h4&gt;&lt;/h4&gt;下</span><br><span class="line">&lt;h5&gt;&lt;/h5&gt;变</span><br><span class="line">&lt;h6&gt;&lt;/h6&gt;小</span><br><span class="line">这里是正文文字</span><br><span class="line">标题大小可用css样式规定</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">段落标签           显示</span><br><span class="line">&lt;p&gt;XXX&lt;/p&gt;       XXX</span><br><span class="line">&lt;p&gt;XXX   X,      XXX X, XXXXXX。</span><br><span class="line"></span><br><span class="line">XXXXXX。&lt;/p&gt;</span><br><span class="line">每个段落自动换行，忽略段落内部连续空格，不显示空行，标签内部不自动换行。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">段内换行标签</span><br><span class="line">&lt;br/&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">空格字符</span><br><span class="line">&amp;nbsp;</span><br><span class="line"></span><br><span class="line">生成角标标签&lt;sup&gt;</span><br><span class="line">&lt;p&gt;XXX&lt;sup&gt;1&lt;/sup&gt;XXX&lt;/p&gt;</span><br><span class="line">可用于书本上的注解</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">预留格式            </span><br><span class="line">&lt;pre&gt;               显示</span><br><span class="line">XXX    XXX       XXX    XXX  </span><br><span class="line">    xxx              xxx</span><br><span class="line">&lt;/pre&gt;</span><br><span class="line">标签之间空格和换行符会被保留。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">行内组合元素标签</span><br><span class="line">&lt;p&gt;XXX&lt;span&gt;YYY&lt;/span&gt;XXX&lt;/p&gt;</span><br><span class="line">&lt;span&gt;标签组合行内元素YYY,以便通过CSS样式来格式化。</span><br><span class="line">css:</span><br><span class="line">&lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">span&#123;</span><br><span class="line">    color: blue;(字体蓝色)</span><br><span class="line">	font-weight:blod;(字体加粗)</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">显示：YYY部分蓝色加粗</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">水平线(分割线)</span><br><span class="line">&lt;hr/&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">注释内容</span><br><span class="line">&lt;!--   --&gt;</span><br><span class="line">自动注释选中段落，按ctrl+shift+?</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">超链接标签</span><br><span class="line">&lt;a href=&quot;网址(比如https://www.baidu.com)&quot; &gt;文字或图片&lt;/a&gt;连接到其他站点</span><br><span class="line">&lt;a href=&quot;xxx.html/jsp&quot; &gt;文字或图片&lt;/a&gt;连接到本站其他网页</span><br><span class="line">&lt;a href=&quot;#&quot;&gt;文字或图片&lt;/a&gt;虚拟超链接，当前并未设定好，暂不设定url</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">图像标签&lt;image /&gt;</span><br><span class="line">图像格式:</span><br><span class="line">JPG:有损压缩,色彩丰富图片</span><br><span class="line">GIF:简单动、背景透明(适合图标logo）</span><br><span class="line">PNG:无损压缩、透明、交错、动画</span><br><span class="line">插入图像：&lt;image src=&quot;路径+文件名&quot; alt=&quot;找不到图片时显示的文字&quot; /&gt;</span><br><span class="line">绝对路径：src=&quot;详细地址&quot;，以根目录为基准</span><br><span class="line">相对路径(推荐)：以该文档所在位置为基准</span><br><span class="line">../表示向上一级文件夹</span><br><span class="line">(1)C:/site/index.html,C:/site/logo.gif  图片与文档在同一文件夹，&lt;image src=&quot;logo.gif&quot; /&gt;</span><br><span class="line">(2)C:/index.html,C:/site/logo.gif       图片在文档下一文件夹，&lt;image src=&quot;site/logo.gif&quot; /&gt;</span><br><span class="line">(3)C:/site/index.html,C:/logo.gif       图片在文档上一文件夹，&lt;image src=&quot;../logo.gif&quot; /&gt;</span><br><span class="line">(4)C:/site/index.html,C:/images/logo.gif 图片与文档份属两文件夹,&lt;image src=&quot;../images/logo.gif&quot; /&gt;(先向上一级，再向下一级)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">区域标签&lt;div&gt;</span><br><span class="line">确定一个单独的却与，如页面一部分或一个栏目板块，可规整网页布局。</span><br><span class="line">&lt;div id=&quot;contanier&quot; align=&quot;center&quot;(设置被包括部分格式居中)&gt;</span><br><span class="line">    &lt;div id=&quot;nav&quot;&gt;</span><br><span class="line">      &lt;p&gt;XXX | YYY&lt;/p&gt;</span><br><span class="line">	&lt;/div&gt;  </span><br><span class="line">	&lt;hr /&gt;</span><br><span class="line">	&lt;div id=&quot;content&quot;&gt;</span><br><span class="line">	  &lt;p&gt;MMMMMM&lt;/p&gt;</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line">&lt;div&gt;</span><br><span class="line">除了外层板块，内部生成两个板块，每个版块可进行单独的css样式设置。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">无序列表&lt;ul&gt; 列表项&lt;li&gt;</span><br><span class="line">常用于超链接组合</span><br><span class="line">&lt;ul&gt;</span><br><span class="line">   &lt;li&gt;XXX&lt;/li&gt;</span><br><span class="line">   &lt;li&gt;YYY&lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br><span class="line">显示时列表项前为小黑点(可通过css设置)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">有序列表&lt;ol&gt; 列表项&lt;li&gt;</span><br><span class="line">&lt;ol&gt;</span><br><span class="line">   &lt;li&gt;XXX&lt;/li&gt;</span><br><span class="line">   &lt;li&gt;YYY&lt;/li&gt;</span><br><span class="line">&lt;/ol&gt;</span><br><span class="line">显示时列表项前为有序数列+.(可通过css设置)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">表格&lt;table&gt;</span><br><span class="line">&lt;th&gt;表头(加粗) &lt;tr&gt;行 &lt;td&gt;单元格</span><br><span class="line">&lt;table border=&quot;1&quot;&gt;</span><br><span class="line">      &lt;tr&gt;</span><br><span class="line">              &lt;td&gt;&lt;/td&gt;  </span><br><span class="line">              &lt;th&gt;语文&lt;/th&gt;  </span><br><span class="line">              &lt;th&gt;数学&lt;/th&gt;</span><br><span class="line">      &lt;/tr&gt; </span><br><span class="line">      &lt;tr&gt;</span><br><span class="line">              &lt;th&gt;一班&lt;/th&gt;   </span><br><span class="line">              &lt;td&gt;80&lt;/td&gt;  </span><br><span class="line">              &lt;td&gt;40&lt;/td&gt;</span><br><span class="line">      &lt;/tr&gt; </span><br><span class="line">      &lt;tr&gt;</span><br><span class="line">              &lt;th&gt;二班&lt;/th&gt;  </span><br><span class="line">              &lt;td&gt;70&lt;/td&gt;  </span><br><span class="line">              &lt;td&gt;60&lt;/td&gt;</span><br><span class="line">      &lt;/tr&gt; </span><br><span class="line">&lt;/table&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">form表单</span><br><span class="line">&lt;form&gt;</span><br><span class="line">&lt;input type=&quot;&quot; /&gt;(插入)</span><br><span class="line">type中属性:</span><br><span class="line">text:文本框</span><br><span class="line">password：密码框</span><br><span class="line">input:提交按钮</span><br><span class="line">reset:重置按钮</span><br><span class="line">radio:单选框(只能选一项)(后可设置checked属性，checked=&quot;checked&quot;,该选项默认被选中)</span><br><span class="line">checked:复选框(可选择任意项)(后可设置checked属性，checked=&quot;checked&quot;,该选项默认被选中)</span><br><span class="line"></span><br><span class="line">&lt;select&gt;(下拉框)</span><br><span class="line">   &lt;option&gt;选项1&lt;/option&gt;</span><br><span class="line">   &lt;option selected=&quot;selected&quot;(默认被选项)&gt;选项2&lt;/option&gt;</span><br><span class="line">&lt;/select&gt;</span><br><span class="line"></span><br><span class="line">文本域:</span><br><span class="line">&lt;textarea rows=&quot;行数&quot; clos=&quot;列数&quot;&gt;默认出现的文本&lt;/textarea&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">语义化标签</span><br><span class="line">&lt;em&gt;斜体+强调&lt;/em&gt;</span><br><span class="line">&lt;i&gt;斜体,无语义&lt;/i&gt;</span><br><span class="line">&lt;strong&gt;粗体+非常强调&lt;/strong&gt;</span><br><span class="line">&lt;b&gt;粗体,无语义&lt;/b&gt;</span><br><span class="line">自定义列表&lt;dl&gt;,列表项&lt;dt&gt;,描述&lt;dd&gt;</span><br><span class="line">&lt;dl&gt;                                 显示</span><br><span class="line">    &lt;dt&gt;HTML&lt;/dt&gt;              HTML</span><br><span class="line">	&lt;dd&gt;超文本标记语言&lt;/dd&gt;        超文本标记语言</span><br><span class="line">	&lt;dt&gt;CSS&lt;/dt&gt;               CSS</span><br><span class="line">	&lt;dd&gt;层叠样式表&lt;/dd&gt;            层叠样式表</span><br><span class="line">&lt;/dl&gt;</span><br></pre></td></tr></table></figure>
         
         
         <p class="article-more-link">
@@ -706,21 +402,42 @@ html文件
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2019/08/17/html/" title="" itemprop="url"></a>
+      <a href="/2019/08/19/hexo/" title="解决网络问题的Hexo下载与安装" itemprop="url">解决网络问题的Hexo下载与安装</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="邵圣煜" target="_blank" itemprop="author">邵圣煜</a>
 		
   <p class="article-time">
-    <time datetime="2019-08-17T14:31:17.719Z" itemprop="datePublished"> 发表于 2019-08-17</time>
+    <time datetime="2019-08-19T11:48:32.691Z" itemprop="datePublished"> 发表于 2019-08-19</time>
     
   </p>
 </header>
     <div class="article-content">
         
-        <h1>关于html页面标签的一些理解</h1>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br></pre></td><td class="code"><pre><span class="line">java前端</span><br><span class="line">web网站即文件夹，page网页即文件。</span><br><span class="line">前端网页由三部分决定。html决定页面结构，css决定页面样式，javascript决定页面上的行为。</span><br><span class="line">HTML：超文本标记语言，构建网页结构，定义网页内容。</span><br><span class="line">CSS：层叠样式表，构建网页布局、外观，美化页面。</span><br><span class="line">JS：JavaScript，脚本语言，构建网页行为，与用户进行交互，是用户更好体验。</span><br><span class="line"></span><br><span class="line">HTML</span><br><span class="line">文件结构:</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;title&gt;XXX&lt;/title&gt; 浏览器搜索引擎所需信息,出现在网页标题栏。</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">body标签中间显示网站具体内容</span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">字符集与编码:</span><br><span class="line">ASCII:对数字、英文字母、符号进行编码</span><br><span class="line">GB2312:简体中文</span><br><span class="line">UNicode；所有语言</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">标签：</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">元数据标签&lt;meta&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">标题标签</span><br><span class="line">&lt;h1&gt;&lt;/h1&gt;从 一个页面只会有一个&lt;h1&gt;</span><br><span class="line">&lt;h2&gt;&lt;/h2&gt;上</span><br><span class="line">&lt;h3&gt;&lt;/h3&gt;往</span><br><span class="line">&lt;h4&gt;&lt;/h4&gt;下</span><br><span class="line">&lt;h5&gt;&lt;/h5&gt;变</span><br><span class="line">&lt;h6&gt;&lt;/h6&gt;小</span><br><span class="line">这里是正文文字</span><br><span class="line">标题大小可用css样式规定</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">段落标签           显示</span><br><span class="line">&lt;p&gt;XXX&lt;/p&gt;       XXX</span><br><span class="line">&lt;p&gt;XXX   X,      XXX X, XXXXXX。</span><br><span class="line"></span><br><span class="line">XXXXXX。&lt;/p&gt;</span><br><span class="line">每个段落自动换行，忽略段落内部连续空格，不显示空行，标签内部不自动换行。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">段内换行标签</span><br><span class="line">&lt;br/&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">空格字符</span><br><span class="line">&amp;nbsp;</span><br><span class="line"></span><br><span class="line">生成角标标签&lt;sup&gt;</span><br><span class="line">&lt;p&gt;XXX&lt;sup&gt;1&lt;/sup&gt;XXX&lt;/p&gt;</span><br><span class="line">可用于书本上的注解</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">预留格式            </span><br><span class="line">&lt;pre&gt;               显示</span><br><span class="line">XXX    XXX       XXX    XXX  </span><br><span class="line">    xxx              xxx</span><br><span class="line">&lt;/pre&gt;</span><br><span class="line">标签之间空格和换行符会被保留。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">行内组合元素标签</span><br><span class="line">&lt;p&gt;XXX&lt;span&gt;YYY&lt;/span&gt;XXX&lt;/p&gt;</span><br><span class="line">&lt;span&gt;标签组合行内元素YYY,以便通过CSS样式来格式化。</span><br><span class="line">css:</span><br><span class="line">&lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">span&#123;</span><br><span class="line">    color: blue;(字体蓝色)</span><br><span class="line">	font-weight:blod;(字体加粗)</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">显示：YYY部分蓝色加粗</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">水平线(分割线)</span><br><span class="line">&lt;hr/&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">注释内容</span><br><span class="line">&lt;!--   --&gt;</span><br><span class="line">自动注释选中段落，按ctrl+shift+?</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">超链接标签</span><br><span class="line">&lt;a href=&quot;网址(比如https://www.baidu.com)&quot; &gt;文字或图片&lt;/a&gt;连接到其他站点</span><br><span class="line">&lt;a href=&quot;xxx.html/jsp&quot; &gt;文字或图片&lt;/a&gt;连接到本站其他网页</span><br><span class="line">&lt;a href=&quot;#&quot;&gt;文字或图片&lt;/a&gt;虚拟超链接，当前并未设定好，暂不设定url</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">图像标签&lt;image /&gt;</span><br><span class="line">图像格式:</span><br><span class="line">JPG:有损压缩,色彩丰富图片</span><br><span class="line">GIF:简单动、背景透明(适合图标logo）</span><br><span class="line">PNG:无损压缩、透明、交错、动画</span><br><span class="line">插入图像：&lt;image src=&quot;路径+文件名&quot; alt=&quot;找不到图片时显示的文字&quot; /&gt;</span><br><span class="line">绝对路径：src=&quot;详细地址&quot;，以根目录为基准</span><br><span class="line">相对路径(推荐)：以该文档所在位置为基准</span><br><span class="line">../表示向上一级文件夹</span><br><span class="line">(1)C:/site/index.html,C:/site/logo.gif  图片与文档在同一文件夹，&lt;image src=&quot;logo.gif&quot; /&gt;</span><br><span class="line">(2)C:/index.html,C:/site/logo.gif       图片在文档下一文件夹，&lt;image src=&quot;site/logo.gif&quot; /&gt;</span><br><span class="line">(3)C:/site/index.html,C:/logo.gif       图片在文档上一文件夹，&lt;image src=&quot;../logo.gif&quot; /&gt;</span><br><span class="line">(4)C:/site/index.html,C:/images/logo.gif 图片与文档份属两文件夹,&lt;image src=&quot;../images/logo.gif&quot; /&gt;(先向上一级，再向下一级)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">区域标签&lt;div&gt;</span><br><span class="line">确定一个单独的却与，如页面一部分或一个栏目板块，可规整网页布局。</span><br><span class="line">&lt;div id=&quot;contanier&quot; align=&quot;center&quot;(设置被包括部分格式居中)&gt;</span><br><span class="line">    &lt;div id=&quot;nav&quot;&gt;</span><br><span class="line">      &lt;p&gt;XXX | YYY&lt;/p&gt;</span><br><span class="line">	&lt;/div&gt;  </span><br><span class="line">	&lt;hr /&gt;</span><br><span class="line">	&lt;div id=&quot;content&quot;&gt;</span><br><span class="line">	  &lt;p&gt;MMMMMM&lt;/p&gt;</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line">&lt;div&gt;</span><br><span class="line">除了外层板块，内部生成两个板块，每个版块可进行单独的css样式设置。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">无序列表&lt;ul&gt; 列表项&lt;li&gt;</span><br><span class="line">常用于超链接组合</span><br><span class="line">&lt;ul&gt;</span><br><span class="line">   &lt;li&gt;XXX&lt;/li&gt;</span><br><span class="line">   &lt;li&gt;YYY&lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br><span class="line">显示时列表项前为小黑点(可通过css设置)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">有序列表&lt;ol&gt; 列表项&lt;li&gt;</span><br><span class="line">&lt;ol&gt;</span><br><span class="line">   &lt;li&gt;XXX&lt;/li&gt;</span><br><span class="line">   &lt;li&gt;YYY&lt;/li&gt;</span><br><span class="line">&lt;/ol&gt;</span><br><span class="line">显示时列表项前为有序数列+.(可通过css设置)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">表格&lt;table&gt;</span><br><span class="line">&lt;th&gt;表头(加粗) &lt;tr&gt;行 &lt;td&gt;单元格</span><br><span class="line">&lt;table border=&quot;1&quot;&gt;</span><br><span class="line">      &lt;tr&gt;</span><br><span class="line">              &lt;td&gt;&lt;/td&gt;  </span><br><span class="line">              &lt;th&gt;语文&lt;/th&gt;  </span><br><span class="line">              &lt;th&gt;数学&lt;/th&gt;</span><br><span class="line">      &lt;/tr&gt; </span><br><span class="line">      &lt;tr&gt;</span><br><span class="line">              &lt;th&gt;一班&lt;/th&gt;   </span><br><span class="line">              &lt;td&gt;80&lt;/td&gt;  </span><br><span class="line">              &lt;td&gt;40&lt;/td&gt;</span><br><span class="line">      &lt;/tr&gt; </span><br><span class="line">      &lt;tr&gt;</span><br><span class="line">              &lt;th&gt;二班&lt;/th&gt;  </span><br><span class="line">              &lt;td&gt;70&lt;/td&gt;  </span><br><span class="line">              &lt;td&gt;60&lt;/td&gt;</span><br><span class="line">      &lt;/tr&gt; </span><br><span class="line">&lt;/table&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">form表单</span><br><span class="line">&lt;form&gt;</span><br><span class="line">&lt;input type=&quot;&quot; /&gt;(插入)</span><br><span class="line">type中属性:</span><br><span class="line">text:文本框</span><br><span class="line">password：密码框</span><br><span class="line">input:提交按钮</span><br><span class="line">reset:重置按钮</span><br><span class="line">radio:单选框(只能选一项)(后可设置checked属性，checked=&quot;checked&quot;,该选项默认被选中)</span><br><span class="line">checked:复选框(可选择任意项)(后可设置checked属性，checked=&quot;checked&quot;,该选项默认被选中)</span><br><span class="line"></span><br><span class="line">&lt;select&gt;(下拉框)</span><br><span class="line">   &lt;option&gt;选项1&lt;/option&gt;</span><br><span class="line">   &lt;option selected=&quot;selected&quot;(默认被选项)&gt;选项2&lt;/option&gt;</span><br><span class="line">&lt;/select&gt;</span><br><span class="line"></span><br><span class="line">文本域:</span><br><span class="line">&lt;textarea rows=&quot;行数&quot; clos=&quot;列数&quot;&gt;默认出现的文本&lt;/textarea&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">语义化标签</span><br><span class="line">&lt;em&gt;斜体+强调&lt;/em&gt;</span><br><span class="line">&lt;i&gt;斜体,无语义&lt;/i&gt;</span><br><span class="line">&lt;strong&gt;粗体+非常强调&lt;/strong&gt;</span><br><span class="line">&lt;b&gt;粗体,无语义&lt;/b&gt;</span><br><span class="line">自定义列表&lt;dl&gt;,列表项&lt;dt&gt;,描述&lt;dd&gt;</span><br><span class="line">&lt;dl&gt;                                 显示</span><br><span class="line">    &lt;dt&gt;HTML&lt;/dt&gt;              HTML</span><br><span class="line">	&lt;dd&gt;超文本标记语言&lt;/dd&gt;        超文本标记语言</span><br><span class="line">	&lt;dt&gt;CSS&lt;/dt&gt;               CSS</span><br><span class="line">	&lt;dd&gt;层叠样式表&lt;/dd&gt;            层叠样式表</span><br><span class="line">&lt;/dl&gt;</span><br></pre></td></tr></table></figure>
+        <h2>首先是nodejs与git的下载<h2>
+这些可以去官网上下载最新版并根据网上的教程安装。nodejs下载完成后，需要安装一下nodeJs和里面的npm工具。然后在本地找一个位置建一个hexo文件夹，然后鼠标右击Git Bash Here，在git指令中输入git init,完成初始化。
+<br>
+
+<h3>接下来是对hexo的下载<h3>
+由于国内的管制所以在连接外网时网速可能达不到下载的要求，这时候就要使用淘宝的镜像分身生成cnpm来代替npm，这里同时要注意最好不要使用内网，不然可能下载不了。接下来附上安装hexo的流程图片。
+<br>
+
+<image src="https://github.com/shaoshengyu/gituser/blob/master/hexo/first.png?raw=true">
+<br><br>
+<image src="https://github.com/shaoshengyu/gituser/blob/master/hexo/second.png?raw=true">
+<br><br>
+<image src="https://github.com/shaoshengyu/gituser/blob/master/hexo/third.png?raw=true">
+<br><br>
+<image src="https://github.com/shaoshengyu/gituser/blob/master/hexo/fourth.png?raw=true">
+<br><br><br>
+
+<h2>最后验证成功<h2>
+登录http://localhost:4000查看发现有hexo自带的主题网页产生。
+<br>
+<image src="https://github.com/shaoshengyu/gituser/blob/master/hexo/last.png?raw=true">
+
+</image></h2></h2></image></image></image></image></h3></h3></h2></h2>
         
         
         <p class="article-more-link">
@@ -756,27 +473,160 @@ html文件
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2019/08/17/SSM/" title="" itemprop="url"></a>
+      <a href="/2019/08/19/gitrejected/" title="对使用git时！【rejected】-master问题的解决" itemprop="url">对使用git时！【rejected】-master问题的解决</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="邵圣煜" target="_blank" itemprop="author">邵圣煜</a>
 		
   <p class="article-time">
-    <time datetime="2019-08-17T14:22:43.062Z" itemprop="datePublished"> 发表于 2019-08-17</time>
+    <time datetime="2019-08-19T11:48:32.690Z" itemprop="datePublished"> 发表于 2019-08-19</time>
     
   </p>
 </header>
     <div class="article-content">
         
-        <h1>对SSM框架的理解</h1>
-SSM框架（Spring+SpringMVC+MyBatis）框架集由Spring、MyBatis两个开源框架整合而成（SpringMVC是Spring中的部分内容）。<br>
-SSM框架通常使用 springMVC为控制器(controller) ，spring 为事务层(service)， MyBatis 负责持久层（dao）。<br>
-SSM框架中pojo类可以与数据库表进行映射，是实体层。<br>
-Spring是一个轻量级的控制反转(IoC)和面向切面(AOP)的容器框架。通过使用注解依赖注入来管理各层的组件，使用AOP切面编程来管理事务，日志，权限等。<br>
-springMVC为控制器，使用Servlet嵌入，分离了控制器、模型对象、分派器以及处理程序对象的角色，让它们更容易进行定制。<br>
-MyBatis持久化dao层，对jdbc的封装。它消除了几乎所有的JDBC代码和参数的手工设置以及结果集的检索，使用简单的 XML或注解用于配置和原始映射将接口和 Java 的POJO层对象映射成数据库中的记录。<br>
-SSM框架我做了一个房源系统，具体实现代码可以访问我的github。https://github.com/shaoshengyu/gituser
+        <p>使用git时有时会出现！【rejected】-master -&gt;master的错误<br><br>如图:<br><br><image src="https://github.com/shaoshengyu/gituser/blob/master/gitrejected/problem.png?raw=true"><br><br><br><br>我的解决方案如下:<br><br><image src="https://github.com/shaoshengyu/gituser/blob/master/gitrejected/resolve.png?raw=true"></image></image></p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2019/08/19/gitinstruction/" title="常用的一些git指令" itemprop="url">常用的一些git指令</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="邵圣煜" target="_blank" itemprop="author">邵圣煜</a>
+		
+  <p class="article-time">
+    <time datetime="2019-08-19T11:48:32.688Z" itemprop="datePublished"> 发表于 2019-08-19</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>mkdir <filename>    ——创建一个文件夹(空目录)   假设filename为learngit<br><br>cd                  ——进入某文件夹目录<br><br>ls                    ——查看所在目录的所有文件<br><br>cat readme.txt        ——查看文件内容<br><br>vi readme.txt      ——进入文件编辑界面<br><br>            1、按i进入编辑模式，此时界面右下角显示insert<br><br>            2、编辑完按esc推出insert模式<br><br>            3、按shift + ：（shift + 冒号键）输入wq。  ps：wq表示保存并退出，只有q表示只退出<br><br>            4、最后按enter键退出界面<br><br>rm readme.txt       ——删除文件<br><br>pwd                 ——用于显示当前目录<br></filename></p>
+<p>初始化仓库<br>git  init                      ——初始化一个Git仓库</p>
+<p>添加文件到Git仓库：<br>    1、git add <file>    ——添加文件，可以反复使用多次<br>            先将文件提交到暂存区<br>    2、git commit -m <message>    ——提交文件到Git仓库，-m后面输入的是本次提交的说明<br>            将暂存区文件一次性commit到master上<br>git status        ——查看仓库当前的状态，随时掌握工作区的状态</message></file></p>
+<p>git diff          ——查看difference，若git status提示文件被修改过，使用该命令查看修改内容</p>
+<p>版本回退<br>    git log           ——查看从最近到最远的提交日志，若嫌输出的信息太多可以加上 –pretty=oneline参数</p>
+<pre><code>git reset --hard HEAD^    ——退回到上一个版本，HEAD表示当前版本
+       git reset命令既可以回退版本，也可以把暂存区的修改回退到工作区。当我们用HEAD时，表示最新的版本。
+
+git reset --hard 7be436d    ——回到退回前的版本(前提是命令行窗口未被关闭，找到上面的对应版本的
+                                版本号)版本号没必要写全，前几位就可以了
+     git reflog                                —— 查看命令历史
+                                                    （可用于版本退回后想要回到退回前，但已关闭命令行窗口）</code></pre><p>管理修改<br>          第一次修改 -&gt; git add -&gt; 第二次修改 -&gt; git add -&gt; git commit        【正确，推荐】</p>
+<pre><code>第一次修改 -&gt; git add -&gt;  第二次修改 -&gt; git commit     【错误】  
+                                            第二次修改没有被提交，只有再进行一次add、commit</code></pre><p>撤销修改 git checkout<br>  —git checkout其实是用版本库里的版本替换工作区的版本，无论工作区是修改还是删除，都可“一键还原”。<br>            使用git status查看仓库当前状态，若有修改 :</p>
+<pre><code>一、git checkout -- &lt;file&gt; 放弃工作区的修改（两种情况）:
+                ----此命令让文件回到最近一次git commit或者git add时的状态
+        1、file自修改后还没有被放到暂存区，此时撤销修改回到和版本库一摸一样的状态。
+                   直接使用此命令
+        2、file已经添加至暂存区，又做了修改，此时撤销就回到添加至暂存区后的状态。
+                    使用git add后，查询仓库状态:
+
+                  首先使用 git reset HEAD readme.txt，将暂存区的修改退回工作区。
+                  再使用 git checkout -- readme.txt  丢弃工作区的修改
+
+二、已经提交了不合适的修改到版本库时，想要撤销本次提交。
+         参考版本回退进行操作，不过前提是没有推送到远程库</code></pre><p>删除文件 rm file<br>            一般情况，直接在文件管理器中删除，或者用 rm test.txt 删除文件 ，此时git知道你删除文件，和版本库不一致   ，git status会提示你那些文件删除了。</p>
+<pre><code>此时有两个选择:
+     1、确实要从版本库删除该文件，则用git rm删掉，并且git commit
+     2、删错了，将误删的文件恢复到最新版本：   git checkout -- test.txt</code></pre><p>创建分支并切换 git checkout -b dev<br>        相当于 git branch dev   之后再 git checkout dev</p>
+<pre><code>查看当前分支  git branch
+日常工作git add file和git commit -m &quot;&quot;
+dev工作完成则切换回master分支 git checkout master
+dev合并到当前分支 git merge dev
+合并完成后删除 git branch -d dev</code></pre><p>分支合并冲突，把合并失败的文件手动修改再提交。</p>
+<p>分支管理策略，平时不在master分支干活，master只用于发布</p>
+<pre><code>2人以下在dev分支工作，2人以上在dev分支的基础上再建立feature分支上工作
+普通模式合并有历史分支  在分支上git add file和git commit -m &quot;&quot;，转回上一分支 git merge --no--ff -m &quot;&quot; dev(或者feature)</code></pre><p>bug分支<br>          突然遇到要修改的bug，将当前dev分支的工作储藏  git stash<br>          然后转到要修复的分支  git checkout bug分支<br>          在bug分支创建临时修改分支  git checkout -b issue-101<br>          完成修复并git add file， git commit -m “fix bug 101”(假设这步版本号为为4c80512)<br>          再切换到bug分支合并 git checkout bug分支    git merge –no–ff -m “” issue-101<br>          bug修复返回dev分支工作  git checkout dev<br>          查看储藏的工作现场   git stash list<br>          恢复现场有2种<br>               1 恢复的同时删除stash  git stash pop<br>               2 恢复时不删除stash  git stash apply  之后想删除可以  git stash drop<br>          可以多次stash，恢复时根据工作现场的版本号(假设为stash@{0})恢复   git stash apply stash@{0}<br>          bug修复的分支的相关分支通常也有相同bug，切换到那些分支执行之前的修复操作 git cherry-pick 4c805e2</p>
+<p>Feature分支 feature-v分支修改完毕但未合并，突然需求变化不再需要，  git branch -D feature-v    </p>
+<p>查看远程仓库信息  git remote<br>查看具体信息      git remote -v<br>推送分支          git push master/dev/feature</p>
+<p>将本地未push的分叉整理成直线  git rebase </p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2019/08/19/csstwo/" title="对于html各标签内内容具体css设计笔记" itemprop="url">对于html各标签内内容具体css设计笔记</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="邵圣煜" target="_blank" itemprop="author">邵圣煜</a>
+		
+  <p class="article-time">
+    <time datetime="2019-08-19T11:48:32.686Z" itemprop="datePublished"> 发表于 2019-08-19</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line">CSS文字样式</span><br><span class="line">单位</span><br><span class="line">px 像素</span><br><span class="line">em 字符</span><br><span class="line">%  百分比</span><br><span class="line">&lt;p&gt;标签不设置样式则默认120%*12px</span><br><span class="line">若设置div字体大小12px</span><br><span class="line">&lt;div&gt;</span><br><span class="line">&lt;h1&gt;&lt;/h1&gt;</span><br><span class="line">&lt;p&gt;&lt;/p&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">受HTML DOM树继承关系，&lt;h1&gt;和&lt;p&gt;标签内容大小为12px</span><br><span class="line"></span><br><span class="line">颜色</span><br><span class="line">red,blue,green</span><br><span class="line">RGB为红色,蓝色,绿色在黑色下调色</span><br><span class="line">reg(x,x,x):RGB值,每个颜色分量取0-255:</span><br><span class="line">红色:rgb(255,0,0),灰色:rgb(66,66,66)(三种颜色分量一样),黑色(0,0,0)</span><br><span class="line">rgb(x%,x%,x%):RGB百分比值0-100%,如红色rgb(100%,0%,0%)</span><br><span class="line">rgba(x,x,x,x):RGB值,透明度(最后一位)</span><br><span class="line">a值(透明度):0.0(完全透明)-1.0(完全不透明) </span><br><span class="line">#rrggbb:十六进制数,如红色:#ff00(#ff0000去掉了重复位)</span><br><span class="line"></span><br><span class="line">文本</span><br><span class="line">属性              描述         取值</span><br><span class="line">color             文本颜色     red #ff00 rgb,rgba</span><br><span class="line">letter-spacing    字符间距     2px  -3px(负数时会产生重叠效果)</span><br><span class="line">line-height       行高         14px 1.5em 120%(将line-height与height设置的一样就能垂直居中)</span><br><span class="line">text-align        对齐         center(居中)  left  right  justify(两端对齐)</span><br><span class="line">text-decoration   装饰线       none(无装饰线）  overline  underline(下划线)  line-through(删除线)</span><br><span class="line">可设置a&#123;text-decoration:none;&#125;，将超链接下划线删除。</span><br><span class="line">text-indent       首行缩进     2em</span><br><span class="line"></span><br><span class="line">字体</span><br><span class="line">font(属性)在一个声明中设置所有字体的属性</span><br><span class="line">font:bold 18px &apos;幼圆&apos;</span><br><span class="line">font-family(字体系列): &quot;HiraginoSans GB&quot;(有空格要加引号),sans-serif；</span><br><span class="line">font-size(字号)  font-style:italic(斜体)  font-weight(粗体):bold </span><br><span class="line">简化font(必须拥有所有属性)</span><br><span class="line">font:斜体   粗体  字号/行高   字体;</span><br><span class="line">font:italic bold  16px/1.5em  &apos;宋体&apos;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">css背景样式</span><br><span class="line">background空元素要先定义元素的高度和宽度</span><br><span class="line">height:30px;</span><br><span class="line">width:600px;</span><br><span class="line">background-color:rgb(未显示图片则显示颜色)</span><br><span class="line">background-image:url(&quot;logo.jpg&quot;)</span><br><span class="line">background-repeat:repeat(全部填充),repeat-x(横向),repeat-y(纵向),no-repeat(填充一次)</span><br><span class="line">background:颜色 图片 repeat;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">css超链接样式(都设置则按以下顺序编写)</span><br><span class="line">a&#123;</span><br><span class="line">    font-size:22px;</span><br><span class="line">&#125;</span><br><span class="line">a:link&#123;</span><br><span class="line">    text-decoration:none;</span><br><span class="line">	color:#09f; /*未访问*/</span><br><span class="line">&#125;</span><br><span class="line">a:visited&#123;</span><br><span class="line">    text-decoration:none;</span><br><span class="line">	color:#930; /*已访问*/</span><br><span class="line">&#125;</span><br><span class="line">a:hover&#123;</span><br><span class="line">    text-decoration:underline;</span><br><span class="line">	font-size:120%;(字体放大,简单同态效果)</span><br><span class="line">	color:#03c; /*鼠标悬停*/</span><br><span class="line">&#125;</span><br><span class="line">a:active&#123;</span><br><span class="line">    text-decoration:none;</span><br><span class="line">    color:#03c; /*按下鼠标*/</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">列表表格样式</span><br><span class="line">css列表样式ul与ol公用</span><br><span class="line">list-style:所有用于列表的属性设置于一个声明中</span><br><span class="line">list-style-image:设置列表项标志的图像</span><br><span class="line">list-style-position:标志的位置(inside向右缩进/outside向左缩进)</span><br><span class="line">list-style-type:标志的类型</span><br><span class="line"></span><br><span class="line">css表格样式table</span><br><span class="line">border-collapse:collapse;合并表格边框</span><br><span class="line">:ntn-child(odd|even)奇偶选择器</span><br><span class="line">tr:nth-child(odd)每行交替显示颜色</span><br></pre></td></tr></table></figure>
+
 
         
         
@@ -820,22 +670,13 @@ SSM框架我做了一个房源系统，具体实现代码可以访问我的githu
 <aside class="clearfix">
 
   
-<div class="github-card">
-<p class="asidetitle">Github 名片</p>
-<div class="github-card" data-github="shaoshengyu" data-theme="medium"></div>
-<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
-</div>
-
-
-
-  
 
   
 
   
   <div class="archiveslist">
     <p class="asidetitle"><a href="/archives">归档</a></p>
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">14</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">16</span></li></ul>
   </div>
 
 

@@ -1,28 +1,27 @@
 
-  
-    <!DOCTYPE HTML>
+ <!DOCTYPE HTML>
 <html lang="zh-CN">
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
   
-    <title>categories | 邵圣煜的博客</title>
+    <title>对MVC的一些了解 | 邵圣煜的博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="邵圣煜">
     
 
     
-    <meta name="description" content="你好，欢迎来到邵圣煜的博客!~">
-<meta property="og:type" content="website">
-<meta property="og:title" content="categories">
-<meta property="og:url" content="http://shaoshengyu.github.io/categories/index.html">
+    <meta name="description" content="MVC框架 MVC全名是Model View Controller，是模型(model)－视图(view)－控制器(controller)的缩写。 MVC的最主要精神之一就是Model与View的分离。  MVC 是一种使用 MVC（Model View Controller 模型-视图-控制器）设计创建 Web 应用程序的模式：（1）Model（模型）表示应用程序核心（比如数据库记录列表）。（2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="对MVC的一些了解">
+<meta property="og:url" content="http://shaoshengyu.github.io/2019/08/19/MVC/index.html">
 <meta property="og:site_name" content="邵圣煜的博客">
-<meta property="og:description" content="你好，欢迎来到邵圣煜的博客!~">
+<meta property="og:description" content="MVC框架 MVC全名是Model View Controller，是模型(model)－视图(view)－控制器(controller)的缩写。 MVC的最主要精神之一就是Model与View的分离。  MVC 是一种使用 MVC（Model View Controller 模型-视图-控制器）设计创建 Web 应用程序的模式：（1）Model（模型）表示应用程序核心（比如数据库记录列表）。（2">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-08-19T14:24:28.531Z">
+<meta property="og:updated_time" content="2019-08-19T13:57:16.607Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="categories">
-<meta name="twitter:description" content="你好，欢迎来到邵圣煜的博客!~">
+<meta name="twitter:title" content="对MVC的一些了解">
+<meta name="twitter:description" content="MVC框架 MVC全名是Model View Controller，是模型(model)－视图(view)－控制器(controller)的缩写。 MVC的最主要精神之一就是Model与View的分离。  MVC 是一种使用 MVC（Model View Controller 模型-视图-控制器）设计创建 Web 应用程序的模式：（1）Model（模型）表示应用程序核心（比如数据库记录列表）。（2">
 
     
     <link rel="alternative" href="/atom.xml" title="邵圣煜的博客" type="application/atom+xml">
@@ -37,9 +36,9 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 </html>
-      <body>
-        <header>
-          
+  <body>
+    <header>
+      
 <div>
 		
 			<div id="imglogo">
@@ -76,28 +75,35 @@
 				</ul>
 			</nav>			
 </div>
-        </header>
-        <div id="container">
-          <div id="main" class="page" itemscope itemprop="blogPost">
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
   
 	<article itemprop="articleBody"> 
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/categories/index.html" title="categories" itemprop="url">categories</a>
+      <a href="/2019/08/19/MVC/" title="对MVC的一些了解" itemprop="url">对MVC的一些了解</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="邵圣煜" target="_blank" itemprop="author">邵圣煜</a>
 		
   <p class="article-time">
-    <time datetime="2019-08-19T11:43:31.000Z" itemprop="datePublished"> 发表于 2019-08-19</time>
+    <time datetime="2019-08-19T11:48:32.694Z" itemprop="datePublished"> 发表于 2019-08-19</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
-		  
+		<h2>MVC框架</h2>
+MVC全名是Model View Controller，是模型(model)－视图(view)－控制器(controller)的缩写。<br>
+MVC的最主要精神之一就是Model与View的分离。<br><br>
+
+<p>MVC 是一种使用 MVC（Model View Controller 模型-视图-控制器）设计创建 Web 应用程序的模式：<br><br>（1）Model（模型）表示应用程序核心（比如数据库记录列表）。<br><br>（2）View（视图）显示数据（数据库记录）。<br><br>（3）Controller（控制器）处理输入（写入数据库记录）。<br><br></p>
+<p>MVC指MVC模式的某种框架，它强制性的使应用程序的输入、处理和输出分开。<br><br>使用MVC应用程序被分成三个核心部件：模型、视图、控制器。它们各自处理自己的任务。最典型的MVC就是JSP + servlet + javabean的模式。<br><br></p>
+<p>Java Web开发模式在发展中经历了Model 1模式和Model 2模式。<br><br>Model 1模式是以JSP为主的开发模式，分为完全用JSP开发和使用JSP+JavaBean来设计。<br><br>完全使用JSP开发，开发时间较短，但程序可读性较低，程序重复利用率较低，维护成本大。<br><br>使用JSP+JavaBean开发，程序可读性与重复利用率提高，但流程控制不清晰，仍然不易维护。<br><br>Model 2模式即Java Web应用的MVC模式，通过JavaBean、EJB等组件来实现MVC的模型层，通过JSP实现MVC的视图层，通过Servlet实现MVC的控制层。<br><br>Model 2模式的组件可以交互与重用弥补了Model 1的不足，开发流程明确，核心程序管控，更易维护。但Model2 的开发时间较长，在系统设计上花费更多时间。<br></p>
+  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -109,7 +115,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://shaoshengyu.github.io/categories/index.html" data-title="categories | 邵圣煜的博客" data-tsina="" class="share clearfix">
+	  <div data-url="http://shaoshengyu.github.io/2019/08/19/MVC/" data-title="对MVC的一些了解 | 邵圣煜的博客" data-tsina="" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -120,13 +126,78 @@
    	       
 	</article>
 	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2019/08/19/shopping/" title="自编的一个简单购物车">
+  <strong>上一篇：</strong><br/>
+  <span>
+  自编的一个简单购物车</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2019/08/19/html/"  title="关于html页面标签的一些理解">
+ <strong>下一篇：</strong><br/> 
+ <span>关于html页面标签的一些理解
+</span>
+</a>
+</div>
+
+</nav>
+
 	
 
 
 
 </div>  
-        </div>
-        <footer><div id="footer" >
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+  
+
+  
+  <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">归档</a></p>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">16</span></li></ul>
+  </div>
+
+
+  
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://how2j.cn" target="_blank" title="一个学习java宝地与前端css库">How2j</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.liaoxuefeng.com" target="_blank" title="Liaoxuefeng&#39;s Website">Liaoxuefeng&#39;s Website</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
 	
 	<div class="line">
 		<span></span>
@@ -167,7 +238,7 @@
 		</p>
 </div>
 </footer>
-        <script src="/js/jquery-2.0.3.min.js"></script>
+    <script src="/js/jquery-2.0.3.min.js"></script>
 <script src="/js/jquery.imagesloaded.min.js"></script>
 <script src="/js/gallery.js"></script>
 <script src="/js/jquery.qrcode-0.12.0.min.js"></script>
@@ -213,6 +284,32 @@ $(document).ready(function(){
       o.css('display', 'none');
         
     }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
   });
 });
 </script>
@@ -337,6 +434,5 @@ var _hmt = _hmt || [];
 
 <!-- Tiny_search End -->
 
-      </body>
-     </html>
-     
+  </body>
+</html>

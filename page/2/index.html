@@ -84,27 +84,20 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2019/08/17/actionscope/" title="" itemprop="url"></a>
+      <a href="/2019/08/19/cssthree/" title="盒子模型" itemprop="url">盒子模型</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="邵圣煜" target="_blank" itemprop="author">邵圣煜</a>
 		
   <p class="article-time">
-    <time datetime="2019-08-17T14:21:07.770Z" itemprop="datePublished"> 发表于 2019-08-17</time>
+    <time datetime="2019-08-19T11:48:32.685Z" itemprop="datePublished"> 发表于 2019-08-19</time>
     
   </p>
 </header>
     <div class="article-content">
         
-        <h1>对JavaWeb四大作用域的理解</h1>
-
-<p>application作用域：application应用域，是程序全局变量，对每个用户每个页面都有效。存放在ServletContext对象中。它的存活时间是最长的，只要服务器开启，如果不进行手工删除，它们就一直可以使用。</p>
-<p>session作用域：session会话域，Session是用户全局变量，在整个会话期间都有效。只要页面不关闭就一直有效（或者直到用户一直未活动导致会话过期，默认session过期时间为30分钟，或调用HttpSession的invalidate()方法）。</p>
-<p>servletRequest作用域：request请求域生存时间为一次完整请求全过程，即从http请求到服务器处理结束，返回响应的整个过程，存放在HttpServletRequest对象中。在这个过程中可以使用forward方式跳转多个jsp。在这些页面里你都可以使用这个变量。</p>
-<p>PageContext作用域：PageContext页面域是范围最小的一个域，仅当前页面有效或在一个jsp页面里有效。</p>
-<p>帮助理解的小程序，可以在不同浏览器刷新查看结果的不同。<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"> &lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;</span><br><span class="line">    pageEncoding=&quot;UTF-8&quot;%&gt;</span><br><span class="line">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;%</span><br><span class="line">		int pageCount = 1;</span><br><span class="line">		int sessionCount = 1;</span><br><span class="line">		int applicationCount = 1;</span><br><span class="line">		</span><br><span class="line">		//页面域计数</span><br><span class="line">		if (pageContext.getAttribute(&quot;pageCount&quot;) != null) &#123;</span><br><span class="line">			pageCount = Integer.parseInt(pageContext.getAttribute(&quot;pageCount&quot;).toString());</span><br><span class="line">			pageCount++;</span><br><span class="line">		&#125;</span><br><span class="line">		pageContext.setAttribute(&quot;pageCount&quot;, pageCount);</span><br><span class="line">		</span><br><span class="line">		//会话域计数(一个浏览器打开到关闭)</span><br><span class="line">		if (session.getAttribute(&quot;sessionCount&quot;) != null) &#123;</span><br><span class="line">			sessionCount = Integer.parseInt(session.getAttribute(&quot;sessionCount&quot;).toString());</span><br><span class="line">			sessionCount++;</span><br><span class="line">		&#125;</span><br><span class="line">		session.setAttribute(&quot;sessionCount&quot;, sessionCount);</span><br><span class="line">		</span><br><span class="line">		//应用域计数(Web项目服务运行全程)</span><br><span class="line">		if (application.getAttribute(&quot;applicationCount&quot;) != null) &#123;</span><br><span class="line">			applicationCount = Integer.parseInt(application.getAttribute(&quot;applicationCount&quot;).toString());</span><br><span class="line">			applicationCount++;</span><br><span class="line">		&#125;</span><br><span class="line">		application.setAttribute(&quot;applicationCount&quot;, applicationCount);</span><br><span class="line">	%&gt;</span><br><span class="line">	</span><br><span class="line">	&lt;p&gt;</span><br><span class="line">		页面域计数：&lt;%=pageCount%&gt;&lt;/p&gt;</span><br><span class="line">	&lt;p&gt;</span><br><span class="line">		会话域计数：&lt;%=sessionCount%&gt;&lt;/p&gt;</span><br><span class="line">	&lt;p&gt;</span><br><span class="line">		应用域计数：&lt;%=applicationCount%&gt;&lt;/p&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
-
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">content内容 padding(内边距) border(边界) margin(外边距) </span><br><span class="line">padding,border,margin都有(top,right,bottom,left)(顶部，右部，底部，左部)</span><br><span class="line">width=左右各部+content-width</span><br><span class="line">height=顶底各部+content-height</span><br><span class="line">当内容溢出盒子，overflow属性：hidden(超出部分不可见),scroll(显示滚动条),auto(如果有超出部分显示滚动条)</span><br><span class="line">border属性:</span><br><span class="line">border-width:px</span><br><span class="line">border-style:dashed(虚线)、dotted(点)、solid(实现)、double(双实线)</span><br><span class="line">border-color:颜色</span><br><span class="line">border:width style color</span><br><span class="line">水平分割线(例子):</span><br><span class="line">.line&#123;</span><br><span class="line">   height:1px;</span><br><span class="line">   width:500px;</span><br><span class="line">   border-top:1px solid #e5e5e5;(上边线)</span><br><span class="line">&#125;</span><br><span class="line">对浏览器默认的设置清零</span><br><span class="line">*&#123;</span><br><span class="line">  margin:0;</span><br><span class="line">  padding:0</span><br><span class="line">&#125;</span><br><span class="line">margin:1px 2px 1px 3px;(按顺时针)(顶,右,底,左)</span><br><span class="line">margin:1px(代表4边间距都为1px)</span><br><span class="line">margin不设置全四边,则未设置bottom与top相同,未设置left与right相同。</span><br><span class="line">margin的合并:垂直方向合并(哪个margin-width大,取哪个)，水平方向不合并</span><br><span class="line">图片、文字水平居中:text-align:center;</span><br><span class="line">水平居中:margin:auto;</span><br></pre></td></tr></table></figure>
         
         
         <p class="article-more-link">
@@ -140,38 +133,20 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2019/08/17/MVC/" title="" itemprop="url"></a>
+      <a href="/2019/08/19/cssfour/" title="CSS定位机制" itemprop="url">CSS定位机制</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="邵圣煜" target="_blank" itemprop="author">邵圣煜</a>
 		
   <p class="article-time">
-    <time datetime="2019-08-17T14:10:32.422Z" itemprop="datePublished"> 发表于 2019-08-17</time>
+    <time datetime="2019-08-19T11:48:32.683Z" itemprop="datePublished"> 发表于 2019-08-19</time>
     
   </p>
 </header>
     <div class="article-content">
         
-        <h1>对MVC的一些了解</h1>
-<h2>MVC框架</h2>
-MVC全名是Model View Controller，是模型(model)－视图(view)－控制器(controller)的缩写。<br>
-MVC的最主要精神之一就是Model与View的分离。<br><br>
-
-MVC 是一种使用 MVC（Model View Controller 模型-视图-控制器）设计创建 Web 应用程序的模式：<br>
-（1）Model（模型）表示应用程序核心（比如数据库记录列表）。<br>
-（2）View（视图）显示数据（数据库记录）。<br>
-（3）Controller（控制器）处理输入（写入数据库记录）。<br><br>
-
-MVC指MVC模式的某种框架，它强制性的使应用程序的输入、处理和输出分开。<br>
-使用MVC应用程序被分成三个核心部件：模型、视图、控制器。它们各自处理自己的任务。最典型的MVC就是JSP + servlet + javabean的模式。<br><br>
-
-Java Web开发模式在发展中经历了Model 1模式和Model 2模式。<br>
-Model 1模式是以JSP为主的开发模式，分为完全用JSP开发和使用JSP+JavaBean来设计。<br>
-完全使用JSP开发，开发时间较短，但程序可读性较低，程序重复利用率较低，维护成本大。<br>
-使用JSP+JavaBean开发，程序可读性与重复利用率提高，但流程控制不清晰，仍然不易维护。<br>
-Model 2模式即Java Web应用的MVC模式，通过JavaBean、EJB等组件来实现MVC的模型层，通过JSP实现MVC的视图层，通过Servlet实现MVC的控制层。<br>
-Model 2模式的组件可以交互与重用弥补了Model 1的不足，开发流程明确，核心程序管控，更易维护。但Model2 的开发时间较长，在系统设计上花费更多时间。<br>
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">文档流定位</span><br><span class="line">元素分类：</span><br><span class="line">block(独占一行,可设置height、width、margin、padding):</span><br><span class="line">常见的有:&lt;div&gt;,&lt;p&gt;,&lt;h1&gt;...&lt;h6&gt;,&lt;ol&gt;,&lt;ul&gt;,&lt;table&gt;,&lt;form&gt;</span><br><span class="line">inline(不独占一行,width就是包含图片和文字宽度不可改变):</span><br><span class="line">常见的有&lt;span&gt;、&lt;a&gt;(元素间会有间距问题)</span><br><span class="line">inline-block(不独占一行,但可设置height、width、margin、padding):</span><br><span class="line">元素类型转换:display属性</span><br><span class="line">display:block/inline/inline/block</span><br><span class="line"></span><br><span class="line">浮动定位</span><br><span class="line">float浮动             clear清除浮动</span><br><span class="line">float:left            clear:left(左侧不会有浮动对象)</span><br><span class="line">flooat:right          clear:right(右侧不会有浮动对象)</span><br><span class="line">float:none(不浮动)    clear:both(两侧不出现浮动，独占一行)</span><br><span class="line">使用float若宽度不够会丢失原有的位置。</span><br><span class="line"></span><br><span class="line">层定位</span><br><span class="line">position属性:</span><br><span class="line">static没有定位</span><br><span class="line">fixed固定定位(相对于浏览器窗口)</span><br><span class="line">relative相对定位(相对于父元素,原位置依然保留，不会被占据)</span><br><span class="line">absolute绝对定位(相对于static定位以外的第一个父元素，原位置不再存在，会被其他盒子占据)</span><br><span class="line">top,right,bottom,left属性:以当前盒子为参照物</span><br><span class="line">z-index:值大的在上面覆盖小的(设置极大或极小值（负数）来设置底层)</span><br></pre></td></tr></table></figure>
         
         
         <p class="article-more-link">
@@ -207,23 +182,268 @@ Model 2模式的组件可以交互与重用弥补了Model 1的不足，开发流
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2019/08/17/ajax/" title="" itemprop="url"></a>
+      <a href="/2019/08/19/ccsone/" title="对css添加方法和选择器的一些理解与记录" itemprop="url">对css添加方法和选择器的一些理解与记录</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="邵圣煜" target="_blank" itemprop="author">邵圣煜</a>
 		
   <p class="article-time">
-    <time datetime="2019-08-17T12:04:35.358Z" itemprop="datePublished"> 发表于 2019-08-17</time>
+    <time datetime="2019-08-19T11:48:32.681Z" itemprop="datePublished"> 发表于 2019-08-19</time>
     
   </p>
 </header>
     <div class="article-content">
         
-        <body>
-<h1>Ajax基础</h1>
-<br><br>
-Ajax是一种对传统Web应用模式加以扩展的技术，可以在不重新加载网页的情况下通过异步请求方式对网页进行局部刷新，是非阻塞的。<br>
+        <p>平常接触后端较多，最近发现了前端的一些乐趣，做了一些css样式的笔记。</p>
+<pre><code>CSS层叠样式表
+内容和样式相分离，便于修改样式。
+
+CSS语法
+&lt;p&gt;XXXXX&lt;/p&gt;(html中)
+CSS中
+p(选择器，此处选择html中&lt;p&gt;标签){
+    font-size:12px;     /*字号*/
+    color:blue;         /*文字颜色*/
+    font-weight:bold;   /*加粗*/
+    属性名:属性值;      /*注释，可跨行*/
+}    
+
+css添加方法
+
+(1)行内: 
+&lt;body&gt;
+&lt;p style=&quot;color:red;&quot;&gt;XXX&lt;/p&gt;
+&lt;/body&gt;
+
+(2)内嵌样式: (适合文件少，css代码也不多的情况)
+&lt;head&gt;
+  &lt;style type=&quot;text/css&quot;&gt;
+   p{
+       color:red;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;p&gt;XXX&lt;/p&gt;
+&lt;/body&gt;
+
+(3)单独文件(外联样式表文件)
+现有css文件夹与1.html和2.html处于同一文件夹，css文件夹中有style.css
+style.css外联样式表文件
+p{
+color:
+}
+1.html网页文件
+&lt;head&gt;
+  &lt;link rel=&quot;stylesheet&quot;(连接文件的类型) href=&quot;css/style.css&quot;(文件相对路径) /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;p&gt;XXX&lt;/p&gt;
+&lt;/body&gt;
+&lt;/head&gt;
+
+优先级：
+多重样式可以层叠，可以覆盖
+样式的优先按照就近原则
+行内样式&gt;内嵌样式&gt;连接样式&gt;浏览器默认样式
+例子:
+外联样式表文件
+h3{
+color:red
+text-align:left;
+font-size:8pt;
+}
+内嵌样式
+h3{
+text-align:right;
+font-size:20pt
+}
+
+html中h3得到的样式
+clor&quot;red;
+text-aligen:right;
+font-size:20pt;
+
+
+CSS选择器
+
+标签选择器
+&lt;style type=&quot;text/css&quot;&gt;
+  body{background-color:#ccc;(背景灰色)
+  text-align:center(居中)
+  font-size:12px}
+  h1{font:&quot;黑体&quot;,font-size:20px;}
+  p{color:red;}
+  hr{width:200px;}
+&lt;style&gt;
+
+类别选择器
+css文件
+p  { font-size:12px;}
+ .one{font-size:18px;}(注意one前面要加点)
+ .two{font-size:24px;}
+html文件
+&lt;body&gt;
+  &lt;p class=&quot;one&quot;&gt;18px&lt;/p&gt;(注意one前面不要加点)
+  &lt;p class=&quot;one&quot;&gt;18px&lt;/p&gt;
+  &lt;p class=&quot;two&quot;&gt;24px&lt;/p&gt;
+  &lt;p class=&quot;two&quot;&gt;24px&lt;/p&gt;
+  &lt;p&gt;12px&lt;/p&gt;
+&lt;/body&gt;
+
+ID选择器(与class的区别在于唯一性)
+css文件
+ #one{font-size:12px;}
+ #two{font-size:24px;}
+html文件
+&lt;body&gt;
+  &lt;p id=&quot;one&quot;&gt;12px&lt;/p&gt;
+  &lt;p id=&quot;two&quot;&gt;24px&lt;/p&gt;
+&lt;/body&gt;
+
+嵌套声明
+css文件
+p span{color:red;}(用空格隔断标签)
+html文件
+&lt;body&gt;
+&lt;p&gt;&lt;span&gt;红色的字&lt;/span&gt;XXXX&lt;/p&gt;
+&lt;/body&gt;
+
+集体声明
+css文件
+h1,p{text-align:center;}(用,隔断标签)
+html文件
+&lt;body&gt;
+ &lt;h1&gt;居中的字&lt;/h1&gt;
+ &lt;p&gt;居中的字&lt;/p&gt;
+&lt;body&gt;
+
+全局声明
+css文件
+*{
+   text-align:center
+}
+html文件
+&lt;body&gt;
+所有未就近设置其他样式的标签内容居中
+&lt;body&gt;
+
+混合
+id选择器不可多个同时使用。
+可同时使用一个id选择器和多个class选择器。
+css文件
+#my{}
+.one{}
+.yellow{}
+.left{}
+html文件
+&lt;div id=&quot;my&quot; class=&quot;one yellow left&quot;&gt;......&lt;div&gt;
+
+
+
+
+
+</code></pre>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2019/08/19/candel/" title="自编的一些帮助理解c标签以及el表达式的代码" itemprop="url">自编的一些帮助理解c标签以及el表达式的代码</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="邵圣煜" target="_blank" itemprop="author">邵圣煜</a>
+		
+  <p class="article-time">
+    <time datetime="2019-08-19T11:48:32.680Z" itemprop="datePublished"> 发表于 2019-08-19</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>对c标签与el表达式重新学习了一下，有所收获写下一些代码。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@page import=&quot;java.util.HashMap&quot;%&gt;</span><br><span class="line">&lt;%@page import=&quot;java.util.Map&quot;%&gt;</span><br><span class="line">&lt;%@page import=&quot;java.util.ArrayList&quot;%&gt;</span><br><span class="line">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;</span><br><span class="line">    pageEncoding=&quot;UTF-8&quot; import=&quot;com.cha4.Book&quot;%&gt;</span><br><span class="line">&lt;%@taglib prefix=&quot;c&quot; uri=&quot;http://java.sun.com/jsp/jstl/core&quot;%&gt;</span><br><span class="line">&lt;%@taglib prefix=&quot;fn&quot; uri=&quot;http://java.sun.com/jsp/jstl/functions&quot;%&gt;</span><br><span class="line">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line"></span><br><span class="line">&lt;c:set var=&quot;hello&quot; value=&quot;Hello JSTL!&lt;br/&gt;&quot; scope=&quot;session&quot;/&gt;</span><br><span class="line">&lt;c:out value=&quot;$&#123;hello &#125;&quot; escapeXml=&quot;false&quot; default=&quot;Goodby!&lt;br/&gt;&quot;&gt;&lt;/c:out&gt;</span><br><span class="line">&lt;c:out value=&quot;$&#123;hello &#125;&quot; escapeXml=&quot;true&quot;&gt;&lt;/c:out&gt;</span><br><span class="line">&lt;c:out value=&quot;$&#123;hello2 &#125;&quot; escapeXml=&quot;false&quot; default=&quot;Goodby!&lt;br/&gt;&quot;&gt;&lt;/c:out&gt;</span><br><span class="line">$&#123;fn:substring(hello,0,5)&#125;&lt;br&gt;</span><br><span class="line"></span><br><span class="line">&lt;c:if test=&quot;$&#123;not empty sessionScope.hello&#125;&quot;&gt;</span><br><span class="line">     欢迎您：$&#123;sessionScope.hello&#125;</span><br><span class="line">&lt;/c:if&gt;</span><br><span class="line"></span><br><span class="line">&lt;c:set var=&quot;score&quot; value=&quot;85&quot;&gt;&lt;/c:set&gt;</span><br><span class="line">&lt;c:choose&gt;</span><br><span class="line">&lt;c:when test=&quot;$&#123;score&gt;=90&#125;&quot;&gt;</span><br><span class="line">优秀&lt;br/&gt;</span><br><span class="line">&lt;/c:when&gt;</span><br><span class="line">&lt;c:when test=&quot;$&#123;score&lt;90&amp;&amp;score&gt;=60&#125;&quot;&gt;</span><br><span class="line">良好&lt;br/&gt;</span><br><span class="line">&lt;/c:when&gt;</span><br><span class="line">&lt;c:otherwise&gt;</span><br><span class="line">不及格&lt;br/&gt;</span><br><span class="line">&lt;/c:otherwise&gt;</span><br><span class="line">&lt;/c:choose&gt;</span><br><span class="line"></span><br><span class="line">&lt;%</span><br><span class="line">ArrayList list=new ArrayList();</span><br><span class="line">list.add(&quot;一&quot;);</span><br><span class="line">list.add(2);</span><br><span class="line">list.add(3.6);</span><br><span class="line">list.add(&quot;si&quot;);</span><br><span class="line">session.setAttribute(&quot;list&quot;, list);</span><br><span class="line">%&gt;</span><br><span class="line">&lt;c:forEach items=&quot;$&#123;sessionScope.list&#125;&quot; var=&quot;item&quot; varStatus=&quot;vst&quot;&gt;</span><br><span class="line">序号$&#123;vst.index+1&#125;:$&#123;item&#125;&lt;br&gt;</span><br><span class="line">&lt;%//判断一个数是否在集合内 %&gt;</span><br><span class="line">&lt;c:if test=&quot;$&#123;item eq &apos;2&apos;&#125;&quot;&gt;</span><br><span class="line">存在&lt;br/&gt;</span><br><span class="line">&lt;/c:if&gt;</span><br><span class="line">&lt;/c:forEach&gt;</span><br><span class="line">&lt;%=list.get(2)%&gt;&lt;br&gt;</span><br><span class="line"></span><br><span class="line">&lt;c:forEach begin=&quot;3&quot; end=&quot;10&quot; step=&quot;2&quot; var=&quot;num&quot;&gt;</span><br><span class="line">$&#123;num&#125;&lt;br&gt;</span><br><span class="line">&lt;/c:forEach&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;%</span><br><span class="line">//无序</span><br><span class="line">Map&lt;String,Book&gt; map=new HashMap&lt;String,Book&gt;();</span><br><span class="line">map.put(&quot;Java基础&quot;,new Book(&quot;Java基础开发&quot;,50));</span><br><span class="line">map.put(&quot;Java高级&quot;,new Book(&quot;Java高级开发&quot;,60));</span><br><span class="line">map.put(&quot;JavaWeb&quot;,new Book(&quot;JavaWeb开发&quot;,70));</span><br><span class="line">map.put(&quot;Java框架&quot;,new Book(&quot;Java框架开发&quot;,80));</span><br><span class="line">request.setAttribute(&quot;bookMap&quot;,map);</span><br><span class="line">%&gt;</span><br><span class="line">&lt;c:forEach items=&quot;$&#123;requestScope.bookMap&#125;&quot; var=&quot;book&quot;&gt;</span><br><span class="line">$&#123;book.key&#125;:$&#123;book.value.name&#125;--$&#123;book.value&#125;&lt;br&gt;&lt;br&gt;</span><br><span class="line">&lt;/c:forEach&gt;</span><br><span class="line">&lt;%=map.get(&quot;Java基础&quot;).getName() %&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;c:set var=&quot;number&quot; value=&quot;a,b,c,d,e&quot;&gt;&lt;/c:set&gt;</span><br><span class="line">&lt;c:forTokens items=&quot;$&#123;number&#125;&quot; var=&quot;num&quot; delims=&quot;,&quot; varStatus=&quot;no&quot;&gt;</span><br><span class="line">&lt;c:out value=&quot;$&#123;no.count&#125;&quot;/&gt;.&lt;c:out value=&quot;$&#123;num&#125;&quot;/&gt;</span><br><span class="line">&lt;/c:forTokens&gt;</span><br><span class="line">&lt;br&gt;</span><br><span class="line"></span><br><span class="line">&lt;c:catch var=&quot;myException&quot;&gt;</span><br><span class="line">&lt;%=5/0 %&gt;</span><br><span class="line">&lt;/c:catch&gt;</span><br><span class="line">&lt;c:out value=&quot;$&#123;myException&#125;&lt;br/&gt;&quot; escapeXml=&quot;false&quot;&gt;&lt;/c:out&gt;</span><br><span class="line">&lt;c:out value=&quot;$&#123;myException.message&#125;&lt;br/&gt;&quot;&gt;&lt;/c:out&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2019/08/19/ajax/" title="Ajax基础" itemprop="url">Ajax基础</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="邵圣煜" target="_blank" itemprop="author">邵圣煜</a>
+		
+  <p class="article-time">
+    <time datetime="2019-08-19T11:48:32.678Z" itemprop="datePublished"> 发表于 2019-08-19</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>Ajax是一种对传统Web应用模式加以扩展的技术，可以在不重新加载网页的情况下通过异步请求方式对网页进行局部刷新，是非阻塞的。<br></p>
 <h2>基于Ajax的关键技术有：</h2><br>
 （1）使用XHTML（HTML）和CSS构建标准化的展示层。<br>
 （2）使用DOM进行动态交互和显示。<br>
@@ -231,7 +451,8 @@ Ajax是一种对传统Web应用模式加以扩展的技术，可以在不重新�
 （4）使用XMLHttpRequest来和服务器进行异步通信。<br>
 （5）使用JavaScript将所有元素绑定在一起。<br>
 XMLHttpRequest是Ajax技术得以实现的一个重要JavaScript对象。<br>
-<br><br>
+
+
 <h2>Ajax实例实现一般需要几个步骤：</h2><br>
 （1）在页面中定义Ajax请求的触发事件。<br>
 （2）创建XMLHttpRequest对象。<br>
@@ -240,23 +461,16 @@ XMLHttpRequest是Ajax技术得以实现的一个重要JavaScript对象。<br>
 （5）通过XMLHttpRequest对象的onreadystatechange属性指定响应事件处理函数。<br>
 （6）在函数中根据响应状态进行数据获取和数处理工作。<br>
 （7）调用XMLHttpRequest对象的send()方法向服务器发出请求。<br>
-<br>
+
 <p>其中open()方法必须包含mthod(特定请求方法)，url(所调用资源的url)这两个参数，其他参数可选(asynch一般不写默认为true，表示异步,可设为false表示同步)。
 onreadystatechange属性中主要有readyState和status两个属性。readyState可设为0,1,2,3,4这五个值。0表示XMLHttpRequest对象已创建但未初始化，
 1表示请求准备发送到服务器，2表示请求已发送到服务器但未响应，3表示正在接收但只接收到HTTP响应头部信息，4表示响应已完全被接收。所以readyState常设为4表示已
 接收完成信息。status描述了HTTP状态码，包括200（请求成功），202请求未接收但处理未完成，400（错误请求），404（请求资源未找到），500（内部服务器错误）。
 通常status设为200。</p>
-<br>
-JSON是基于JavaScript的一种轻量级数据格式，易于阅读和编写，也易于机器解析和生成，是理想的数据交换语言。<br>
-JSON有两种结构：（1）"名/值"对的集合 （2）值得有序列表<br>
-JSON格式相比XML格式在可读性，可扩展性，编码难度，解码难度，流行度等方面都更具有优势。<br>
-我个人的体会来说，JSON格式在编码时代码量大大减少，不需要XML格式使用时的关于XMLHttpRequest对象的操作。<br>
-使用插件后前后端发送接收信息都使用JSON格式，无需复杂的编码解码过程。
-<br>
-JQuery是一种免费开源兼多浏览器的JavaScript库其核心理念是：write less,do more。<br>
-JQuery的语法设计可以使开发者更加便捷操作，例如操作文档对象，选择DOM元素，事件处理以及Ajax以及其他功能。<br>
-我认为jQuery就是一种简洁的语言，在Ajax中使用JQuery，可以使代码变得简介而且可以更容易实现一些操作。
-</body>
+
+<p>JSON是基于JavaScript的一种轻量级数据格式，易于阅读和编写，也易于机器解析和生成，是理想的数据交换语言。<br><br>JSON有两种结构：（1）”名/值”对的集合 （2）值得有序列表<br><br>JSON格式相比XML格式在可读性，可扩展性，编码难度，解码难度，流行度等方面都更具有优势。<br><br>我个人的体会来说，JSON格式在编码时代码量大大减少，不需要XML格式使用时的关于XMLHttpRequest对象的操作。<br><br>使用插件后前后端发送接收信息都使用JSON格式，无需复杂的编码解码过程。</p>
+<p>JQuery是一种免费开源兼多浏览器的JavaScript库其核心理念是：write less,do more。<br><br>JQuery的语法设计可以使开发者更加便捷操作，例如操作文档对象，选择DOM元素，事件处理以及Ajax以及其他功能。<br><br>我认为jQuery就是一种简洁的语言，在Ajax中使用JQuery，可以使代码变得简介而且可以更容易实现一些操作。</p>
+
         
         
         <p class="article-more-link">
@@ -292,44 +506,25 @@ JQuery的语法设计可以使开发者更加便捷操作，例如操作文档�
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2019/08/17/hexo/" title="" itemprop="url"></a>
+      <a href="/2019/08/19/actionscope/" title="对JavaWeb四大作用域的理解" itemprop="url">对JavaWeb四大作用域的理解</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="邵圣煜" target="_blank" itemprop="author">邵圣煜</a>
 		
   <p class="article-time">
-    <time datetime="2019-08-17T11:15:05.922Z" itemprop="datePublished"> 发表于 2019-08-17</time>
+    <time datetime="2019-08-19T11:48:32.675Z" itemprop="datePublished"> 发表于 2019-08-19</time>
     
   </p>
 </header>
     <div class="article-content">
         
-        <h1>解决网络问题的Hexo下载与安装<h1>
+        <p>application作用域：application应用域，是程序全局变量，对每个用户每个页面都有效。存放在ServletContext对象中。它的存活时间是最长的，只要服务器开启，如果不进行手工删除，它们就一直可以使用。</p>
+<p>session作用域：session会话域，Session是用户全局变量，在整个会话期间都有效。只要页面不关闭就一直有效（或者直到用户一直未活动导致会话过期，默认session过期时间为30分钟，或调用HttpSession的invalidate()方法）。</p>
+<p>servletRequest作用域：request请求域生存时间为一次完整请求全过程，即从http请求到服务器处理结束，返回响应的整个过程，存放在HttpServletRequest对象中。在这个过程中可以使用forward方式跳转多个jsp。在这些页面里你都可以使用这个变量。</p>
+<p>PageContext作用域：PageContext页面域是范围最小的一个域，仅当前页面有效或在一个jsp页面里有效。</p>
+<p>帮助理解的小程序，可以在不同浏览器刷新查看结果的不同。<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"> &lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;</span><br><span class="line">    pageEncoding=&quot;UTF-8&quot;%&gt;</span><br><span class="line">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;%</span><br><span class="line">		int pageCount = 1;</span><br><span class="line">		int sessionCount = 1;</span><br><span class="line">		int applicationCount = 1;</span><br><span class="line">		</span><br><span class="line">		//页面域计数</span><br><span class="line">		if (pageContext.getAttribute(&quot;pageCount&quot;) != null) &#123;</span><br><span class="line">			pageCount = Integer.parseInt(pageContext.getAttribute(&quot;pageCount&quot;).toString());</span><br><span class="line">			pageCount++;</span><br><span class="line">		&#125;</span><br><span class="line">		pageContext.setAttribute(&quot;pageCount&quot;, pageCount);</span><br><span class="line">		</span><br><span class="line">		//会话域计数(一个浏览器打开到关闭)</span><br><span class="line">		if (session.getAttribute(&quot;sessionCount&quot;) != null) &#123;</span><br><span class="line">			sessionCount = Integer.parseInt(session.getAttribute(&quot;sessionCount&quot;).toString());</span><br><span class="line">			sessionCount++;</span><br><span class="line">		&#125;</span><br><span class="line">		session.setAttribute(&quot;sessionCount&quot;, sessionCount);</span><br><span class="line">		</span><br><span class="line">		//应用域计数(Web项目服务运行全程)</span><br><span class="line">		if (application.getAttribute(&quot;applicationCount&quot;) != null) &#123;</span><br><span class="line">			applicationCount = Integer.parseInt(application.getAttribute(&quot;applicationCount&quot;).toString());</span><br><span class="line">			applicationCount++;</span><br><span class="line">		&#125;</span><br><span class="line">		application.setAttribute(&quot;applicationCount&quot;, applicationCount);</span><br><span class="line">	%&gt;</span><br><span class="line">	</span><br><span class="line">	&lt;p&gt;</span><br><span class="line">		页面域计数：&lt;%=pageCount%&gt;&lt;/p&gt;</span><br><span class="line">	&lt;p&gt;</span><br><span class="line">		会话域计数：&lt;%=sessionCount%&gt;&lt;/p&gt;</span><br><span class="line">	&lt;p&gt;</span><br><span class="line">		应用域计数：&lt;%=applicationCount%&gt;&lt;/p&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
 
-<h2># 首先是nodejs与git的下载<h2>
-这些可以去官网上下载最新版并根据网上的教程安装。nodejs下载完成后，需要安装一下nodeJs和里面的npm工具。然后在本地找一个位置建一个hexo文件夹，然后鼠标右击Git Bash Here，在git指令中输入git init,完成初始化。
-<br>
-
-<h3># 接下来是对hexo的下载<h3>
-由于国内的管制所以在连接外网时网速可能达不到下载的要求，这时候就要使用淘宝的镜像分身生成cnpm来代替npm，这里同时要注意最好不要使用内网，不然可能下载不了。接下来附上安装hexo的流程图片。
-<br>
-
-<image src="https://github.com/shaoshengyu/gituser/blob/master/hexo/first.png?raw=true">
-<br><br>
-<image src="https://github.com/shaoshengyu/gituser/blob/master/hexo/second.png?raw=true">
-<br><br>
-<image src="https://github.com/shaoshengyu/gituser/blob/master/hexo/third.png?raw=true">
-<br><br>
-<image src="https://github.com/shaoshengyu/gituser/blob/master/hexo/fourth.png?raw=true">
-<br><br><br>
-
-<h2># 最后验证成功<h2>
-登录http://localhost:4000查看发现有hexo自带的主题网页产生。
-<br>
-<image src="https://github.com/shaoshengyu/gituser/blob/master/hexo/last.png?raw=true">
-
-</image></h2></h2></image></image></image></image></h3></h3></h2></h2></h1></h1>
         
         
         <p class="article-more-link">
@@ -372,22 +567,13 @@ JQuery的语法设计可以使开发者更加便捷操作，例如操作文档�
 <aside class="clearfix">
 
   
-<div class="github-card">
-<p class="asidetitle">Github 名片</p>
-<div class="github-card" data-github="shaoshengyu" data-theme="medium"></div>
-<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
-</div>
-
-
-
-  
 
   
 
   
   <div class="archiveslist">
     <p class="asidetitle"><a href="/archives">归档</a></p>
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">14</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">16</span></li></ul>
   </div>
 
 

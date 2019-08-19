@@ -1,28 +1,27 @@
 
-  
-    <!DOCTYPE HTML>
+ <!DOCTYPE HTML>
 <html lang="zh-CN">
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
   
-    <title>categories | 邵圣煜的博客</title>
+    <title>对css添加方法和选择器的一些理解与记录 | 邵圣煜的博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="邵圣煜">
     
 
     
-    <meta name="description" content="你好，欢迎来到邵圣煜的博客!~">
-<meta property="og:type" content="website">
-<meta property="og:title" content="categories">
-<meta property="og:url" content="http://shaoshengyu.github.io/categories/index.html">
+    <meta name="description" content="平常接触后端较多，最近发现了前端的一些乐趣，做了一些css样式的笔记。 CSS层叠样式表 内容和样式相分离，便于修改样式。  CSS语法 &amp;lt;p&amp;gt;XXXXX&amp;lt;/p&amp;gt;(html中) CSS中 p(选择器，此处选择html中&amp;lt;p&amp;gt;标签){     font-size:12px;     /*字号*/     color:blue;         /*文字颜色*/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="对css添加方法和选择器的一些理解与记录">
+<meta property="og:url" content="http://shaoshengyu.github.io/2019/08/19/ccsone/index.html">
 <meta property="og:site_name" content="邵圣煜的博客">
-<meta property="og:description" content="你好，欢迎来到邵圣煜的博客!~">
+<meta property="og:description" content="平常接触后端较多，最近发现了前端的一些乐趣，做了一些css样式的笔记。 CSS层叠样式表 内容和样式相分离，便于修改样式。  CSS语法 &amp;lt;p&amp;gt;XXXXX&amp;lt;/p&amp;gt;(html中) CSS中 p(选择器，此处选择html中&amp;lt;p&amp;gt;标签){     font-size:12px;     /*字号*/     color:blue;         /*文字颜色*/">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-08-19T14:24:28.531Z">
+<meta property="og:updated_time" content="2019-08-19T13:53:53.283Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="categories">
-<meta name="twitter:description" content="你好，欢迎来到邵圣煜的博客!~">
+<meta name="twitter:title" content="对css添加方法和选择器的一些理解与记录">
+<meta name="twitter:description" content="平常接触后端较多，最近发现了前端的一些乐趣，做了一些css样式的笔记。 CSS层叠样式表 内容和样式相分离，便于修改样式。  CSS语法 &amp;lt;p&amp;gt;XXXXX&amp;lt;/p&amp;gt;(html中) CSS中 p(选择器，此处选择html中&amp;lt;p&amp;gt;标签){     font-size:12px;     /*字号*/     color:blue;         /*文字颜色*/">
 
     
     <link rel="alternative" href="/atom.xml" title="邵圣煜的博客" type="application/atom+xml">
@@ -37,9 +36,9 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 </html>
-      <body>
-        <header>
-          
+  <body>
+    <header>
+      
 <div>
 		
 			<div id="imglogo">
@@ -76,28 +75,177 @@
 				</ul>
 			</nav>			
 </div>
-        </header>
-        <div id="container">
-          <div id="main" class="page" itemscope itemprop="blogPost">
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
   
 	<article itemprop="articleBody"> 
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/categories/index.html" title="categories" itemprop="url">categories</a>
+      <a href="/2019/08/19/ccsone/" title="对css添加方法和选择器的一些理解与记录" itemprop="url">对css添加方法和选择器的一些理解与记录</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="邵圣煜" target="_blank" itemprop="author">邵圣煜</a>
 		
   <p class="article-time">
-    <time datetime="2019-08-19T11:43:31.000Z" itemprop="datePublished"> 发表于 2019-08-19</time>
+    <time datetime="2019-08-19T11:48:32.681Z" itemprop="datePublished"> 发表于 2019-08-19</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
-		  
+		<p>平常接触后端较多，最近发现了前端的一些乐趣，做了一些css样式的笔记。</p>
+<pre><code>CSS层叠样式表
+内容和样式相分离，便于修改样式。
+
+CSS语法
+&lt;p&gt;XXXXX&lt;/p&gt;(html中)
+CSS中
+p(选择器，此处选择html中&lt;p&gt;标签){
+    font-size:12px;     /*字号*/
+    color:blue;         /*文字颜色*/
+    font-weight:bold;   /*加粗*/
+    属性名:属性值;      /*注释，可跨行*/
+}    
+
+css添加方法
+
+(1)行内: 
+&lt;body&gt;
+&lt;p style=&quot;color:red;&quot;&gt;XXX&lt;/p&gt;
+&lt;/body&gt;
+
+(2)内嵌样式: (适合文件少，css代码也不多的情况)
+&lt;head&gt;
+  &lt;style type=&quot;text/css&quot;&gt;
+   p{
+       color:red;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;p&gt;XXX&lt;/p&gt;
+&lt;/body&gt;
+
+(3)单独文件(外联样式表文件)
+现有css文件夹与1.html和2.html处于同一文件夹，css文件夹中有style.css
+style.css外联样式表文件
+p{
+color:
+}
+1.html网页文件
+&lt;head&gt;
+  &lt;link rel=&quot;stylesheet&quot;(连接文件的类型) href=&quot;css/style.css&quot;(文件相对路径) /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;p&gt;XXX&lt;/p&gt;
+&lt;/body&gt;
+&lt;/head&gt;
+
+优先级：
+多重样式可以层叠，可以覆盖
+样式的优先按照就近原则
+行内样式&gt;内嵌样式&gt;连接样式&gt;浏览器默认样式
+例子:
+外联样式表文件
+h3{
+color:red
+text-align:left;
+font-size:8pt;
+}
+内嵌样式
+h3{
+text-align:right;
+font-size:20pt
+}
+
+html中h3得到的样式
+clor&quot;red;
+text-aligen:right;
+font-size:20pt;
+
+
+CSS选择器
+
+标签选择器
+&lt;style type=&quot;text/css&quot;&gt;
+  body{background-color:#ccc;(背景灰色)
+  text-align:center(居中)
+  font-size:12px}
+  h1{font:&quot;黑体&quot;,font-size:20px;}
+  p{color:red;}
+  hr{width:200px;}
+&lt;style&gt;
+
+类别选择器
+css文件
+p  { font-size:12px;}
+ .one{font-size:18px;}(注意one前面要加点)
+ .two{font-size:24px;}
+html文件
+&lt;body&gt;
+  &lt;p class=&quot;one&quot;&gt;18px&lt;/p&gt;(注意one前面不要加点)
+  &lt;p class=&quot;one&quot;&gt;18px&lt;/p&gt;
+  &lt;p class=&quot;two&quot;&gt;24px&lt;/p&gt;
+  &lt;p class=&quot;two&quot;&gt;24px&lt;/p&gt;
+  &lt;p&gt;12px&lt;/p&gt;
+&lt;/body&gt;
+
+ID选择器(与class的区别在于唯一性)
+css文件
+ #one{font-size:12px;}
+ #two{font-size:24px;}
+html文件
+&lt;body&gt;
+  &lt;p id=&quot;one&quot;&gt;12px&lt;/p&gt;
+  &lt;p id=&quot;two&quot;&gt;24px&lt;/p&gt;
+&lt;/body&gt;
+
+嵌套声明
+css文件
+p span{color:red;}(用空格隔断标签)
+html文件
+&lt;body&gt;
+&lt;p&gt;&lt;span&gt;红色的字&lt;/span&gt;XXXX&lt;/p&gt;
+&lt;/body&gt;
+
+集体声明
+css文件
+h1,p{text-align:center;}(用,隔断标签)
+html文件
+&lt;body&gt;
+ &lt;h1&gt;居中的字&lt;/h1&gt;
+ &lt;p&gt;居中的字&lt;/p&gt;
+&lt;body&gt;
+
+全局声明
+css文件
+*{
+   text-align:center
+}
+html文件
+&lt;body&gt;
+所有未就近设置其他样式的标签内容居中
+&lt;body&gt;
+
+混合
+id选择器不可多个同时使用。
+可同时使用一个id选择器和多个class选择器。
+css文件
+#my{}
+.one{}
+.yellow{}
+.left{}
+html文件
+&lt;div id=&quot;my&quot; class=&quot;one yellow left&quot;&gt;......&lt;div&gt;
+
+
+
+
+
+</code></pre>  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -109,7 +257,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://shaoshengyu.github.io/categories/index.html" data-title="categories | 邵圣煜的博客" data-tsina="" class="share clearfix">
+	  <div data-url="http://shaoshengyu.github.io/2019/08/19/ccsone/" data-title="对css添加方法和选择器的一些理解与记录 | 邵圣煜的博客" data-tsina="" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -120,13 +268,78 @@
    	       
 	</article>
 	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2019/08/19/cssfour/" title="CSS定位机制">
+  <strong>上一篇：</strong><br/>
+  <span>
+  CSS定位机制</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2019/08/19/candel/"  title="自编的一些帮助理解c标签以及el表达式的代码">
+ <strong>下一篇：</strong><br/> 
+ <span>自编的一些帮助理解c标签以及el表达式的代码
+</span>
+</a>
+</div>
+
+</nav>
+
 	
 
 
 
 </div>  
-        </div>
-        <footer><div id="footer" >
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+  
+
+  
+  <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">归档</a></p>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">16</span></li></ul>
+  </div>
+
+
+  
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://how2j.cn" target="_blank" title="一个学习java宝地与前端css库">How2j</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.liaoxuefeng.com" target="_blank" title="Liaoxuefeng&#39;s Website">Liaoxuefeng&#39;s Website</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
 	
 	<div class="line">
 		<span></span>
@@ -167,7 +380,7 @@
 		</p>
 </div>
 </footer>
-        <script src="/js/jquery-2.0.3.min.js"></script>
+    <script src="/js/jquery-2.0.3.min.js"></script>
 <script src="/js/jquery.imagesloaded.min.js"></script>
 <script src="/js/gallery.js"></script>
 <script src="/js/jquery.qrcode-0.12.0.min.js"></script>
@@ -213,6 +426,32 @@ $(document).ready(function(){
       o.css('display', 'none');
         
     }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
   });
 });
 </script>
@@ -337,6 +576,5 @@ var _hmt = _hmt || [];
 
 <!-- Tiny_search End -->
 
-      </body>
-     </html>
-     
+  </body>
+</html>
