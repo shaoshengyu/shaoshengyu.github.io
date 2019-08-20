@@ -84,7 +84,7 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2019/08/19/js2/" title="js之DOM" itemprop="url">js之DOM</a>
+      <a href="/2019/08/19/js2/" title="js之DOM与BOM" itemprop="url">js之DOM与BOM</a>
   </h1>
   <p class="article-author">By
        
@@ -103,6 +103,15 @@
 <p>DOM修改<br>1.读取属性值<br>先获得属性节点对象，再获得节点对象的属性值<br>var attr=elem.attributes[下标/属性名];<br>var attr=elem.getAttributeNode(属性名)<br>attr.value 属性值<br>直接获得属性值<br>var value=elem.getAttribute(“属性名”);</p>
 <p>2.修改属性<br>elem.setAttribute(“属性名”,value);<br>判断元素中是否包含指定属性:<br>var bool=elem.hasAttribute(“属性名”);<br>移除属性<br><a id="alink" class="slink" href></a><br>var a=document.getElementById(“alink”);<br>a.removeAttribute(“class”);</p>
 <p>3.修改样式<br>内联样式elem.style.属性名(去横线，变驼峰)<br>如list-style-type=&gt;listStyleType</p>
+<p>DOM添加<br>添加元素的步骤</p>
+<p>1.创建空元素<br>var elem(table)=doucument.createElement(“元素名”(“table”))</p>
+<p>2.设置关键属性<br>a.innerHTML=”go to tmooc”(a标签中显示的内容)<br>a.href=”<a href="http://tmooc.cn&quot;" target="_blank" rel="noopener">http://tmooc.cn&quot;</a>;<br>2.设置关键样式<br>a.style.opacity=”1”;(透明度)<br>a.style.cssText=”width:100px;heigeht:100px”</p>
+<p>3.将元素添加到DOM树<br>用于为一个父元素追加最后一个子节点<br>parentNode.appendChild(ChildNode);<br>var div=document.createElement(“div”);<br>var txt=document.createTextNode(“版权声明”);<br>div.appendChild(txt);<br>document.body.appendChild(div);</p>
+<p>用于在父元素中的指定子节点之前添加一个新的子节点<br>parentNode.insertBefore(newChild,existingChild(已经出现的节点));</p>
+<p>添加元素优化<br>1.如果同时创建父元素和子元素时，建议在内存中先将子元素添加到父元素，再将元父素一次性挂到页面<br>2.如果只添加多个平级子元素，将所有子元素临时添加到文档片段中，再将文档片段加到页面<br>内存中临时保存多个虚拟父元素<br>创建片段<br>var frag=document.createDocumentFragment();<br>将子元素临时追加到frag中<br>frag.appendChild(child);<br>将frag追加到页面<br>parent.appendChild(frag);</p>
+<p>BOM定时器<br>获取当前窗口大小window.outerWidth/outerHeight<br>获取文档显示区大小window.innerWidth/innerHeight</p>
+<p>1.周期性定时器<br>让程序按一定的时间间隔反复自动执行一项任务<br>setInterval(exp,time);<br>exp:执行语句  time:时间周期,单位为毫秒<br>例:setInterval(function(){<br>      console.log(“Hello World”);<br>},1000);<br>停止定时器<br>给定时器取名<br>var timer =setInterval(function(){<br>      console.log(“Hello World”);<br>},1000);<br>停止定时器clearInterval(timer);</p>
+<p>2.一次性定时器<br>让程序延迟一段时间执行<br>setTimeout(exp,time);<br>例子:<br>setTimeout(function(){<br>       alert(“恭喜过关”);<br>},3000);</p>
 
         
         
