@@ -84,6 +84,146 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2019/08/19/gitinstruction/" title="常用的一些git指令" itemprop="url">常用的一些git指令</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="邵圣煜" target="_blank" itemprop="author">邵圣煜</a>
+		
+  <p class="article-time">
+    <time datetime="2019-08-19T11:48:32.688Z" itemprop="datePublished"> 发表于 2019-08-19</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>mkdir <filename>    ——创建一个文件夹(空目录)   假设filename为learngit<br><br>cd                  ——进入某文件夹目录<br><br>ls                    ——查看所在目录的所有文件<br><br>cat readme.txt        ——查看文件内容<br><br>vi readme.txt      ——进入文件编辑界面<br><br>            1、按i进入编辑模式，此时界面右下角显示insert<br><br>            2、编辑完按esc推出insert模式<br><br>            3、按shift + ：（shift + 冒号键）输入wq。  ps：wq表示保存并退出，只有q表示只退出<br><br>            4、最后按enter键退出界面<br><br>rm readme.txt       ——删除文件<br><br>pwd                 ——用于显示当前目录<br></filename></p>
+<p>初始化仓库<br>git  init                      ——初始化一个Git仓库</p>
+<p>添加文件到Git仓库：<br>    1、git add <file>    ——添加文件，可以反复使用多次<br>            先将文件提交到暂存区<br>    2、git commit -m <message>    ——提交文件到Git仓库，-m后面输入的是本次提交的说明<br>            将暂存区文件一次性commit到master上<br>git status        ——查看仓库当前的状态，随时掌握工作区的状态</message></file></p>
+<p>git diff          ——查看difference，若git status提示文件被修改过，使用该命令查看修改内容</p>
+<p>版本回退<br>    git log           ——查看从最近到最远的提交日志，若嫌输出的信息太多可以加上 –pretty=oneline参数</p>
+<pre><code>git reset --hard HEAD^    ——退回到上一个版本，HEAD表示当前版本
+       git reset命令既可以回退版本，也可以把暂存区的修改回退到工作区。当我们用HEAD时，表示最新的版本。
+
+git reset --hard 7be436d    ——回到退回前的版本(前提是命令行窗口未被关闭，找到上面的对应版本的
+                                版本号)版本号没必要写全，前几位就可以了
+     git reflog                                —— 查看命令历史
+                                                    （可用于版本退回后想要回到退回前，但已关闭命令行窗口）</code></pre><p>管理修改<br>          第一次修改 -&gt; git add -&gt; 第二次修改 -&gt; git add -&gt; git commit        【正确，推荐】</p>
+<pre><code>第一次修改 -&gt; git add -&gt;  第二次修改 -&gt; git commit     【错误】  
+                                            第二次修改没有被提交，只有再进行一次add、commit</code></pre><p>撤销修改 git checkout<br>  —git checkout其实是用版本库里的版本替换工作区的版本，无论工作区是修改还是删除，都可“一键还原”。<br>            使用git status查看仓库当前状态，若有修改 :</p>
+<pre><code>一、git checkout -- &lt;file&gt; 放弃工作区的修改（两种情况）:
+                ----此命令让文件回到最近一次git commit或者git add时的状态
+        1、file自修改后还没有被放到暂存区，此时撤销修改回到和版本库一摸一样的状态。
+                   直接使用此命令
+        2、file已经添加至暂存区，又做了修改，此时撤销就回到添加至暂存区后的状态。
+                    使用git add后，查询仓库状态:
+
+                  首先使用 git reset HEAD readme.txt，将暂存区的修改退回工作区。
+                  再使用 git checkout -- readme.txt  丢弃工作区的修改
+
+二、已经提交了不合适的修改到版本库时，想要撤销本次提交。
+         参考版本回退进行操作，不过前提是没有推送到远程库</code></pre><p>删除文件 rm file<br>            一般情况，直接在文件管理器中删除，或者用 rm test.txt 删除文件 ，此时git知道你删除文件，和版本库不一致   ，git status会提示你那些文件删除了。</p>
+<pre><code>此时有两个选择:
+     1、确实要从版本库删除该文件，则用git rm删掉，并且git commit
+     2、删错了，将误删的文件恢复到最新版本：   git checkout -- test.txt</code></pre><p>创建分支并切换 git checkout -b dev<br>        相当于 git branch dev   之后再 git checkout dev</p>
+<pre><code>查看当前分支  git branch
+日常工作git add file和git commit -m &quot;&quot;
+dev工作完成则切换回master分支 git checkout master
+dev合并到当前分支 git merge dev
+合并完成后删除 git branch -d dev</code></pre><p>分支合并冲突，把合并失败的文件手动修改再提交。</p>
+<p>分支管理策略，平时不在master分支干活，master只用于发布</p>
+<pre><code>2人以下在dev分支工作，2人以上在dev分支的基础上再建立feature分支上工作
+普通模式合并有历史分支  在分支上git add file和git commit -m &quot;&quot;，转回上一分支 git merge --no--ff -m &quot;&quot; dev(或者feature)</code></pre><p>bug分支<br>          突然遇到要修改的bug，将当前dev分支的工作储藏  git stash<br>          然后转到要修复的分支  git checkout bug分支<br>          在bug分支创建临时修改分支  git checkout -b issue-101<br>          完成修复并git add file， git commit -m “fix bug 101”(假设这步版本号为为4c80512)<br>          再切换到bug分支合并 git checkout bug分支    git merge –no–ff -m “” issue-101<br>          bug修复返回dev分支工作  git checkout dev<br>          查看储藏的工作现场   git stash list<br>          恢复现场有2种<br>               1 恢复的同时删除stash  git stash pop<br>               2 恢复时不删除stash  git stash apply  之后想删除可以  git stash drop<br>          可以多次stash，恢复时根据工作现场的版本号(假设为stash@{0})恢复   git stash apply stash@{0}<br>          bug修复的分支的相关分支通常也有相同bug，切换到那些分支执行之前的修复操作 git cherry-pick 4c805e2</p>
+<p>Feature分支 feature-v分支修改完毕但未合并，突然需求变化不再需要，  git branch -D feature-v    </p>
+<p>查看远程仓库信息  git remote<br>查看具体信息      git remote -v<br>推送分支          git push master/dev/feature</p>
+<p>将本地未push的分叉整理成直线  git rebase </p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2019/08/19/csstwo/" title="对于html各标签内内容具体css设计笔记" itemprop="url">对于html各标签内内容具体css设计笔记</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="邵圣煜" target="_blank" itemprop="author">邵圣煜</a>
+		
+  <p class="article-time">
+    <time datetime="2019-08-19T11:48:32.686Z" itemprop="datePublished"> 发表于 2019-08-19</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line">CSS文字样式</span><br><span class="line">单位</span><br><span class="line">px 像素</span><br><span class="line">em 字符</span><br><span class="line">%  百分比</span><br><span class="line">&lt;p&gt;标签不设置样式则默认120%*12px</span><br><span class="line">若设置div字体大小12px</span><br><span class="line">&lt;div&gt;</span><br><span class="line">&lt;h1&gt;&lt;/h1&gt;</span><br><span class="line">&lt;p&gt;&lt;/p&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">受HTML DOM树继承关系，&lt;h1&gt;和&lt;p&gt;标签内容大小为12px</span><br><span class="line"></span><br><span class="line">颜色</span><br><span class="line">red,blue,green</span><br><span class="line">RGB为红色,蓝色,绿色在黑色下调色</span><br><span class="line">reg(x,x,x):RGB值,每个颜色分量取0-255:</span><br><span class="line">红色:rgb(255,0,0),灰色:rgb(66,66,66)(三种颜色分量一样),黑色(0,0,0)</span><br><span class="line">rgb(x%,x%,x%):RGB百分比值0-100%,如红色rgb(100%,0%,0%)</span><br><span class="line">rgba(x,x,x,x):RGB值,透明度(最后一位)</span><br><span class="line">a值(透明度):0.0(完全透明)-1.0(完全不透明) </span><br><span class="line">#rrggbb:十六进制数,如红色:#ff00(#ff0000去掉了重复位)</span><br><span class="line"></span><br><span class="line">文本</span><br><span class="line">属性              描述         取值</span><br><span class="line">color             文本颜色     red #ff00 rgb,rgba</span><br><span class="line">letter-spacing    字符间距     2px  -3px(负数时会产生重叠效果)</span><br><span class="line">line-height       行高         14px 1.5em 120%(将line-height与height设置的一样就能垂直居中)</span><br><span class="line">text-align        对齐         center(居中)  left  right  justify(两端对齐)</span><br><span class="line">text-decoration   装饰线       none(无装饰线）  overline  underline(下划线)  line-through(删除线)</span><br><span class="line">可设置a&#123;text-decoration:none;&#125;，将超链接下划线删除。</span><br><span class="line">text-indent       首行缩进     2em</span><br><span class="line"></span><br><span class="line">字体</span><br><span class="line">font(属性)在一个声明中设置所有字体的属性</span><br><span class="line">font:bold 18px &apos;幼圆&apos;</span><br><span class="line">font-family(字体系列): &quot;HiraginoSans GB&quot;(有空格要加引号),sans-serif；</span><br><span class="line">font-size(字号)  font-style:italic(斜体)  font-weight(粗体):bold </span><br><span class="line">简化font(必须拥有所有属性)</span><br><span class="line">font:斜体   粗体  字号/行高   字体;</span><br><span class="line">font:italic bold  16px/1.5em  &apos;宋体&apos;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">css背景样式</span><br><span class="line">background空元素要先定义元素的高度和宽度</span><br><span class="line">height:30px;</span><br><span class="line">width:600px;</span><br><span class="line">background-color:rgb(未显示图片则显示颜色)</span><br><span class="line">background-image:url(&quot;logo.jpg&quot;)</span><br><span class="line">background-repeat:repeat(全部填充),repeat-x(横向),repeat-y(纵向),no-repeat(填充一次)</span><br><span class="line">background:颜色 图片 repeat;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">css超链接样式(都设置则按以下顺序编写)</span><br><span class="line">a&#123;</span><br><span class="line">    font-size:22px;</span><br><span class="line">&#125;</span><br><span class="line">a:link&#123;</span><br><span class="line">    text-decoration:none;</span><br><span class="line">	color:#09f; /*未访问*/</span><br><span class="line">&#125;</span><br><span class="line">a:visited&#123;</span><br><span class="line">    text-decoration:none;</span><br><span class="line">	color:#930; /*已访问*/</span><br><span class="line">&#125;</span><br><span class="line">a:hover&#123;</span><br><span class="line">    text-decoration:underline;</span><br><span class="line">	font-size:120%;(字体放大,简单同态效果)</span><br><span class="line">	color:#03c; /*鼠标悬停*/</span><br><span class="line">&#125;</span><br><span class="line">a:active&#123;</span><br><span class="line">    text-decoration:none;</span><br><span class="line">    color:#03c; /*按下鼠标*/</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">列表表格样式</span><br><span class="line">css列表样式ul与ol公用</span><br><span class="line">list-style:所有用于列表的属性设置于一个声明中</span><br><span class="line">list-style-image:设置列表项标志的图像</span><br><span class="line">list-style-position:标志的位置(inside向右缩进/outside向左缩进)</span><br><span class="line">list-style-type:标志的类型</span><br><span class="line"></span><br><span class="line">css表格样式table</span><br><span class="line">border-collapse:collapse;合并表格边框</span><br><span class="line">:ntn-child(odd|even)奇偶选择器</span><br><span class="line">tr:nth-child(odd)每行交替显示颜色</span><br></pre></td></tr></table></figure>
+
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2019/08/19/cssthree/" title="盒子模型" itemprop="url">盒子模型</a>
   </h1>
   <p class="article-author">By
@@ -573,7 +713,7 @@ onreadystatechange属性中主要有readyState和status两个属性。readyState
   
   <div class="archiveslist">
     <p class="asidetitle"><a href="/archives">归档</a></p>
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">16</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">18</span></li></ul>
   </div>
 
 

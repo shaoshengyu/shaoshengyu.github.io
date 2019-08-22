@@ -4,24 +4,24 @@
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
   
-    <title>盒子模型 | 邵圣煜的博客</title>
+    <title>JQuery常用语法 | 邵圣煜的博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="邵圣煜">
     
 
     
-    <meta name="description" content="123456789101112131415161718192021222324252627content内容 padding(内边距) border(边界) margin(外边距) padding,border,margin都有(top,right,bottom,left)(顶部，右部，底部，左部)width=左右各部+content-widthheight=顶底各部+content-height">
+    <meta name="description" content="123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172写更少的代码，做更多的事！工厂函数$()DOM:documengt.getElementById(&amp;quot;myList&amp;quo">
 <meta property="og:type" content="article">
-<meta property="og:title" content="盒子模型">
-<meta property="og:url" content="http://shaoshengyu.github.io/2019/08/19/cssthree/index.html">
+<meta property="og:title" content="JQuery常用语法">
+<meta property="og:url" content="http://shaoshengyu.github.io/2019/08/20/JQuery/index.html">
 <meta property="og:site_name" content="邵圣煜的博客">
-<meta property="og:description" content="123456789101112131415161718192021222324252627content内容 padding(内边距) border(边界) margin(外边距) padding,border,margin都有(top,right,bottom,left)(顶部，右部，底部，左部)width=左右各部+content-widthheight=顶底各部+content-height">
+<meta property="og:description" content="123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172写更少的代码，做更多的事！工厂函数$()DOM:documengt.getElementById(&amp;quot;myList&amp;quo">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-08-19T13:54:40.960Z">
+<meta property="og:updated_time" content="2019-08-22T12:22:33.649Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="盒子模型">
-<meta name="twitter:description" content="123456789101112131415161718192021222324252627content内容 padding(内边距) border(边界) margin(外边距) padding,border,margin都有(top,right,bottom,left)(顶部，右部，底部，左部)width=左右各部+content-widthheight=顶底各部+content-height">
+<meta name="twitter:title" content="JQuery常用语法">
+<meta name="twitter:description" content="123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172写更少的代码，做更多的事！工厂函数$()DOM:documengt.getElementById(&amp;quot;myList&amp;quo">
 
     
     <link rel="alternative" href="/atom.xml" title="邵圣煜的博客" type="application/atom+xml">
@@ -83,20 +83,20 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2019/08/19/cssthree/" title="盒子模型" itemprop="url">盒子模型</a>
+      <a href="/2019/08/20/JQuery/" title="JQuery常用语法" itemprop="url">JQuery常用语法</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="邵圣煜" target="_blank" itemprop="author">邵圣煜</a>
 		
   <p class="article-time">
-    <time datetime="2019-08-19T11:48:32.685Z" itemprop="datePublished"> 发表于 2019-08-19</time>
+    <time datetime="2019-08-20T08:39:47.047Z" itemprop="datePublished"> 发表于 2019-08-20</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
-		<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">content内容 padding(内边距) border(边界) margin(外边距) </span><br><span class="line">padding,border,margin都有(top,right,bottom,left)(顶部，右部，底部，左部)</span><br><span class="line">width=左右各部+content-width</span><br><span class="line">height=顶底各部+content-height</span><br><span class="line">当内容溢出盒子，overflow属性：hidden(超出部分不可见),scroll(显示滚动条),auto(如果有超出部分显示滚动条)</span><br><span class="line">border属性:</span><br><span class="line">border-width:px</span><br><span class="line">border-style:dashed(虚线)、dotted(点)、solid(实现)、double(双实线)</span><br><span class="line">border-color:颜色</span><br><span class="line">border:width style color</span><br><span class="line">水平分割线(例子):</span><br><span class="line">.line&#123;</span><br><span class="line">   height:1px;</span><br><span class="line">   width:500px;</span><br><span class="line">   border-top:1px solid #e5e5e5;(上边线)</span><br><span class="line">&#125;</span><br><span class="line">对浏览器默认的设置清零</span><br><span class="line">*&#123;</span><br><span class="line">  margin:0;</span><br><span class="line">  padding:0</span><br><span class="line">&#125;</span><br><span class="line">margin:1px 2px 1px 3px;(按顺时针)(顶,右,底,左)</span><br><span class="line">margin:1px(代表4边间距都为1px)</span><br><span class="line">margin不设置全四边,则未设置bottom与top相同,未设置left与right相同。</span><br><span class="line">margin的合并:垂直方向合并(哪个margin-width大,取哪个)，水平方向不合并</span><br><span class="line">图片、文字水平居中:text-align:center;</span><br><span class="line">水平居中:margin:auto;</span><br></pre></td></tr></table></figure>  
+		<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line">写更少的代码，做更多的事！</span><br><span class="line">工厂函数$()</span><br><span class="line">DOM:documengt.getElementById(&quot;myList&quot;);</span><br><span class="line">Jquery:$(&quot;#myList&quot;);</span><br><span class="line"></span><br><span class="line">JQuery查找</span><br><span class="line">1.基本选择器</span><br><span class="line">#id  .class  同CSS</span><br><span class="line">2.层级选择器</span><br><span class="line">后代选择器 子代选择器 同css</span><br><span class="line">3.兄弟关系</span><br><span class="line">紧邻的前一个或者后一个元素 $(&quot;...&quot;).next/prev()</span><br><span class="line">之前或者之后的所有元素     $(&quot;...&quot;).nextAll/prevAll</span><br><span class="line">除自己之外的所有兄弟       $(&quot;...&quot;).siblings()</span><br><span class="line"></span><br><span class="line">JQuery修改</span><br><span class="line">1.访问元素属性</span><br><span class="line">(1)获取  $(&quot;...&quot;).attr(&quot;属性名&quot;);</span><br><span class="line">(2)修改  $(&quot;...&quot;).attr(&quot;属性名&quot;，属性值);</span><br><span class="line">2.内容</span><br><span class="line">(1)html操作: html() 读取或修改节点的HTML内容</span><br><span class="line">获取&lt;p&gt;元素   $(&quot;p&quot;).html();</span><br><span class="line">设置&lt;p&gt;元素   $(&quot;p&quot;).html(&quot;&lt;strong&gt;你最喜欢的水果是？&lt;/strong&gt;&quot;);</span><br><span class="line">(2)文本操作</span><br><span class="line">Text():读取或修改节点的文本内容</span><br><span class="line">获取&lt;p&gt;元素   $(&quot;p&quot;).text()</span><br><span class="line">设置&lt;p&gt;元素   $(&quot;p&quot;).text(&quot;你最喜欢的水果是?&quot;);</span><br><span class="line">值操作</span><br><span class="line">读取或修改节点的value属性值   val()</span><br><span class="line">获取按钮的value值 </span><br><span class="line">$(&quot;input:eq(5)&quot;).val();</span><br><span class="line">设置按钮的value值</span><br><span class="line">$(&quot;input&quot;).val(&quot;我被点击了!&quot;);</span><br><span class="line">(3)样式</span><br><span class="line">1.直接修改CSS属性</span><br><span class="line">获取css样式(计算后的样式)    $(&quot;...&quot;).css(&quot;CSS属性名&quot;)</span><br><span class="line">修改css样式                  $(&quot;...&quot;).css(&quot;css属性名&quot;,值)</span><br><span class="line">2.通过修改class批量修改样式</span><br><span class="line">判断是否包含指定class   $(&quot;...&quot;).hasClass(&quot;类名&quot;)</span><br><span class="line">添加class               $(&quot;...&quot;).addClass(&quot;类名&quot;)</span><br><span class="line">移除class               $(&quot;...&quot;).removeClass(&quot;类名&quot;)</span><br><span class="line"></span><br><span class="line">JQuery添加或删除</span><br><span class="line">1.添加</span><br><span class="line">创建新元素</span><br><span class="line">var $newelem=$(&quot;html代码片段&quot;);</span><br><span class="line">将新元素结尾添加到DOM树</span><br><span class="line">$(parent).append($newelem)</span><br><span class="line">例子:</span><br><span class="line">var $li=$(&quot;&lt;li title=&apos;香蕉&apos;&gt;香蕉&lt;/li&gt;&quot;);</span><br><span class="line">var $parent=$(&quot;ul&quot;);</span><br><span class="line">$parent.append($li);</span><br><span class="line">2.删除</span><br><span class="line">$(&quot;...&quot;).remove()</span><br><span class="line">//获取第二个&lt;li&gt;元素节点后,将他从网页中删除</span><br><span class="line">$(&quot;ul li:eq(1)&quot;).remove();</span><br><span class="line">//把&lt;li&gt;元素中属性title不等于&quot;菠萝&quot;的&lt;li&gt;删除</span><br><span class="line">$(&quot;ul li&quot;).remove(&quot;li[title!=菠萝]&quot;);</span><br><span class="line"></span><br><span class="line">JQuery事件</span><br><span class="line">1.事件绑定</span><br><span class="line">$(&quot;...&quot;).bind(&quot;事件类型&quot;,function(e)&#123;...&#125;)</span><br><span class="line">简写形式 $(&quot;...&quot;).事件类型(function(e)&#123;...&#125;)</span><br><span class="line">例子: $(&quot;#btn&quot;).bind(&quot;click&quot;,function(e)&#123;console.log(&quot;hello&quot;);&#125;)</span><br><span class="line">$(&quot;#btn&quot;).click(function(e)&#123;console.log(&quot;hello&quot;);&#125;)</span><br><span class="line">e这个对象中包含与事件相关的信息，也提供了可以影响事件在DOM中传递进程的一些方法</span><br><span class="line"></span><br><span class="line">2.事件对象</span><br><span class="line">事件对象发生时的鼠标位置，键盘按键状态和触发对象等信息</span><br><span class="line">事件发生的X坐标  clientX/offsetX/pageX/screenX/x</span><br><span class="line">事件发生的X坐标  clientY/offsetY/pageY/screenY/y</span><br><span class="line">键盘事件中按下的按键的值  keyCode</span><br></pre></td></tr></table></figure>  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -108,7 +108,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://shaoshengyu.github.io/2019/08/19/cssthree/" data-title="盒子模型 | 邵圣煜的博客" data-tsina="" class="share clearfix">
+	  <div data-url="http://shaoshengyu.github.io/2019/08/20/JQuery/" data-title="JQuery常用语法 | 邵圣煜的博客" data-tsina="" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -122,18 +122,18 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2019/08/19/csstwo/" title="对于html各标签内内容具体css设计笔记">
+ <a href="/2019/08/22/html5/" title="html5的一些常用标签">
   <strong>上一篇：</strong><br/>
   <span>
-  对于html各标签内内容具体css设计笔记</span>
+  html5的一些常用标签</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2019/08/19/cssfour/"  title="CSS定位机制">
+<a href="/2019/08/19/js2/"  title="js之DOM与BOM">
  <strong>下一篇：</strong><br/> 
- <span>CSS定位机制
+ <span>js之DOM与BOM
 </span>
 </a>
 </div>
