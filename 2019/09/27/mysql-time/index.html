@@ -4,24 +4,24 @@
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
   
-    <title>CSS定位机制 | 邵圣煜的博客</title>
+    <title>Mysql时间函数的使用 | 邵圣煜的博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="邵圣煜">
     
 
     
-    <meta name="description" content="12345678910111213141516171819202122232425文档流定位元素分类：block(独占一行,可设置height、width、margin、padding):常见的有:&amp;lt;div&amp;gt;,&amp;lt;p&amp;gt;,&amp;lt;h1&amp;gt;...&amp;lt;h6&amp;gt;,&amp;lt;ol&amp;gt;,&amp;lt;ul&amp;gt;,&amp;lt;table&amp;gt;,&amp;lt;form&amp;gt;inline(">
+    <meta name="description" content="–cancat使用中文字符与后面值类型不同会乱码，用字符串转换函数转成char类型select concat(‘当前时间是’,convert(current_timestamp(),char));select concat(‘当前时间是’,convert(current_date(),char),’ ‘,convert(current_time(),char));–从格林时间’1970-01-01">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CSS定位机制">
-<meta property="og:url" content="http://shaoshengyu.github.io/2019/08/19/cssfour/index.html">
+<meta property="og:title" content="Mysql时间函数的使用">
+<meta property="og:url" content="http://shaoshengyu.github.io/2019/09/27/mysql-time/index.html">
 <meta property="og:site_name" content="邵圣煜的博客">
-<meta property="og:description" content="12345678910111213141516171819202122232425文档流定位元素分类：block(独占一行,可设置height、width、margin、padding):常见的有:&amp;lt;div&amp;gt;,&amp;lt;p&amp;gt;,&amp;lt;h1&amp;gt;...&amp;lt;h6&amp;gt;,&amp;lt;ol&amp;gt;,&amp;lt;ul&amp;gt;,&amp;lt;table&amp;gt;,&amp;lt;form&amp;gt;inline(">
+<meta property="og:description" content="–cancat使用中文字符与后面值类型不同会乱码，用字符串转换函数转成char类型select concat(‘当前时间是’,convert(current_timestamp(),char));select concat(‘当前时间是’,convert(current_date(),char),’ ‘,convert(current_time(),char));–从格林时间’1970-01-01">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-08-19T13:54:16.433Z">
+<meta property="og:updated_time" content="2019-09-26T05:39:26.689Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CSS定位机制">
-<meta name="twitter:description" content="12345678910111213141516171819202122232425文档流定位元素分类：block(独占一行,可设置height、width、margin、padding):常见的有:&amp;lt;div&amp;gt;,&amp;lt;p&amp;gt;,&amp;lt;h1&amp;gt;...&amp;lt;h6&amp;gt;,&amp;lt;ol&amp;gt;,&amp;lt;ul&amp;gt;,&amp;lt;table&amp;gt;,&amp;lt;form&amp;gt;inline(">
+<meta name="twitter:title" content="Mysql时间函数的使用">
+<meta name="twitter:description" content="–cancat使用中文字符与后面值类型不同会乱码，用字符串转换函数转成char类型select concat(‘当前时间是’,convert(current_timestamp(),char));select concat(‘当前时间是’,convert(current_date(),char),’ ‘,convert(current_time(),char));–从格林时间’1970-01-01">
 
     
     <link rel="alternative" href="/atom.xml" title="邵圣煜的博客" type="application/atom+xml">
@@ -83,20 +83,29 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2019/08/19/cssfour/" title="CSS定位机制" itemprop="url">CSS定位机制</a>
+      <a href="/2019/09/27/mysql-time/" title="Mysql时间函数的使用" itemprop="url">Mysql时间函数的使用</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="邵圣煜" target="_blank" itemprop="author">邵圣煜</a>
 		
   <p class="article-time">
-    <time datetime="2019-08-19T11:48:32.683Z" itemprop="datePublished"> 发表于 2019-08-19</time>
+    <time datetime="2019-09-27T08:37:19.288Z" itemprop="datePublished"> 发表于 2019-09-27</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
-		<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">文档流定位</span><br><span class="line">元素分类：</span><br><span class="line">block(独占一行,可设置height、width、margin、padding):</span><br><span class="line">常见的有:&lt;div&gt;,&lt;p&gt;,&lt;h1&gt;...&lt;h6&gt;,&lt;ol&gt;,&lt;ul&gt;,&lt;table&gt;,&lt;form&gt;</span><br><span class="line">inline(不独占一行,width就是包含图片和文字宽度不可改变):</span><br><span class="line">常见的有&lt;span&gt;、&lt;a&gt;(元素间会有间距问题)</span><br><span class="line">inline-block(不独占一行,但可设置height、width、margin、padding):</span><br><span class="line">元素类型转换:display属性</span><br><span class="line">display:block/inline/inline/block</span><br><span class="line"></span><br><span class="line">浮动定位</span><br><span class="line">float浮动             clear清除浮动</span><br><span class="line">float:left            clear:left(左侧不会有浮动对象)</span><br><span class="line">flooat:right          clear:right(右侧不会有浮动对象)</span><br><span class="line">float:none(不浮动)    clear:both(两侧不出现浮动，独占一行)</span><br><span class="line">使用float若宽度不够会丢失原有的位置。</span><br><span class="line"></span><br><span class="line">层定位</span><br><span class="line">position属性:</span><br><span class="line">static没有定位</span><br><span class="line">fixed固定定位(相对于浏览器窗口)</span><br><span class="line">relative相对定位(相对于父元素,原位置依然保留，不会被占据)</span><br><span class="line">absolute绝对定位(相对于static定位以外的第一个父元素，原位置不再存在，会被其他盒子占据)</span><br><span class="line">top,right,bottom,left属性:以当前盒子为参照物</span><br><span class="line">z-index:值大的在上面覆盖小的(设置极大或极小值（负数）来设置底层)</span><br></pre></td></tr></table></figure>  
+		<p>–cancat使用中文字符与后面值类型不同会乱码，用字符串转换函数转成char类型<br>select concat(‘当前时间是’,convert(current_timestamp(),char));<br>select concat(‘当前时间是’,convert(current_date(),char),’ ‘,convert(current_time(),char));<br>–从格林时间’1970-01-01 00:00:00’开始计算秒数<br>select unix_timestamp();<br>select unix_timestamp(current_timestamp());<br>select unix_timestamp(‘1980-01-01 00:00:00’);<br>select from_unixtime(315504000);  –与select unix_timestamp()相反<br>–当前所时区时间<br>select now(),current_date()+0;<br>select current_time(),current_time()+0;<br>–utc为世界统一时间<br>select utc_date(),utc_date()+0;<br>select utc_time(),utc_time()+0;<br>–显示月份<br>select month(current_timestamp());  –阿拉伯数字<br>select monthname(current_timestamp());  –英文<br>select month(‘1980-01-01 00:00:00’);<br>–显示为当前年份第几周<br>select week(‘1980-01-01’);  –从第0周开始计数<br>select week(‘1980-12-31 00:00:00’);<br>select week(‘1980-12-30 24:00:00’); –时间不符合标准即大于等于24:00:00时显示null<br>select weekofyear(‘1980-01-01 00:00:00’);  –从第1周开始计数<br>select weekofyear(‘1980-12-28’);<br>select weekofyear(‘1980-12-29 01:00:00’);<br>select weekofyear(‘1980-12-29 -23:00:00’); –符号对时间无影响<br>–显示星期几<br>select dayname(‘2019-09-15’);  –英文表示<br>select dayofweek(‘2019-09-15’);  –阿拉伯数字表示，星期日为一周的开始标为1<br>select dayofweek(‘2019-09-14’);  –阿拉伯数字表示，星期一为一周的结束标为7<br>select weekday(‘2019-09-09’);  –阿拉伯数字表示,星期一为一周的开始标为0<br>select weekday(‘2019-09-15’);  –阿拉伯数字表示,星期日为一周的结束标为6</p>
+<p>select dayofyear(‘1980-02-01’);  –本年第几天<br>select dayofmonth(‘1980-02-01’);  –本月第几天<br>select year(‘1980-02-01’);  –提取年<br>select quarter(‘1980-02-01’);  –第几季度</p>
+<p>select hour(‘888:50:50’);  –小时,区间为838<br>select hour(‘255050’);<br>select hour(‘1980-12-31 25:50:50’);  –有日期时时间要符合规范,否则为空<br>select hour(‘255050’);<br>select hour(‘19801231 238050’);  –该日期格式时间不符合规范则显示最大值<br>select minute(‘25:50:50’);  –分,区间为0-59<br>select minute(‘19801231 255050’);  –该日期格式时间不符合规范则显示最大值<br>select minute(‘255050’);<br>select second(‘25:50:50’);  –秒,区间为0-59<br>select second(‘255050’);<br>select second(‘19801231 2535090’);  –该日期格式时间不符合规范则显示最大值</p>
+<p>–输出所要数据<br>select extract(year from ‘2019-01-01 01:02:03’);<br>select extract(month from ‘2019-01-01 01:02:03’);<br>select extract(day from ‘2019-01-01 01:02:03’);<br>select extract(quarter from ‘2019-01-01 01:02:03’);<br>select extract(hour from ‘2019-01-01 01:02:03’);<br>select extract(minute from ‘2019-01-01 01:02:03’);<br>select extract(second from ‘2019-01-01 01:02:03’);</p>
+<p>–计算从0000-01-01开始的天数<br>select time_to_sec(‘2019-01-01 01:02:03’);<br>select time_to_sec(‘01:02:03’);  –把时间转化为秒忽视日期<br>select to_days(‘2019-01-01’);  –计算从0000-01-01开始的天数</p>
+<p>–计算两个日期之间的天数前面为靠近的日期<br>select datediff(‘2019-01-01’,’1980-01-01’);</p>
+<p>–计算两个时间之间多长，后面为靠近的日期，可设置得到的格式<br>timestampdiff(year,’2019-01-01’,now())</p>
+<p>–计算某时间加上一段时间后的时间<br>select adddate(‘2019-01-01’,2);  –不写interval和单位则默认为天数<br>select adddate(‘2019-01-01 23:02:03’,interval 2 hour);  –计算某时间加上一段时间后的时间<br>select date_add(‘2019-01-01 23:02:03’,interval 4 minute);<br>select subdate(‘2019-01-01’,2);  –不写interval和单位则默认为天数<br>select subdate(‘2019-01-01 23:02:03’,interval 2 hour);  –计算某时间减去一段时间后的时间<br>select date_sub(‘2019-01-01 23:02:03’,interval 4 minute);<br>select addtime(‘2019-01-01 23:59:59’,2);  –加上n秒后时间<br>select subtime(‘2019-01-01 23:02:01’,2);  –减去n秒后时间</p>
+<p>–按照自己设置的格式显示日期<br>select date_format(‘2019-01-01 23:59:59’,’%Y年%m月%d日 %h时%i分%s秒’);  –按照自己设置的格式显示日期<br>select date_format(‘2019-01-01 23:59:59’,’%y年%M月%D日 %H时%I分%S秒’);<br>select time_format(‘2019-01-01 23:59:59’,’%Y年%m月%d日 %h时%i分%s秒’);  –不要加日期否则显示为0<br>select time_format(‘24:59:59’,’耗时%h小时%i分钟%s秒’);<br>select time_format(‘49:59:59’,’耗时%h小时%i分钟%s秒’);  –小时数为24则显示为12，大于24则显示为n%24</p>
+  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -108,7 +117,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://shaoshengyu.github.io/2019/08/19/cssfour/" data-title="CSS定位机制 | 邵圣煜的博客" data-tsina="" class="share clearfix">
+	  <div data-url="http://shaoshengyu.github.io/2019/09/27/mysql-time/" data-title="Mysql时间函数的使用 | 邵圣煜的博客" data-tsina="" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -121,19 +130,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2019/08/19/cssthree/" title="盒子模型">
-  <strong>上一篇：</strong><br/>
-  <span>
-  盒子模型</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2019/08/19/ccsone/"  title="对css添加方法和选择器的一些理解与记录">
+<a href="/2019/09/27/mysqlimpt/"  title="Mysql视图、触发器、存储过程">
  <strong>下一篇：</strong><br/> 
- <span>对css添加方法和选择器的一些理解与记录
+ <span>Mysql视图、触发器、存储过程
 </span>
 </a>
 </div>
