@@ -84,6 +84,82 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2019/08/19/ajax/" title="Ajax基础" itemprop="url">Ajax基础</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="邵圣煜" target="_blank" itemprop="author">邵圣煜</a>
+		
+  <p class="article-time">
+    <time datetime="2019-08-19T11:48:32.678Z" itemprop="datePublished"> 发表于 2019-08-19</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>Ajax是一种对传统Web应用模式加以扩展的技术，可以在不重新加载网页的情况下通过异步请求方式对网页进行局部刷新，是非阻塞的。<br></p>
+<h2>基于Ajax的关键技术有：</h2><br>
+（1）使用XHTML（HTML）和CSS构建标准化的展示层。<br>
+（2）使用DOM进行动态交互和显示。<br>
+（3）使用XML或JSON等进行数据交换和操纵。<br>
+（4）使用XMLHttpRequest来和服务器进行异步通信。<br>
+（5）使用JavaScript将所有元素绑定在一起。<br>
+XMLHttpRequest是Ajax技术得以实现的一个重要JavaScript对象。<br>
+
+
+<h2>Ajax实例实现一般需要几个步骤：</h2><br>
+（1）在页面中定义Ajax请求的触发事件。<br>
+（2）创建XMLHttpRequest对象。<br>
+（3）确定请求地址和请求参数。<br>
+（4）通过XMLHttpRequest对象的open()方法建立对服务器的调用。<br>
+（5）通过XMLHttpRequest对象的onreadystatechange属性指定响应事件处理函数。<br>
+（6）在函数中根据响应状态进行数据获取和数处理工作。<br>
+（7）调用XMLHttpRequest对象的send()方法向服务器发出请求。<br>
+
+<p>其中open()方法必须包含mthod(特定请求方法)，url(所调用资源的url)这两个参数，其他参数可选(asynch一般不写默认为true，表示异步,可设为false表示同步)。
+onreadystatechange属性中主要有readyState和status两个属性。readyState可设为0,1,2,3,4这五个值。0表示XMLHttpRequest对象已创建但未初始化，
+1表示请求准备发送到服务器，2表示请求已发送到服务器但未响应，3表示正在接收但只接收到HTTP响应头部信息，4表示响应已完全被接收。所以readyState常设为4表示已
+接收完成信息。status描述了HTTP状态码，包括200（请求成功），202请求未接收但处理未完成，400（错误请求），404（请求资源未找到），500（内部服务器错误）。
+通常status设为200。</p>
+
+<p>JSON是基于JavaScript的一种轻量级数据格式，易于阅读和编写，也易于机器解析和生成，是理想的数据交换语言。<br><br>JSON有两种结构：（1）”名/值”对的集合 （2）值得有序列表<br><br>JSON格式相比XML格式在可读性，可扩展性，编码难度，解码难度，流行度等方面都更具有优势。<br><br>我个人的体会来说，JSON格式在编码时代码量大大减少，不需要XML格式使用时的关于XMLHttpRequest对象的操作。<br><br>使用插件后前后端发送接收信息都使用JSON格式，无需复杂的编码解码过程。</p>
+<p>JQuery是一种免费开源兼多浏览器的JavaScript库其核心理念是：write less,do more。<br><br>JQuery的语法设计可以使开发者更加便捷操作，例如操作文档对象，选择DOM元素，事件处理以及Ajax以及其他功能。<br><br>我认为jQuery就是一种简洁的语言，在Ajax中使用JQuery，可以使代码变得简介而且可以更容易实现一些操作。</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2019/08/19/actionscope/" title="对JavaWeb四大作用域的理解" itemprop="url">对JavaWeb四大作用域的理解</a>
   </h1>
   <p class="article-author">By
@@ -98,7 +174,7 @@
     <div class="article-content">
         
         <p>application作用域：application应用域，是程序全局变量，对每个用户每个页面都有效。存放在ServletContext对象中。它的存活时间是最长的，只要服务器开启，如果不进行手工删除，它们就一直可以使用。</p>
-<p>session作用域：session会话域，Session是用户全局变量，在整个会话期间都有效。只要页面不关闭就一直有效（或者直到用户一直未活动导致会话过期，默认session过期时间为30分钟，或调用HttpSession的invalidate()方法）。</p>
+<p>session作用域：session会话域，Session是用户全局变量，在整个会话期间都有效。只要浏览器不关闭就一直有效（或者直到用户一直未活动导致会话过期，默认session过期时间为30分钟，或调用HttpSession的invalidate()方法）。</p>
 <p>servletRequest作用域：request请求域生存时间为一次完整请求全过程，即从http请求到服务器处理结束，返回响应的整个过程，存放在HttpServletRequest对象中。在这个过程中可以使用forward方式跳转多个jsp。在这些页面里你都可以使用这个变量。</p>
 <p>PageContext作用域：PageContext页面域是范围最小的一个域，仅当前页面有效或在一个jsp页面里有效。</p>
 <p>帮助理解的小程序，可以在不同浏览器刷新查看结果的不同。<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"> &lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;</span><br><span class="line">    pageEncoding=&quot;UTF-8&quot;%&gt;</span><br><span class="line">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;%</span><br><span class="line">		int pageCount = 1;</span><br><span class="line">		int sessionCount = 1;</span><br><span class="line">		int applicationCount = 1;</span><br><span class="line">		</span><br><span class="line">		//页面域计数</span><br><span class="line">		if (pageContext.getAttribute(&quot;pageCount&quot;) != null) &#123;</span><br><span class="line">			pageCount = Integer.parseInt(pageContext.getAttribute(&quot;pageCount&quot;).toString());</span><br><span class="line">			pageCount++;</span><br><span class="line">		&#125;</span><br><span class="line">		pageContext.setAttribute(&quot;pageCount&quot;, pageCount);</span><br><span class="line">		</span><br><span class="line">		//会话域计数(一个浏览器打开到关闭)</span><br><span class="line">		if (session.getAttribute(&quot;sessionCount&quot;) != null) &#123;</span><br><span class="line">			sessionCount = Integer.parseInt(session.getAttribute(&quot;sessionCount&quot;).toString());</span><br><span class="line">			sessionCount++;</span><br><span class="line">		&#125;</span><br><span class="line">		session.setAttribute(&quot;sessionCount&quot;, sessionCount);</span><br><span class="line">		</span><br><span class="line">		//应用域计数(Web项目服务运行全程)</span><br><span class="line">		if (application.getAttribute(&quot;applicationCount&quot;) != null) &#123;</span><br><span class="line">			applicationCount = Integer.parseInt(application.getAttribute(&quot;applicationCount&quot;).toString());</span><br><span class="line">			applicationCount++;</span><br><span class="line">		&#125;</span><br><span class="line">		application.setAttribute(&quot;applicationCount&quot;, applicationCount);</span><br><span class="line">	%&gt;</span><br><span class="line">	</span><br><span class="line">	&lt;p&gt;</span><br><span class="line">		页面域计数：&lt;%=pageCount%&gt;&lt;/p&gt;</span><br><span class="line">	&lt;p&gt;</span><br><span class="line">		会话域计数：&lt;%=sessionCount%&gt;&lt;/p&gt;</span><br><span class="line">	&lt;p&gt;</span><br><span class="line">		应用域计数：&lt;%=applicationCount%&gt;&lt;/p&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
@@ -151,7 +227,7 @@
   
   <div class="archiveslist">
     <p class="asidetitle"><a href="/archives">归档</a></p>
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">18</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">18</span></li></ul>
   </div>
 
 
